@@ -53,6 +53,17 @@ class ImperialSystemOfUnits extends LinearConvertibleSystemOfUnits {
         );
 }
 
+/// Nautical System of Units.
+///
+/// Will be configured by each [PhysicalProperty] especialization with its collection of [Unit] instances.
+class NauticalSystemOfUnits extends LinearConvertibleSystemOfUnits {
+  NauticalSystemOfUnits({required PhysicalProperty kind})
+      : super(
+          name: 'Nautical System of Units',
+          kind: kind,
+        );
+}
+
 /// Exception for incompatible [SystemOfMeasurent] instances.
 class IncompatibleSystemOfMeasureException implements Exception {
   const IncompatibleSystemOfMeasureException({required this.systemOfMeasure, required this.unit});

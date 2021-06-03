@@ -1,6 +1,6 @@
 name: qty
 description: Quantities and Units calculations and conversions.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/ricardo-nogueira-cc/qty
 
 environment:
