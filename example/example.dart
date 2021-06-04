@@ -2,7 +2,7 @@ import 'package:qty/mass.dart';
 import 'package:qty/quantities.dart';
 
 /// This example walk through different funcionalities using Mass.
-/// Same API is provided for other physical properties, such as Volume and Length.
+/// Same API also works for other physical properties, such as Volume and Length.
 void main() {
   print('Available units of mass:');
   for (var system in Mass().systemsOfMeasurent) {

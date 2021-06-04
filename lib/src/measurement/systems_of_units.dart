@@ -3,25 +3,26 @@ import 'unit_converters.dart';
 
 /// General class for systems of units with linear convertible units.
 ///
-/// This is a full functional class that supports most [SystemOfMeasurent] units, such as [InternationalSystemOfUnits] (SI) and the [ImperialSystemOfUnits].
+/// This is a full functional class that supports most [SystemOfMeasurent] units, such as [InternationalSystemOfUnits] (SI), [ImperialSystemOfUnits] and [NauticalSystemOfUnits].
 /// It does not support more complex units conversions such as the Fahrenheit scale for Temperature.
 class LinearConvertibleSystemOfUnits extends SystemOfMeasurent {
   LinearConvertibleSystemOfUnits({required String name, required PhysicalProperty kind, LinearUnitConverter? unitConverter})
       : super(name: name, kind: kind, unitConverter: unitConverter ?? LinearUnitConverter());
 
   @override
-  // ignore: avoid_as
   LinearUnitConverter get unitConverter => super.unitConverter as LinearUnitConverter;
 
   @override
   Unit defineUnit({required String symbol, required String name}) => defineUnitWithFactor(symbol: symbol, name: name, factor: 1.0);
 
+  /// Defines an Unit with a conversion factor to the baseUnit of this SystemOfMeasurent
   Unit defineUnitWithFactor({required String symbol, required String name, required double factor}) {
     final unit = super.defineUnit(symbol: symbol, name: name);
     unitConverter.add(unit: unit, factor: factor);
     return unit;
   }
 
+  /// Returns the conversionFactor between two units of this SystemOfMeasurement
   double conversionFactor({required Unit fromUnit, required Unit toUnit}) {
     if (fromUnit.systemOfMeasurent != this) throw IncompatibleSystemOfMeasureException(systemOfMeasure: this, unit: fromUnit);
     if (toUnit.systemOfMeasurent != this) throw IncompatibleSystemOfMeasureException(systemOfMeasure: this, unit: toUnit);

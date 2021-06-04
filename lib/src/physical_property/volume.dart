@@ -5,6 +5,8 @@ import '../quantity/quantity.dart';
 /// Volume physical property.
 ///
 /// Configures Internation (SI) and Imperial (British) systems of units defining their [Volume] [Unit] instances.
+/// All units are accessible by singleton method, static methods or by symbol.
+/// Also provides Quantity constructors for common units.
 class Volume extends PhysicalProperty {
   factory Volume() => _instance ??= Volume._internal('volume');
 

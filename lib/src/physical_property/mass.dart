@@ -5,6 +5,8 @@ import '../quantity/quantity.dart';
 /// Mass physical property.
 ///
 /// Configures Internation (SI) and Imperial (British) systems of units defining their [Mass] [Unit] instances.
+/// All units are accessible by singleton method, static methods or by symbol.
+/// Also provides Quantity constructors for common units.
 class Mass extends PhysicalProperty {
   factory Mass() => _instance ??= Mass._internal('mass');
 

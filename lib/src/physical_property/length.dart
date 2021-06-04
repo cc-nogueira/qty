@@ -2,9 +2,11 @@ import '../measurement/measurement.dart';
 import '../measurement/systems_of_units.dart';
 import '../quantity/quantity.dart';
 
-/// Length physical property.
+/// Length physical property singleton.
 ///
-/// Configures Internation (SI) and Imperial (British) systems of units defining their [Length] [Unit] instances.
+/// Configures Internation (SI), Imperial (British) and Nautical systems of units defining their [Length] [Unit] instances.
+/// All units are accessible by singleton method, static methods or by symbol.
+/// Also provides Quantity constructors for common units.
 class Length extends PhysicalProperty {
   factory Length() => _instance ??= Length._internal('length');
 

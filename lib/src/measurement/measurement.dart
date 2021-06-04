@@ -17,11 +17,14 @@ abstract class SystemOfMeasurent {
   final PhysicalProperty kind;
   final UnitConverter unitConverter;
   final Map<String, Unit> _units;
-  late Unit _baseUnit;
-  late double _baseUnitConversionFactor;
+  late final Unit _baseUnit;
+  late final double _baseUnitConversionFactor;
 
+  /// Compare two SystemOfMEasurement to verify if they are for the same [PhysicalProperty]
   bool sameKind(SystemOfMeasurent otherSystem) => kind == otherSystem.kind;
 
+  /// Define the baseUnit for this SystemOfMeasuremnt and its conversionFactor to the other SystemOfMeasurements of the same kind.
+  /// This method can be called only once for each SystemOfMeasument.
   Unit defineBaseUnit({required String symbol, required String name, required double factor}) {
     final unit = defineUnit(symbol: symbol, name: name);
     _baseUnit = unit;
@@ -31,18 +34,24 @@ abstract class SystemOfMeasurent {
 
   Unit get baseUnit => _baseUnit;
 
+  /// Defines a unit with symbol and name
   Unit defineUnit({required String symbol, required String name}) {
     final unit = Unit(this, symbol, name);
     _units[symbol] = unit;
     return unit;
   }
 
+  /// List all units in this SystemOfMeasurement
   List<Unit> get units => _units.values.toList();
+
+  /// Finds an unit by its symbol. Retuns null if none is found
   Unit? unitWith({required String symbol}) => _units[symbol];
 
+  /// Compose a QuantityConverter function to convert amounts from one SystemOfMeasurement baseUnit to another SystemOfMeasurement baseUnit
   QuantityConverter baseUnitConverterTo(SystemOfMeasurent anotherSystem) =>
       (quantity) => quantity * _baseUnitConversionFactor / anotherSystem._baseUnitConversionFactor;
 
+  /// Compose a QuantityConverter function to convert amounts from one unit to another
   QuantityConverter quantityConverter({required Unit fromUnit, required Unit toUnit}) {
     if (fromUnit.systemOfMeasurent != this) {
       return fromUnit.quantityConverterTo(toUnit);
@@ -68,9 +77,13 @@ abstract class PhysicalProperty {
   final String kind;
   final List<SystemOfMeasurent> systemsOfMeasurent;
 
+  /// Return the baseUnit of my first SystemOfMeasurement
   Unit get baseUnit => systemsOfMeasurent[0].baseUnit;
+
+  /// Return all units in all of my SystemOfMeasurement list
   List<Unit> get unitList => systemsOfMeasurent.fold([], (list, systemOfMeasure) => list..addAll(systemOfMeasure.units));
 
+  /// Finds an unit with a symbol in my SystemOfMeasurement list
   Unit? unitWith({required String symbol}) {
     Unit? unit;
     try {
@@ -94,7 +107,7 @@ abstract class PhysicalProperty {
   String toString() => kind;
 }
 
-/// Unit of measure of a physical property.
+/// Unit of a physical property.
 ///
 /// Expressed with a [symbol] in a [systemOfMeasurement] for its kind of [PhysicalProperty] (volume, mass, legnth, etc).
 /// Provides access to a [QuantityConverter] to another [Unit] of the same kind of [PhysicalProperty].
@@ -106,8 +119,11 @@ class Unit extends Equatable {
   final String name;
 
   PhysicalProperty get kind => systemOfMeasurent.kind;
+
+  /// Compare if another unit is of the same kind
   bool sameKind(Unit unit) => systemOfMeasurent.sameKind(unit.systemOfMeasurent);
 
+  /// Compose a QuantityConverter function to convert amounts to another unit.
   QuantityConverter quantityConverterTo(Unit anotherUnit) {
     if (systemOfMeasurent == anotherUnit.systemOfMeasurent) {
       return systemOfMeasurent.quantityConverter(fromUnit: this, toUnit: anotherUnit);
@@ -126,6 +142,8 @@ class Unit extends Equatable {
 ///
 /// Exposes an abstract QuantityConverter getter.
 abstract class UnitConverter {
+  UnitConverter();
+
   QuantityConverter quantityConverter({required Unit fromUnit, required Unit toUnit});
 }
 
