@@ -1,5 +1,5 @@
 name: qty
-description: Quantities representation and unit conversions. Defines most common units for several physical properties such as Mass, Length, Volume, Time, etc.
+description: Quantities representation and unit conversions. Defines most common units for several physical properties such as Mass, Length, Volume and Time.
 version: 0.1.3
 homepage: https://github.com/ricardo-nogueira-cc/qty
 
