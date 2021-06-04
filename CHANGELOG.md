@@ -5,3 +5,8 @@ Initial version with Dimensionless, Mass and Volume quantities.
 Lenght quantities
 Misspelling fixes.
 Better mass usage example.
+
+## 0.1.2
+Formatting (dartfmt)
+Documentation
+SystemOfMeasurement.baseUnit made final (late final)

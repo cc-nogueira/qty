@@ -1,6 +1,6 @@
 name: qty
-description: Quantities and Units calculations and conversions.
-version: 0.1.1
+description: Quantities and Units calculations and conversions. Defines most common units for several PhysicalProperties such as Mass, Length, Volume, all organized inside SystemOfUnits like InternationalSystemOfUnits, ImperialSystemOfUnits and NauticalSystemOfUnits.
+version: 0.1.2
 homepage: https://github.com/ricardo-nogueira-cc/qty
 
 environment:
