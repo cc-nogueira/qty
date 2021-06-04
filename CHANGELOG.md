@@ -10,3 +10,7 @@ Better mass usage example.
 Formatting (dartfmt)
 Documentation
 SystemOfMeasurement.baseUnit made final (late final)
+
+## 0.1.3
+Time quantities
+InternationalSystemOfUnits with optional LinearUnitConverter to replace PowerOfTenUnitConverter
