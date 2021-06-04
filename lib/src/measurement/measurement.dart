@@ -11,7 +11,9 @@ typedef QuantityConverter = double Function(double);
 /// Exposes an API to define and manage a domain of [Unit]s, and a single [baseUnit].
 /// Provides access to [QuantityConverter] between units of its domains and to the base unit of another [SystemOfMeasure].
 abstract class SystemOfMeasurent {
-  SystemOfMeasurent({required this.name, required this.kind, required this.unitConverter}) : _units = HashMap();
+  SystemOfMeasurent(
+      {required this.name, required this.kind, required this.unitConverter})
+      : _units = HashMap();
 
   final String name;
   final PhysicalProperty kind;
@@ -25,7 +27,8 @@ abstract class SystemOfMeasurent {
 
   /// Define the baseUnit for this SystemOfMeasuremnt and its conversionFactor to the other SystemOfMeasurements of the same kind.
   /// This method can be called only once for each SystemOfMeasument.
-  Unit defineBaseUnit({required String symbol, required String name, required double factor}) {
+  Unit defineBaseUnit(
+      {required String symbol, required String name, required double factor}) {
     final unit = defineUnit(symbol: symbol, name: name);
     _baseUnit = unit;
     _baseUnitConversionFactor = factor;
@@ -49,19 +52,26 @@ abstract class SystemOfMeasurent {
 
   /// Compose a QuantityConverter function to convert amounts from one SystemOfMeasurement baseUnit to another SystemOfMeasurement baseUnit
   QuantityConverter baseUnitConverterTo(SystemOfMeasurent anotherSystem) =>
-      (quantity) => quantity * _baseUnitConversionFactor / anotherSystem._baseUnitConversionFactor;
+      (quantity) =>
+          quantity *
+          _baseUnitConversionFactor /
+          anotherSystem._baseUnitConversionFactor;
 
   /// Compose a QuantityConverter function to convert amounts from one unit to another
-  QuantityConverter quantityConverter({required Unit fromUnit, required Unit toUnit}) {
+  QuantityConverter quantityConverter(
+      {required Unit fromUnit, required Unit toUnit}) {
     if (fromUnit.systemOfMeasurent != this) {
       return fromUnit.quantityConverterTo(toUnit);
     }
-    if (fromUnit.kind != toUnit.kind) throw IncompatibleUnitsException(fromUnit, toUnit);
+    if (fromUnit.kind != toUnit.kind) {
+      throw IncompatibleUnitsException(fromUnit, toUnit);
+    }
     return unitConverter.quantityConverter(fromUnit: fromUnit, toUnit: toUnit);
   }
 
   @override
-  bool operator ==(Object other) => other is SystemOfMeasurent && kind == other.kind && name == other.name;
+  bool operator ==(Object other) =>
+      other is SystemOfMeasurent && kind == other.kind && name == other.name;
 
   @override
   int get hashCode => kind.hashCode ^ name.hashCode;
@@ -81,7 +91,8 @@ abstract class PhysicalProperty {
   Unit get baseUnit => systemsOfMeasurent[0].baseUnit;
 
   /// Return all units in all of my SystemOfMeasurement list
-  List<Unit> get unitList => systemsOfMeasurent.fold([], (list, systemOfMeasure) => list..addAll(systemOfMeasure.units));
+  List<Unit> get unitList => systemsOfMeasurent
+      .fold([], (list, systemOfMeasure) => list..addAll(systemOfMeasure.units));
 
   /// Finds an unit with a symbol in my SystemOfMeasurement list
   Unit? unitWith({required String symbol}) {
@@ -98,7 +109,8 @@ abstract class PhysicalProperty {
   }
 
   @override
-  bool operator ==(Object other) => other is PhysicalProperty && kind == other.kind;
+  bool operator ==(Object other) =>
+      other is PhysicalProperty && kind == other.kind;
 
   @override
   int get hashCode => kind.hashCode;
@@ -121,21 +133,27 @@ class Unit extends Equatable {
   PhysicalProperty get kind => systemOfMeasurent.kind;
 
   /// Compare if another unit is of the same kind
-  bool sameKind(Unit unit) => systemOfMeasurent.sameKind(unit.systemOfMeasurent);
+  bool sameKind(Unit unit) =>
+      systemOfMeasurent.sameKind(unit.systemOfMeasurent);
 
   /// Compose a QuantityConverter function to convert amounts to another unit.
   QuantityConverter quantityConverterTo(Unit anotherUnit) {
     if (systemOfMeasurent == anotherUnit.systemOfMeasurent) {
-      return systemOfMeasurent.quantityConverter(fromUnit: this, toUnit: anotherUnit);
+      return systemOfMeasurent.quantityConverter(
+          fromUnit: this, toUnit: anotherUnit);
     }
-    final anotherFromBaseUnitConverter = anotherUnit.systemOfMeasurent.baseUnit.quantityConverterTo(anotherUnit);
+    final anotherFromBaseUnitConverter =
+        anotherUnit.systemOfMeasurent.baseUnit.quantityConverterTo(anotherUnit);
     final thisToBaseConverter = quantityConverterTo(systemOfMeasurent.baseUnit);
-    final baseToAnotherBaseConver = systemOfMeasurent.baseUnitConverterTo(anotherUnit.systemOfMeasurent);
-    return (quantity) => anotherFromBaseUnitConverter(baseToAnotherBaseConver(thisToBaseConverter(quantity)));
+    final baseToAnotherBaseConver =
+        systemOfMeasurent.baseUnitConverterTo(anotherUnit.systemOfMeasurent);
+    return (quantity) => anotherFromBaseUnitConverter(
+        baseToAnotherBaseConver(thisToBaseConverter(quantity)));
   }
 
   @override
-  List<Object> get props => [systemOfMeasurent.kind, systemOfMeasurent.name, symbol, name];
+  List<Object> get props =>
+      [systemOfMeasurent.kind, systemOfMeasurent.name, symbol, name];
 }
 
 /// Interface for unit conversion.
@@ -144,7 +162,8 @@ class Unit extends Equatable {
 abstract class UnitConverter {
   UnitConverter();
 
-  QuantityConverter quantityConverter({required Unit fromUnit, required Unit toUnit});
+  QuantityConverter quantityConverter(
+      {required Unit fromUnit, required Unit toUnit});
 }
 
 /// Exception class for incompatible unit conversion.
@@ -155,5 +174,6 @@ class IncompatibleUnitsException implements Exception {
   final Unit anotherUnit;
 
   @override
-  String toString() => 'Incompatible units "${anUnit.kind}" and "${anotherUnit.kind}"';
+  String toString() =>
+      'Incompatible units "${anUnit.kind}" and "${anotherUnit.kind}"';
 }

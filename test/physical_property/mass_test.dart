@@ -62,7 +62,8 @@ void main() {
     expect(Mass.lb.quantityConverterTo(Mass.g)(1.0), 453.59237);
     expect(Mass.oz.quantityConverterTo(Mass.lb)(1.0), 1.0 / 16.0);
     expect(Mass.st.quantityConverterTo(Mass.lb)(1.0), 14.0);
-    expect(Mass.st.quantityConverterTo(Mass.g)(1.0), inInclusiveRange(6350.29318, 6350.293180000001));
+    expect(Mass.st.quantityConverterTo(Mass.g)(1.0),
+        inInclusiveRange(6350.29318, 6350.293180000001));
     expect(Mass.st.quantityConverterTo(Mass.kg)(1.0), 6.35029318);
     expect(Mass.qr.quantityConverterTo(Mass.lb)(1.0), 28.0);
     expect(Mass.qr.quantityConverterTo(Mass.kg)(1.0), 12.70058636);

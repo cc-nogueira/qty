@@ -6,17 +6,26 @@ import 'unit_converters.dart';
 /// This is a full functional class that supports most [SystemOfMeasurent] units, such as [InternationalSystemOfUnits] (SI), [ImperialSystemOfUnits] and [NauticalSystemOfUnits].
 /// It does not support more complex units conversions such as the Fahrenheit scale for Temperature.
 class LinearConvertibleSystemOfUnits extends SystemOfMeasurent {
-  LinearConvertibleSystemOfUnits({required String name, required PhysicalProperty kind, LinearUnitConverter? unitConverter})
-      : super(name: name, kind: kind, unitConverter: unitConverter ?? LinearUnitConverter());
+  LinearConvertibleSystemOfUnits(
+      {required String name,
+      required PhysicalProperty kind,
+      LinearUnitConverter? unitConverter})
+      : super(
+            name: name,
+            kind: kind,
+            unitConverter: unitConverter ?? LinearUnitConverter());
 
   @override
-  LinearUnitConverter get unitConverter => super.unitConverter as LinearUnitConverter;
+  LinearUnitConverter get unitConverter =>
+      super.unitConverter as LinearUnitConverter;
 
   @override
-  Unit defineUnit({required String symbol, required String name}) => defineUnitWithFactor(symbol: symbol, name: name, factor: 1.0);
+  Unit defineUnit({required String symbol, required String name}) =>
+      defineUnitWithFactor(symbol: symbol, name: name, factor: 1.0);
 
   /// Defines an Unit with a conversion factor to the baseUnit of this SystemOfMeasurent
-  Unit defineUnitWithFactor({required String symbol, required String name, required double factor}) {
+  Unit defineUnitWithFactor(
+      {required String symbol, required String name, required double factor}) {
     final unit = super.defineUnit(symbol: symbol, name: name);
     unitConverter.add(unit: unit, factor: factor);
     return unit;
@@ -24,8 +33,14 @@ class LinearConvertibleSystemOfUnits extends SystemOfMeasurent {
 
   /// Returns the conversionFactor between two units of this SystemOfMeasurement
   double conversionFactor({required Unit fromUnit, required Unit toUnit}) {
-    if (fromUnit.systemOfMeasurent != this) throw IncompatibleSystemOfMeasureException(systemOfMeasure: this, unit: fromUnit);
-    if (toUnit.systemOfMeasurent != this) throw IncompatibleSystemOfMeasureException(systemOfMeasure: this, unit: toUnit);
+    if (fromUnit.systemOfMeasurent != this) {
+      throw IncompatibleSystemOfMeasureException(
+          systemOfMeasure: this, unit: fromUnit);
+    }
+    if (toUnit.systemOfMeasurent != this) {
+      throw IncompatibleSystemOfMeasureException(
+          systemOfMeasure: this, unit: toUnit);
+    }
     return unitConverter.convertionFactor(fromUnit: fromUnit, toUnit: toUnit);
   }
 }
@@ -67,11 +82,13 @@ class NauticalSystemOfUnits extends LinearConvertibleSystemOfUnits {
 
 /// Exception for incompatible [SystemOfMeasurent] instances.
 class IncompatibleSystemOfMeasureException implements Exception {
-  const IncompatibleSystemOfMeasureException({required this.systemOfMeasure, required this.unit});
+  const IncompatibleSystemOfMeasureException(
+      {required this.systemOfMeasure, required this.unit});
 
   final SystemOfMeasurent systemOfMeasure;
   final Unit unit;
 
   @override
-  String toString() => 'Unit of ${unit.kind} "${unit.symbol}" is not part of "${systemOfMeasure.name}" for "${systemOfMeasure.kind}"';
+  String toString() =>
+      'Unit of ${unit.kind} "${unit.symbol}" is not part of "${systemOfMeasure.name}" for "${systemOfMeasure.kind}"';
 }

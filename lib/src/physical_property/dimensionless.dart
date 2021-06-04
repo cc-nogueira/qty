@@ -10,7 +10,8 @@ class Dimensionless extends PhysicalProperty {
 
   Dimensionless._internal(String kind) : super(kind: kind) {
     _internationalSystemOfUnits = InternationalSystemOfUnits(kind: this);
-    _internationalSystemOfUnits.defineBaseUnit(symbol: 'un', name: 'unit', factor: 1.0);
+    _internationalSystemOfUnits.defineBaseUnit(
+        symbol: 'un', name: 'unit', factor: 1.0);
 
     systemsOfMeasurent.addAll([_internationalSystemOfUnits]);
   }
@@ -18,7 +19,8 @@ class Dimensionless extends PhysicalProperty {
   static Dimensionless? _instance;
   late InternationalSystemOfUnits _internationalSystemOfUnits;
 
-  static Quantity units({required double amount}) => Quantity(unit: un, amount: amount);
+  static Quantity units({required double amount}) =>
+      Quantity(unit: un, amount: amount);
   static Unit get un => Dimensionless().unUnit;
 
   Unit get unUnit => _internationalSystemOfUnits.unitWith(symbol: 'un')!;

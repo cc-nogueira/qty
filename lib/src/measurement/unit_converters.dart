@@ -8,13 +8,17 @@ import 'measurement.dart';
 class LinearUnitConverter extends UnitConverter {
   final Map<Unit, double> _factors = {};
 
-  void add({required Unit unit, required double factor}) => _factors[unit] = factor;
+  void add({required Unit unit, required double factor}) =>
+      _factors[unit] = factor;
 
-  double convertionFactor({required Unit fromUnit, required Unit toUnit}) => fromUnit == toUnit ? 1.0 : _factors[fromUnit]! / _factors[toUnit]!;
+  double convertionFactor({required Unit fromUnit, required Unit toUnit}) =>
+      fromUnit == toUnit ? 1.0 : _factors[fromUnit]! / _factors[toUnit]!;
 
   @override
-  QuantityConverter quantityConverter({required Unit fromUnit, required Unit toUnit}) =>
-      (quantity) => quantity * convertionFactor(fromUnit: fromUnit, toUnit: toUnit);
+  QuantityConverter quantityConverter(
+          {required Unit fromUnit, required Unit toUnit}) =>
+      (quantity) =>
+          quantity * convertionFactor(fromUnit: fromUnit, toUnit: toUnit);
 }
 
 /// [UnitConverter] that uses the decimal system for [Unit] conversion.

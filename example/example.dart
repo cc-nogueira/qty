@@ -18,7 +18,8 @@ void main() {
   print('Quantity q1 = Mass.grams(amount: 200.0);');
   print('Quantity q2 = Quantity(amount: 2.0, unit: Mass.kg);');
   print('Quantity q3 = Mass.ounces(amount: 10.0);');
-  print('Quantity q4 = Quantity(amount: 5.0, unit: Mass().unitWith(symbol: \'lb\'));');
+  print(
+      'Quantity q4 = Quantity(amount: 5.0, unit: Mass().unitWith(symbol: \'lb\'));');
   Quantity q1, q2, q3, q4;
   q1 = Mass.grams(amount: 200.0);
   q2 = Quantity(amount: 2.0, unit: Mass.kg);
