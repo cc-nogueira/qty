@@ -50,11 +50,12 @@ class LinearConvertibleSystemOfUnits extends SystemOfMeasurent {
 /// It is the international statandard following the metric system of units.
 /// Will be configured by each [PhysicalProperty] especialization with its collection of [Unit] instances.
 class InternationalSystemOfUnits extends LinearConvertibleSystemOfUnits {
-  InternationalSystemOfUnits({required PhysicalProperty kind})
+  InternationalSystemOfUnits(
+      {required PhysicalProperty kind, LinearUnitConverter? unitConverter})
       : super(
           name: 'International System of Units (SI)',
           kind: kind,
-          unitConverter: PowerOfTenUnitConverter(),
+          unitConverter: unitConverter ?? PowerOfTenUnitConverter(),
         );
 }
 
