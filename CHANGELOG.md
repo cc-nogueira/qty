@@ -14,3 +14,6 @@ SystemOfMeasurement.baseUnit made final (late final)
 ## 0.1.3
 Time quantities
 InternationalSystemOfUnits with optional LinearUnitConverter to replace PowerOfTenUnitConverter
+
+## 0.1.4
+Github account renamed
