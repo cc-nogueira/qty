@@ -12,30 +12,50 @@ class Mass extends PhysicalProperty {
 
   Mass._internal(String kind) : super(kind: kind) {
     _internationalSystemOfUnits = InternationalSystemOfUnits(kind: this);
-    _internationalSystemOfUnits.defineBaseUnit(symbol: 'kg', name: 'kilogram', factor: 1.0);
-    _internationalSystemOfUnits.defineUnitWithFactor(symbol: 'mg', name: 'milligram', factor: 0.000001);
-    _internationalSystemOfUnits.defineUnitWithFactor(symbol: 'g', name: 'gram', factor: 0.001);
-    _internationalSystemOfUnits.defineUnitWithFactor(symbol: 't', name: 'ton', factor: 1000.0);
+    _internationalSystemOfUnits.defineBaseUnit(
+        symbol: 'kg', name: 'kilogram', factor: 1.0);
+    _internationalSystemOfUnits.defineUnitWithFactor(
+        symbol: 'mg', name: 'milligram', factor: 0.000001);
+    _internationalSystemOfUnits.defineUnitWithFactor(
+        symbol: 'g', name: 'gram', factor: 0.001);
+    _internationalSystemOfUnits.defineUnitWithFactor(
+        symbol: 't', name: 'ton', factor: 1000.0);
 
     _imperialSystemOfUnits = ImperialSystemOfUnits(kind: this);
-    _imperialSystemOfUnits.defineBaseUnit(symbol: 'lb', name: 'pound', factor: 0.45359237);
-    _imperialSystemOfUnits.defineUnitWithFactor(symbol: 'oz', name: 'ounce', factor: 1.0 / 16.0);
-    _imperialSystemOfUnits.defineUnitWithFactor(symbol: 'st', name: 'stone', factor: 14.0);
-    _imperialSystemOfUnits.defineUnitWithFactor(symbol: 'qr', name: 'quarter', factor: 28.0);
+    _imperialSystemOfUnits.defineBaseUnit(
+        symbol: 'lb', name: 'pound', factor: 0.45359237);
+    _imperialSystemOfUnits.defineUnitWithFactor(
+        symbol: 'oz', name: 'ounce', factor: 1.0 / 16.0);
+    _imperialSystemOfUnits.defineUnitWithFactor(
+        symbol: 'st', name: 'stone', factor: 14.0);
+    _imperialSystemOfUnits.defineUnitWithFactor(
+        symbol: 'qr', name: 'quarter', factor: 28.0);
 
-    systemsOfMeasurent.addAll([_internationalSystemOfUnits, _imperialSystemOfUnits]);
+    systemsOfMeasurent
+        .addAll([_internationalSystemOfUnits, _imperialSystemOfUnits]);
   }
 
   static Mass? _instance;
   late InternationalSystemOfUnits _internationalSystemOfUnits;
   late ImperialSystemOfUnits _imperialSystemOfUnits;
 
-  static Quantity grams({required double amount}) => Quantity(unit: g, amount: amount);
-  static Quantity kilograms({required double amount}) => Quantity(unit: kg, amount: amount);
-  static Quantity milligrams({required double amount}) => Quantity(unit: mg, amount: amount);
-  static Quantity ounces({required double amount}) => Quantity(unit: oz, amount: amount);
-  static Quantity pounds({required double amount}) => Quantity(unit: lb, amount: amount);
-  static Quantity tons({required double amount}) => Quantity(unit: t, amount: amount);
+  static Quantity milligrams({required double amount}) =>
+      Quantity(unit: mg, amount: amount);
+  static Quantity grams({required double amount}) =>
+      Quantity(unit: g, amount: amount);
+  static Quantity kilograms({required double amount}) =>
+      Quantity(unit: kg, amount: amount);
+  static Quantity tons({required double amount}) =>
+      Quantity(unit: t, amount: amount);
+
+  static Quantity ounces({required double amount}) =>
+      Quantity(unit: oz, amount: amount);
+  static Quantity pounds({required double amount}) =>
+      Quantity(unit: lb, amount: amount);
+  static Quantity stones({required double amount}) =>
+      Quantity(unit: st, amount: amount);
+  static Quantity quarters({required double amount}) =>
+      Quantity(unit: qr, amount: amount);
 
   static Unit get g => Mass().gUnit;
   static Unit get kg => Mass().kgUnit;
