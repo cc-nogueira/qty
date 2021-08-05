@@ -21,4 +21,7 @@ Github account renamed
 ## 0.2.0
 ImperialSystemOfUnits static constructor in Length, Mass and Volume
 Quantity print method to set unitName and fractionDigits format
-README.md update
+README.md updates
+
+## 0.2.1
+README.md updates
