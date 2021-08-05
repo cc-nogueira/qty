@@ -1,7 +1,8 @@
 name: qty
 description: Quantities representation and unit conversions. Defines most common units for several physical properties such as Mass, Length, Volume and Time.
-version: 0.1.4
 homepage: https://github.com/cc-nogueira/qty
+
+version: 0.2.0
 
 environment:
   sdk: '>=2.12.0 <3.0.0'

@@ -17,3 +17,8 @@ InternationalSystemOfUnits with optional LinearUnitConverter to replace PowerOfT
 
 ## 0.1.4
 Github account renamed
+
+## 0.2.0
+ImperialSystemOfUnits static constructor in Length, Mass and Volume
+Quantity print method to set unitName and fractionDigits format
+README.md update
