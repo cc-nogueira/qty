@@ -1,14 +1,15 @@
-# Quantities representation and Unit conversions
+# Physical Quantities and Unit Conversions
 
 This package defines units of measurement and quantities with an API for quantities operations and unit conversions.
 
-It defines the concepts of `PhysicalProperty`, `SystemOfMeasurent`, `Unit` and `Quantity`, explained at the bottom of this README.
+The core concepts are `PhysicalProperty`, `SystemOfMeasurent`, `Unit` and `Quantity`, explained at the bottom of this README.
 
 Defines most common units for **Mass**, **Length**, **Volume** and **Time** quantities.
 
 ## Using Quantities
 
-### Static methods offer a very convenient API to create quantities and quantities operations result in a new quantity keeping the first operand unit:
+Static methods offer a very convenient API to create quantities. Note that the `+` operation returns a new quantity using the first operand unit,
+this the order of the operands is significant when they have different units:
 ```dart
   final raceStart = Length.kilometers(amount: 12.5);
   final raceLength = Length.miles(amount: 1 / 4.0);
@@ -22,14 +23,15 @@ Will output:
   'Finish line at 8.017139902966674 mi from here'
 ```
 
-### You have a number of operations available for quantities:
+You have a number of operations available for quantities, including unit conversions:
 ```dart
   final myWeight = Mass.kilograms(amount: 64.0);
   final herWeight = Mass.kilograms(amount: 53.0);
+  final herWeightInPounds = herWeight.convertTo(Mass.lb);
   print('Twice my weight is ${myWeight * 2}');
   print('Our weight together is ${myWeight + herWeight}');
-  print('Her weight in England would be ${herWeight.convertTo(Mass.lb)}');
-  print('or approximately ${herWeightInPounds.print(useName: true, fractionDigits: 2)}');
+  print('Her weight in England would be $herWeightInPounds');
+  print('approximately ${herWeightInPounds.print(useName: true, fractionDigits: 2)}');
 ```
 
 Will output:
@@ -37,10 +39,10 @@ Will output:
   'Twice my weight is 128.0 kg'
   'Our weight together is 117.0 kg'
   'Her weight in England would be 116.84499895798511 lb'
-  'or approximately 116.84 pounds'
+  'approximately 116.84 pounds'
 ```
 
-### Precision is best within the same system of measurement
+Precision is best within the same system of measurement:
 ```dart
   final galons = Volume.galons(amount: 12.0);
   print('Volume of $galons is equivalent to ${galons.convertTo(Volume.qt)}');
@@ -55,11 +57,11 @@ Will output:
 
 ## Concepts
 
-All concepts are interchained to model our understandig of units and measurements, as follows:
+All concepts are interchained to model our understanding of units and measurements, as follows:
 
 ### ***PhysicalProperty***
 
-The main concept to model measurements is **`PhysicalProperty`**, also called **kind** throughout this package, it is a quantifiable physical property by an amount of an `Unit` that is part one of its `SystemOfMeasurents`.
+The main concept is **`PhysicalProperty`**, also called **kind** throughout this package, it is a quantifiable physical property by an amount of an `Unit` that is part one of its `SystemOfMeasurents`.
 
 `PhysicalProperty` is implemented as an abstract class extended by each especific property, such as `Mass` and `Length`. All instances in this hierarchy are implemented as Singletons with many static shortcuts to the respective singleton instance property.
 
@@ -75,9 +77,9 @@ It defines a ***baseUnit***, a list of contained ***units*** and a especific `Un
 
 ### ***Unit***
 
-**`Unit`** has symbol and name and belongs to a `SystemOfMeasurement` and it knows it. This way we can as an unit for a `QuantityConverter` to another unit of the same kind.
+**`Unit`** has symbol and name and belongs to a `SystemOfMeasurement` and it knows it. This way we can ask an unit for a `QuantityConverter` function to convert amounts from this unit to another one of the same kind, such quantity converter could then be used for a series of conversions from the same two units.
 
 ### ***Quantity***
 
 **`Quantity`** is a container class of ***Unit*** and ***Amount***. It is a comparable class with intrinsic unit conversion and offers an API for 
-quantities operations (+, -, *, /, negated, etc) for units in of the same kind.
+quantities operations (+, -, *, /, negated, etc).
