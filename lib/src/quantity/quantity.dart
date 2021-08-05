@@ -51,6 +51,14 @@ class Quantity extends Equatable implements Comparable<Quantity> {
   bool equivalent(Quantity qtd) =>
       unit.sameKind(qtd.unit) && amount == qtd.convertTo(unit).amount;
 
+  String print({bool useName = false, int? fractionDigits}) {
+    final unitPrint = useName ? unit.name : unit.symbol;
+    final valuePrint = fractionDigits == null
+        ? amount.toString()
+        : amount.toStringAsFixed(fractionDigits);
+    return valuePrint + ' ' + unitPrint + (useName && amount != 1.0 ? 's' : '');
+  }
+
   @override
   int compareTo(Quantity other) {
     if (unit == other.unit) {
