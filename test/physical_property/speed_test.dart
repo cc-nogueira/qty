@@ -29,7 +29,6 @@ void main() {
     expect(kt.symbol, 'nm/h');
     expect(m_s, same(Speed.m_s));
     expect(km_h, same(Speed.km_h));
-    expect(cm_s, same(Speed.cm_s));
     expect(mi_h, same(Speed.mi_h));
     expect(kt, same(Speed.kt));
   });
@@ -38,7 +37,6 @@ void main() {
     expect(Speed.m_s.quantityConverterTo(Speed.km_h)(1.0), 3.6);
     expect(Speed.km_h.quantityConverterTo(Speed.m_s)(1.0),
         inInclusiveRange(0.277777777, 0.27777778));
-    expect(Speed.m_s.quantityConverterTo(Speed.cm_s)(1.0), 100.0);
     expect(Speed.mi_h.quantityConverterTo(Speed.km_h)(1.0), 1.609344);
     expect(Speed.km_h.quantityConverterTo(Speed.mi_h)(1.0),
         inInclusiveRange(0.621371192, 0.621371193));

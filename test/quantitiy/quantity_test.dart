@@ -44,6 +44,26 @@ void main() {
     expect(tenLitersToM3.amount, 10.0 * 0.001);
   });
 
+  test('Speed quantity conversions', () {
+    final mPerS = Speed.m_s;
+    final kmPerHr = Speed.km_h;
+    final miPerHr = Speed.mi_h;
+    final kt = Speed.kt;
+    final tenMetersPerSecond = Speed.metersPerSecond(amount: 10.0);
+    final tenMetersPerSecondToKmPerHour = tenMetersPerSecond.convertTo(kmPerHr);
+    final tenMetersPerSecondToMiPerHour = tenMetersPerSecond.convertTo(miPerHr);
+    final tenMetersPerSecondToKnots = tenMetersPerSecond.convertTo(kt);
+    expect(tenMetersPerSecond.unit, mPerS);
+    expect(tenMetersPerSecond.amount, 10.0);
+    expect(tenMetersPerSecondToKmPerHour.unit, kmPerHr);
+    expect(tenMetersPerSecondToKmPerHour.amount, 10.0 * 3.6);
+    expect(tenMetersPerSecondToMiPerHour.unit, miPerHr);
+    expect(tenMetersPerSecondToMiPerHour.amount, 36.0 / 1.609344);
+    expect(tenMetersPerSecondToKnots.unit, kt);
+    expect(tenMetersPerSecondToKnots.amount,
+        inInclusiveRange(10.0 / 0.514444445, 10.0 / 0.514444444));
+  });
+
   test('Unit quantity plus operator', () {
     final fiveUnits = Dimensionless.units(amount: 5.0);
     final sixAndAHalfUnits = Quantity(amount: 6.5);
@@ -51,6 +71,11 @@ void main() {
     final tenGrams = Mass.grams(amount: 10.0);
     final elevenKilos = Mass.kilograms(amount: 11.0);
     final twelveMillis = Mass.milligrams(amount: 12.0);
+    final tenMetersPerSecond = Speed.metersPerSecond(amount: 10.0);
+    final elevenMetersPerSecond = Speed.metersPerSecond(amount: 11.0);
+    final twelveKilometersPerHour = Speed.kilometersPerHour(amount: 12.0);
+    final nineKnots = Speed.knots(amount: 9.0);
+
     final fivePlusSixAndAHalf = fiveUnits + sixAndAHalfUnits;
     final nineGramsPlusTenGrams = nineGrams + tenGrams;
     final nineGramsPlusElevenKilos = nineGrams + elevenKilos;
@@ -58,6 +83,11 @@ void main() {
     final elevenKilosPlusTenGrams = elevenKilos + tenGrams;
     final twelveMillisPlusTenGrams = twelveMillis + tenGrams;
     final elevenKilosPlusTwelveMillis = elevenKilos + twelveMillis;
+    final tenMpsPlusElevenMps = tenMetersPerSecond + elevenMetersPerSecond;
+    final tenMpsPlusTwelveKph = tenMetersPerSecond + twelveKilometersPerHour;
+    final tenMpsPlusNineKt = tenMetersPerSecond + nineKnots;
+    final nineKtPlusTenMps = nineKnots + tenMetersPerSecond;
+
     expect(fivePlusSixAndAHalf, Dimensionless.units(amount: 11.5));
     expect(fivePlusSixAndAHalf, Quantity(amount: 11.5));
     expect(nineGramsPlusTenGrams, Mass.grams(amount: 19.0));
@@ -66,6 +96,13 @@ void main() {
     expect(elevenKilosPlusTenGrams, Mass.kilograms(amount: 11.010));
     expect(twelveMillisPlusTenGrams, Mass.milligrams(amount: 10012.0));
     expect(elevenKilosPlusTwelveMillis, Mass.kilograms(amount: 11.000012));
+    expect(tenMpsPlusElevenMps, Speed.metersPerSecond(amount: 21.0));
+    expect(tenMpsPlusTwelveKph.amount,
+        inInclusiveRange(10.0 + 12.0 / 3.6, 10.0 + 12.0001 / 3.6));
+    expect(tenMpsPlusNineKt.amount,
+        inInclusiveRange(10.0 + 9.0 * 0.514444444, 10.0 + 9.0 * 0.514444445));
+    expect(nineKtPlusTenMps.amount,
+        inInclusiveRange(9.0 + 10.0 / 0.514444445, 9.0 + 10.0 / 0.514444444));
   });
 
   test('Unit quantity minus operator', () {
@@ -75,6 +112,11 @@ void main() {
     final tenGrams = Mass.grams(amount: 10.0);
     final elevenKilos = Mass.kilograms(amount: 11.0);
     final twelveMillis = Mass.milligrams(amount: 12.0);
+    final tenMetersPerSecond = Speed.metersPerSecond(amount: 10.0);
+    final elevenMetersPerSecond = Speed.metersPerSecond(amount: 11.0);
+    final twelveKilometersPerHour = Speed.kilometersPerHour(amount: 12.0);
+    final nineKnots = Speed.knots(amount: 9.0);
+
     final fiveMinusSixAndAHalf = fiveUnits - sixAndAHalfUnits;
     final sixAndAHalfMinusFive = sixAndAHalfUnits - fiveUnits;
     final nineGramsMinusTenGrams = nineGrams - tenGrams;
@@ -83,6 +125,11 @@ void main() {
     final elevenKilosMinusTenGrams = elevenKilos - tenGrams;
     final twelveMillisMinusTenGrams = twelveMillis - tenGrams;
     final elevenKiloMinusTwelveMillis = elevenKilos - twelveMillis;
+    final tenMpsMinusElevenMps = tenMetersPerSecond - elevenMetersPerSecond;
+    final tenMpsMinusTwelveKph = tenMetersPerSecond - twelveKilometersPerHour;
+    final tenMpsMinusNineKt = tenMetersPerSecond - nineKnots;
+    final nineKtMinusTenMps = nineKnots - tenMetersPerSecond;
+
     expect(fiveMinusSixAndAHalf, Quantity(amount: -1.5));
     expect(sixAndAHalfMinusFive, Quantity(amount: 1.5));
     expect(nineGramsMinusTenGrams, Mass.grams(amount: -1.0));
@@ -91,23 +138,36 @@ void main() {
     expect(elevenKilosMinusTenGrams, Mass.kilograms(amount: 10.990));
     expect(twelveMillisMinusTenGrams, Mass.milligrams(amount: -9988.0));
     expect(elevenKiloMinusTwelveMillis, Mass.kilograms(amount: 10.999988));
+    expect(tenMpsMinusElevenMps, Speed.metersPerSecond(amount: -1.0));
+    expect(tenMpsMinusTwelveKph.amount,
+        inInclusiveRange(10.0 - 12.0001 / 3.6, 10.0 - 12.0 / 3.6));
+    expect(tenMpsMinusNineKt.amount,
+        inInclusiveRange(10.0 - 9.0 * 0.514444445, 10.0 - 9.0 * 0.514444444));
+    expect(nineKtMinusTenMps.amount,
+        inInclusiveRange(9.0 - 10.0 / 0.514444444, 9.0 - 10.0 / 0.514444445));
   });
 
   test('Unit quantity * operator', () {
     final fiveUnits = Dimensionless.units(amount: 5.0);
     final nineGrams = Mass.grams(amount: 9.0);
+    final nineKnots = Speed.knots(amount: 9.0);
     expect(fiveUnits * 3.0, Quantity(amount: 15.0));
     expect(fiveUnits * 3.5, Quantity(amount: 17.5));
     expect(nineGrams * 3.0, Mass.grams(amount: 27.0));
     expect(nineGrams * 3.5, Mass.grams(amount: 31.5));
+    expect(nineKnots * 3.0, Speed.knots(amount: 27.0));
+    expect(nineKnots * 3.5, Speed.knots(amount: 31.5));
   });
 
   test('Unit quantity / operator', () {
     final fiveUnits = Dimensionless.units(amount: 5.0);
     final nineGrams = Mass.grams(amount: 9.0);
+    final nineKnots = Speed.knots(amount: 9.0);
     expect(fiveUnits / 2.0, Quantity(amount: 2.5));
     expect(fiveUnits / 2.5, Quantity(amount: 2.0));
     expect(nineGrams / 3.0, Mass.grams(amount: 3.0));
     expect(nineGrams / 2.0, Mass.grams(amount: 4.5));
+    expect(nineKnots / 3.0, Speed.knots(amount: 3.0));
+    expect(nineKnots / 2.0, Speed.knots(amount: 4.5));
   });
 }
