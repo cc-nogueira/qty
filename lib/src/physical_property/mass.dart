@@ -7,7 +7,7 @@ import '../quantity/quantity.dart';
 /// Configures Internation (SI) and Imperial (British) systems of units defining their [Mass] [Unit] instances.
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
-class Mass extends PhysicalProperty {
+class Mass extends LinearConvertiblePhysicalProperty {
   factory Mass() => _instance ??= Mass._internal('mass');
 
   Mass._internal(String kind) : super(kind: kind) {
@@ -57,21 +57,29 @@ class Mass extends PhysicalProperty {
   static Quantity quarters({required double amount}) =>
       Quantity(unit: qr, amount: amount);
 
-  static Unit get g => Mass().gUnit;
-  static Unit get kg => Mass().kgUnit;
-  static Unit get mg => Mass().mgUnit;
-  static Unit get t => Mass().tUnit;
-  static Unit get oz => Mass().ozUnit;
-  static Unit get lb => Mass().lbUnit;
-  static Unit get st => Mass().stUnit;
-  static Unit get qr => Mass().qrUnit;
+  static LinearConvertibleUnit get g => Mass().gUnit;
+  static LinearConvertibleUnit get kg => Mass().kgUnit;
+  static LinearConvertibleUnit get mg => Mass().mgUnit;
+  static LinearConvertibleUnit get t => Mass().tUnit;
+  static LinearConvertibleUnit get oz => Mass().ozUnit;
+  static LinearConvertibleUnit get lb => Mass().lbUnit;
+  static LinearConvertibleUnit get st => Mass().stUnit;
+  static LinearConvertibleUnit get qr => Mass().qrUnit;
 
-  Unit get gUnit => _internationalSystemOfUnits.unitWith(symbol: 'g')!;
-  Unit get kgUnit => _internationalSystemOfUnits.unitWith(symbol: 'kg')!;
-  Unit get mgUnit => _internationalSystemOfUnits.unitWith(symbol: 'mg')!;
-  Unit get tUnit => _internationalSystemOfUnits.unitWith(symbol: 't')!;
-  Unit get ozUnit => _imperialSystemOfUnits.unitWith(symbol: 'oz')!;
-  Unit get lbUnit => _imperialSystemOfUnits.unitWith(symbol: 'lb')!;
-  Unit get stUnit => _imperialSystemOfUnits.unitWith(symbol: 'st')!;
-  Unit get qrUnit => _imperialSystemOfUnits.unitWith(symbol: 'qr')!;
+  LinearConvertibleUnit get gUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'g')!;
+  LinearConvertibleUnit get kgUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'kg')!;
+  LinearConvertibleUnit get mgUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'mg')!;
+  LinearConvertibleUnit get tUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 't')!;
+  LinearConvertibleUnit get ozUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'oz')!;
+  LinearConvertibleUnit get lbUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'lb')!;
+  LinearConvertibleUnit get stUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'st')!;
+  LinearConvertibleUnit get qrUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'qr')!;
 }

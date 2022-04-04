@@ -7,7 +7,7 @@ import '../quantity/quantity.dart';
 /// Configures Internation (SI), Imperial (British) and Nautical systems of units defining their [Length] [Unit] instances.
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
-class Length extends PhysicalProperty {
+class Length extends LinearConvertiblePhysicalProperty {
   factory Length() => _instance ??= Length._internal('length');
 
   Length._internal(String kind) : super(kind: kind) {
@@ -16,8 +16,6 @@ class Length extends PhysicalProperty {
         symbol: 'm', name: 'meter', factor: 1.0);
     _internationalSystemOfUnits.defineUnitWithFactor(
         symbol: 'pm', name: 'picometer', factor: 0.000000000001);
-    _internationalSystemOfUnits.defineUnitWithFactor(
-        symbol: 'nm', name: 'nanomiter', factor: 0.000000001);
     _internationalSystemOfUnits.defineUnitWithFactor(
         symbol: 'micro', name: 'micrometer', factor: 0.000001);
     _internationalSystemOfUnits.defineUnitWithFactor(
@@ -79,27 +77,38 @@ class Length extends PhysicalProperty {
   static Quantity fathoms({required double amount}) =>
       Quantity(unit: fa, amount: amount);
 
-  static Unit get mm => Length().mmUnit;
-  static Unit get cm => Length().cmUnit;
-  static Unit get dm => Length().dmUnit;
-  static Unit get m => Length().mUnit;
-  static Unit get km => Length().kmUnit;
-  static Unit get ft => Length().ftUnit;
-  static Unit get inch => Length().inUnit;
-  static Unit get yd => Length().ydUnit;
-  static Unit get mi => Length().miUnit;
-  static Unit get fa => Length().faUnit;
-  static Unit get nm => Length().nmUnit;
+  static LinearConvertibleUnit get mm => Length().mmUnit;
+  static LinearConvertibleUnit get cm => Length().cmUnit;
+  static LinearConvertibleUnit get dm => Length().dmUnit;
+  static LinearConvertibleUnit get m => Length().mUnit;
+  static LinearConvertibleUnit get km => Length().kmUnit;
+  static LinearConvertibleUnit get ft => Length().ftUnit;
+  static LinearConvertibleUnit get inch => Length().inUnit;
+  static LinearConvertibleUnit get yd => Length().ydUnit;
+  static LinearConvertibleUnit get mi => Length().miUnit;
+  static LinearConvertibleUnit get fa => Length().faUnit;
+  static LinearConvertibleUnit get nm => Length().nmUnit;
 
-  Unit get mmUnit => _internationalSystemOfUnits.unitWith(symbol: 'mm')!;
-  Unit get cmUnit => _internationalSystemOfUnits.unitWith(symbol: 'cm')!;
-  Unit get dmUnit => _internationalSystemOfUnits.unitWith(symbol: 'dm')!;
-  Unit get mUnit => _internationalSystemOfUnits.unitWith(symbol: 'm')!;
-  Unit get kmUnit => _internationalSystemOfUnits.unitWith(symbol: 'km')!;
-  Unit get ftUnit => _imperialSystemOfUnits.unitWith(symbol: 'ft')!;
-  Unit get inUnit => _imperialSystemOfUnits.unitWith(symbol: 'in')!;
-  Unit get ydUnit => _imperialSystemOfUnits.unitWith(symbol: 'yd')!;
-  Unit get miUnit => _imperialSystemOfUnits.unitWith(symbol: 'mi')!;
-  Unit get faUnit => _imperialSystemOfUnits.unitWith(symbol: 'fa')!;
-  Unit get nmUnit => _nauticalSystemOfUnits.unitWith(symbol: 'nm')!;
+  LinearConvertibleUnit get mmUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'mm')!;
+  LinearConvertibleUnit get cmUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'cm')!;
+  LinearConvertibleUnit get dmUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'dm')!;
+  LinearConvertibleUnit get mUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'm')!;
+  LinearConvertibleUnit get kmUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'km')!;
+  LinearConvertibleUnit get ftUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'ft')!;
+  LinearConvertibleUnit get inUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'in')!;
+  LinearConvertibleUnit get ydUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'yd')!;
+  LinearConvertibleUnit get miUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'mi')!;
+  LinearConvertibleUnit get faUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'fa')!;
+  LinearConvertibleUnit get nmUnit =>
+      _nauticalSystemOfUnits.unitWith(symbol: 'nm')!;
 }

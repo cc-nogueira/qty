@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:equatable/equatable.dart';
+import 'systems_of_units.dart';
 
 /// Dimensionless function to convert a quantity magnitude for an asked unit transformation
 typedef QuantityConverter = double Function(double);
@@ -39,10 +40,12 @@ abstract class SystemOfMeasurent {
 
   /// Defines a unit with symbol and name
   Unit defineUnit({required String symbol, required String name}) {
-    final unit = Unit(this, symbol, name);
-    _units[symbol] = unit;
+    final unit = Unit(this, name: name, symbol: symbol);
+    registerUnit(unit);
     return unit;
   }
+
+  void registerUnit(Unit unit) => _units[unit.symbol] = unit;
 
   /// List all units in this SystemOfMeasurement
   List<Unit> get units => _units.values.toList();
@@ -75,6 +78,14 @@ abstract class SystemOfMeasurent {
 
   @override
   int get hashCode => kind.hashCode ^ name.hashCode;
+}
+
+class FixedSystemOfUnits extends SystemOfMeasurent {
+  FixedSystemOfUnits({required PhysicalProperty kind})
+      : super(
+            kind: kind,
+            name: 'FixedSystemOfUnits',
+            unitConverter: const FixedUnitConverter());
 }
 
 /// Quantifiable physical property by an amount of an [Unit] of one of its [SystemOfMeasurent].
@@ -119,15 +130,61 @@ abstract class PhysicalProperty {
   String toString() => kind;
 }
 
+abstract class LinearConvertiblePhysicalProperty extends PhysicalProperty {
+  LinearConvertiblePhysicalProperty({required String kind}) : super(kind: kind);
+
+  @override
+  List<LinearConvertibleSystemOfUnits> get systemsOfMeasurent =>
+      super.systemsOfMeasurent.cast<LinearConvertibleSystemOfUnits>();
+
+  /// Return the baseUnit of my first SystemOfMeasurement
+  @override
+  LinearConvertibleUnit get baseUnit => systemsOfMeasurent[0].baseUnit;
+
+  /// Return all units in all of my SystemOfMeasurement list
+  @override
+  List<LinearConvertibleUnit> get unitList => systemsOfMeasurent
+      .fold([], (list, systemOfMeasure) => list..addAll(systemOfMeasure.units));
+
+  /// Finds an unit with a symbol in my SystemOfMeasurement list
+  @override
+  LinearConvertibleUnit? unitWith({required String symbol}) {
+    LinearConvertibleUnit? unit;
+    try {
+      systemsOfMeasurent.firstWhere((systemOfMeasure) {
+        unit ??= systemOfMeasure.unitWith(symbol: symbol);
+        return unit != null;
+      });
+    } on StateError {
+      unit = null;
+    }
+    return unit;
+  }
+}
+
+abstract class UnitType extends Equatable {
+  const UnitType();
+  String get symbol;
+  String get name;
+
+  @override
+  List<Object> get props => [symbol, name];
+}
+
 /// Unit of a physical property.
 ///
 /// Expressed with a [symbol] in a [systemOfMeasurement] for its kind of [PhysicalProperty] (volume, mass, legnth, etc).
 /// Provides access to a [QuantityConverter] to another [Unit] of the same kind of [PhysicalProperty].
-class Unit extends Equatable {
-  const Unit(this.systemOfMeasurent, this.symbol, this.name);
+class Unit extends UnitType {
+  const Unit(this.systemOfMeasurent,
+      {required this.name, required this.symbol});
 
   final SystemOfMeasurent systemOfMeasurent;
+
+  @override
   final String symbol;
+
+  @override
   final String name;
 
   PhysicalProperty get kind => systemOfMeasurent.kind;
@@ -153,17 +210,36 @@ class Unit extends Equatable {
 
   @override
   List<Object> get props =>
-      [systemOfMeasurent.kind, systemOfMeasurent.name, symbol, name];
+      [systemOfMeasurent.kind, systemOfMeasurent.name, ...super.props];
+}
+
+class LinearConvertibleUnit extends Unit {
+  const LinearConvertibleUnit(LinearConvertibleSystemOfUnits systemOfMeasurent,
+      {required String name, required String symbol})
+      : super(systemOfMeasurent, name: name, symbol: symbol);
+
+  @override
+  LinearConvertibleSystemOfUnits get systemOfMeasurent =>
+      super.systemOfMeasurent as LinearConvertibleSystemOfUnits;
 }
 
 /// Interface for unit conversion.
 ///
 /// Exposes an abstract QuantityConverter getter.
 abstract class UnitConverter {
-  UnitConverter();
+  const UnitConverter();
 
   QuantityConverter quantityConverter(
       {required Unit fromUnit, required Unit toUnit});
+}
+
+class FixedUnitConverter extends UnitConverter {
+  const FixedUnitConverter();
+
+  @override
+  QuantityConverter quantityConverter(
+          {required Unit fromUnit, required Unit toUnit}) =>
+      (double value) => value;
 }
 
 /// Exception class for incompatible unit conversion.

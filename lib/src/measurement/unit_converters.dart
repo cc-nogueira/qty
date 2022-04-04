@@ -6,17 +6,22 @@ import 'measurement.dart';
 ///
 /// Use a table of unit factors to convert values linearly.
 class LinearUnitConverter extends UnitConverter {
-  final Map<Unit, double> _factors = {};
+  LinearUnitConverter();
 
-  void add({required Unit unit, required double factor}) =>
+  final Map<LinearConvertibleUnit, double> _factors = {};
+
+  void add({required LinearConvertibleUnit unit, required double factor}) =>
       _factors[unit] = factor;
 
-  double convertionFactor({required Unit fromUnit, required Unit toUnit}) =>
+  double convertionFactor(
+          {required LinearConvertibleUnit fromUnit,
+          required LinearConvertibleUnit toUnit}) =>
       fromUnit == toUnit ? 1.0 : _factors[fromUnit]! / _factors[toUnit]!;
 
   @override
   QuantityConverter quantityConverter(
-          {required Unit fromUnit, required Unit toUnit}) =>
+          {required covariant LinearConvertibleUnit fromUnit,
+          required covariant LinearConvertibleUnit toUnit}) =>
       (quantity) =>
           quantity * convertionFactor(fromUnit: fromUnit, toUnit: toUnit);
 }
@@ -29,13 +34,15 @@ class PowerOfTenUnitConverter extends LinearUnitConverter {
   final Map<Unit, int> _powers = {};
 
   @override
-  void add({required Unit unit, required double factor}) {
+  void add({required LinearConvertibleUnit unit, required double factor}) {
     super.add(unit: unit, factor: factor);
     _powers[unit] = (log10e * log(factor)).round();
   }
 
   @override
-  double convertionFactor({required Unit fromUnit, required Unit toUnit}) {
+  double convertionFactor(
+      {required LinearConvertibleUnit fromUnit,
+      required LinearConvertibleUnit toUnit}) {
     return pow(10, _powers[fromUnit]! - _powers[toUnit]!).toDouble();
   }
 }

@@ -1,6 +1,6 @@
-import 'package:test/test.dart';
 import 'package:qty/mass.dart';
 import 'package:qty/volume.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('Mass singleton', () {

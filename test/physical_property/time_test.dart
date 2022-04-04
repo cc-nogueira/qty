@@ -1,6 +1,6 @@
-import 'package:test/test.dart';
 import 'package:qty/src/physical_property/time.dart';
 import 'package:qty/src/physical_property/volume.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('Length singleton', () {

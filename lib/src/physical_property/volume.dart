@@ -7,7 +7,7 @@ import '../quantity/quantity.dart';
 /// Configures Internation (SI) and Imperial (British) systems of units defining their [Volume] [Unit] instances.
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
-class Volume extends PhysicalProperty {
+class Volume extends LinearConvertiblePhysicalProperty {
   factory Volume() => _instance ??= Volume._internal('volume');
 
   Volume._internal(String kind) : super(kind: kind) {
@@ -76,31 +76,44 @@ class Volume extends PhysicalProperty {
   static Quantity quarters({required double amount}) =>
       Quantity(unit: qr, amount: amount);
 
-  static Unit get mm3 => Volume().mm3Unit;
-  static Unit get cm3 => Volume().cm3Unit;
-  static Unit get dm3 => Volume().dm3Unit;
-  static Unit get m3 => Volume().m3Unit;
-  static Unit get l => Volume().lUnit;
-  static Unit get flOz => Volume().flOzUnit;
-  static Unit get gi => Volume().giUnit;
-  static Unit get pt => Volume().ptUnit;
-  static Unit get qt => Volume().qtUnit;
-  static Unit get gal => Volume().galUnit;
-  static Unit get peck => Volume().peckUnit;
-  static Unit get bu => Volume().buUnit;
-  static Unit get qr => Volume().qrUnit;
+  static LinearConvertibleUnit get mm3 => Volume().mm3Unit;
+  static LinearConvertibleUnit get cm3 => Volume().cm3Unit;
+  static LinearConvertibleUnit get dm3 => Volume().dm3Unit;
+  static LinearConvertibleUnit get m3 => Volume().m3Unit;
+  static LinearConvertibleUnit get l => Volume().lUnit;
+  static LinearConvertibleUnit get flOz => Volume().flOzUnit;
+  static LinearConvertibleUnit get gi => Volume().giUnit;
+  static LinearConvertibleUnit get pt => Volume().ptUnit;
+  static LinearConvertibleUnit get qt => Volume().qtUnit;
+  static LinearConvertibleUnit get gal => Volume().galUnit;
+  static LinearConvertibleUnit get peck => Volume().peckUnit;
+  static LinearConvertibleUnit get bu => Volume().buUnit;
+  static LinearConvertibleUnit get qr => Volume().qrUnit;
 
-  Unit get mm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'mm3')!;
-  Unit get cm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'cm3')!;
-  Unit get dm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'dm3')!;
-  Unit get m3Unit => _internationalSystemOfUnits.unitWith(symbol: 'm3')!;
-  Unit get lUnit => _internationalSystemOfUnits.unitWith(symbol: 'l')!;
-  Unit get flOzUnit => _imperialSystemOfUnits.unitWith(symbol: 'fl oz')!;
-  Unit get giUnit => _imperialSystemOfUnits.unitWith(symbol: 'gi')!;
-  Unit get ptUnit => _imperialSystemOfUnits.unitWith(symbol: 'pt')!;
-  Unit get qtUnit => _imperialSystemOfUnits.unitWith(symbol: 'qt')!;
-  Unit get galUnit => _imperialSystemOfUnits.unitWith(symbol: 'gal')!;
-  Unit get peckUnit => _imperialSystemOfUnits.unitWith(symbol: 'peck')!;
-  Unit get buUnit => _imperialSystemOfUnits.unitWith(symbol: 'bu')!;
-  Unit get qrUnit => _imperialSystemOfUnits.unitWith(symbol: 'qr')!;
+  LinearConvertibleUnit get mm3Unit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'mm3')!;
+  LinearConvertibleUnit get cm3Unit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'cm3')!;
+  LinearConvertibleUnit get dm3Unit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'dm3')!;
+  LinearConvertibleUnit get m3Unit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'm3')!;
+  LinearConvertibleUnit get lUnit =>
+      _internationalSystemOfUnits.unitWith(symbol: 'l')!;
+  LinearConvertibleUnit get flOzUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'fl oz')!;
+  LinearConvertibleUnit get giUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'gi')!;
+  LinearConvertibleUnit get ptUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'pt')!;
+  LinearConvertibleUnit get qtUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'qt')!;
+  LinearConvertibleUnit get galUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'gal')!;
+  LinearConvertibleUnit get peckUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'peck')!;
+  LinearConvertibleUnit get buUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'bu')!;
+  LinearConvertibleUnit get qrUnit =>
+      _imperialSystemOfUnits.unitWith(symbol: 'qr')!;
 }

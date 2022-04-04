@@ -16,23 +16,44 @@ class LinearConvertibleSystemOfUnits extends SystemOfMeasurent {
             unitConverter: unitConverter ?? LinearUnitConverter());
 
   @override
+  LinearConvertiblePhysicalProperty get kind =>
+      super.kind as LinearConvertiblePhysicalProperty;
+
+  @override
   LinearUnitConverter get unitConverter =>
       super.unitConverter as LinearUnitConverter;
 
   @override
-  Unit defineUnit({required String symbol, required String name}) =>
+  LinearConvertibleUnit defineUnit(
+          {required String symbol, required String name}) =>
       defineUnitWithFactor(symbol: symbol, name: name, factor: 1.0);
 
+  @override
+  LinearConvertibleUnit get baseUnit => super.baseUnit as LinearConvertibleUnit;
+
   /// Defines an Unit with a conversion factor to the baseUnit of this SystemOfMeasurent
-  Unit defineUnitWithFactor(
+  LinearConvertibleUnit defineUnitWithFactor(
       {required String symbol, required String name, required double factor}) {
-    final unit = super.defineUnit(symbol: symbol, name: name);
+    final unit = LinearConvertibleUnit(this, name: name, symbol: symbol);
+    registerUnit(unit);
     unitConverter.add(unit: unit, factor: factor);
     return unit;
   }
 
+  /// List all units in this SystemOfMeasurement
+  @override
+  List<LinearConvertibleUnit> get units =>
+      super.units.cast<LinearConvertibleUnit>();
+
+  /// Finds an unit by its symbol. Retuns null if none is found
+  @override
+  LinearConvertibleUnit? unitWith({required String symbol}) =>
+      super.unitWith(symbol: symbol) as LinearConvertibleUnit?;
+
   /// Returns the conversionFactor between two units of this SystemOfMeasurement
-  double conversionFactor({required Unit fromUnit, required Unit toUnit}) {
+  double conversionFactor(
+      {required LinearConvertibleUnit fromUnit,
+      required LinearConvertibleUnit toUnit}) {
     if (fromUnit.systemOfMeasurent != this) {
       throw IncompatibleSystemOfMeasureException(
           systemOfMeasure: this, unit: fromUnit);
