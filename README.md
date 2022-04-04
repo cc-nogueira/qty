@@ -4,7 +4,7 @@ This package defines units of measurement and quantities with an API for quantit
 
 The core concepts are `PhysicalProperty`, `SystemOfMeasurent`, `Unit` and `Quantity`, explained at the bottom of this README.
 
-Defines most common units for **Mass**, **Length**, **Volume** and **Time** quantities.
+Defines most common units for **Mass**, **Length**, **Volume**, **Time** and **Speed** quantities.
 
 ## Using Quantities
 
@@ -83,3 +83,10 @@ It defines a ***baseUnit***, a list of contained ***units*** and a especific `Un
 
 **`Quantity`** is a container class of ***Unit*** and ***Amount***. It is a comparable class with intrinsic unit conversion and offers an API for 
 quantities operations (+, -, *, /, negated, etc).
+
+## **CompoundPhysicalProperty**
+
+Introduction of `CompoundPhysicalProperty` in version 0.3.0. Compound kinds combine two existing kinds as `MultipliedPhysicalProperties` or `DividedPhysicalProperties`.
+
+`Speed` is the first compound quantity defined in the library, and it wil be easy now to define new combined physical properties as well as generic (not named) combined kinds,
+that shall evolve to new operations to multiply and divide two quantities, producing a quantity with a combined kind result.
