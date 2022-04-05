@@ -1,5 +1,10 @@
 # Quantities representation and unit conversions
 
+## 0.4.0
+Introduction of Temperature quantities
+Suport for the 4 known units (Kelvin, Celcius, Fahrenheit and Rankine).
+Some class realocation in a better file structure.
+
 ## 0.3.0
 Introduction of CompoundUnit and CompoundPhysicalProperty.  
 Refactoring existing measurements to inherit and use new LinearConvertibleSystemOfUnits and LinearConvertibleUnit.  

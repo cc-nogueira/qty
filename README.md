@@ -4,7 +4,7 @@ This package defines units of measurement and quantities with an API for quantit
 
 The core concepts are `PhysicalProperty`, `SystemOfMeasurent`, `Unit` and `Quantity`, explained at the bottom of this README.
 
-Defines most common units for **Mass**, **Length**, **Volume**, **Time** and **Speed** quantities.
+Defines most common units for **Mass**, **Length**, **Volume**, **Time**, **Speed** and **Temperature** quantities.
 
 ## Using Quantities
 
