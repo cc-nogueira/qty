@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../measurement/measurement.dart';
+import '../measurement/unit.dart';
 import '../physical_property/dimensionless.dart';
 
 /// Quantity to portray the amount of Physical Quantity, defined as a combination o magnitude and unit.

@@ -54,9 +54,11 @@ void main() {
     expect(Length.inch.quantityConverterTo(Length.cm)(1.0), 2.54);
     expect(Length.mi.quantityConverterTo(Length.yd)(1.0), 1760.0);
     expect(Length.fa.quantityConverterTo(Length.inch)(1.0), 72.0);
-    expect(Length.fa.quantityConverterTo(Length.m)(1.0),
-        inInclusiveRange(1.8288, 1.8288000000000001));
+    expect(Length.fa.quantityConverterTo(Length.m)(1.0), closeToValue(1.8288));
     expect(Length.yd.quantityConverterTo(Length.ft)(1.0), 3.0);
     expect(Length.nm.quantityConverterTo(Length.m)(1.0), 1852.0);
   });
 }
+
+Matcher closeToValue(double value) =>
+    inInclusiveRange(value - 0.000000001, value + 0.000000001);

@@ -1,5 +1,6 @@
-import '../measurement/measurement.dart';
+import '../measurement/physical_property.dart';
 import '../measurement/systems_of_units.dart';
+import '../measurement/unit.dart';
 import '../quantity/quantity.dart';
 
 /// Mass physical property.
@@ -8,9 +9,9 @@ import '../quantity/quantity.dart';
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
 class Mass extends LinearConvertiblePhysicalProperty {
-  factory Mass() => _instance ??= Mass._internal('mass');
+  factory Mass() => _instance ??= Mass._('mass');
 
-  Mass._internal(String kind) : super(kind: kind) {
+  Mass._(String kind) : super(kind: kind) {
     _internationalSystemOfUnits = InternationalSystemOfUnits(kind: this);
     _internationalSystemOfUnits.defineBaseUnit(
         symbol: 'kg', name: 'kilogram', factor: 1.0);

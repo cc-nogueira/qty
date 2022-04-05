@@ -1,5 +1,6 @@
-import '../measurement/measurement.dart';
+import '../measurement/physical_property.dart';
 import '../measurement/systems_of_units.dart';
+import '../measurement/unit.dart';
 import '../quantity/quantity.dart';
 
 /// Length physical property singleton.
@@ -8,9 +9,9 @@ import '../quantity/quantity.dart';
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
 class Length extends LinearConvertiblePhysicalProperty {
-  factory Length() => _instance ??= Length._internal('length');
+  factory Length() => _instance ??= Length._('length');
 
-  Length._internal(String kind) : super(kind: kind) {
+  Length._(String kind) : super(kind: kind) {
     _internationalSystemOfUnits = InternationalSystemOfUnits(kind: this);
     _internationalSystemOfUnits.defineBaseUnit(
         symbol: 'm', name: 'meter', factor: 1.0);

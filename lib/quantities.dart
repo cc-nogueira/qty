@@ -1,4 +1,4 @@
 library quantities;
 
-export 'src/measurement/measurement.dart';
+export 'src/measurement/physical_property.dart';
 export 'src/quantity/quantity.dart';

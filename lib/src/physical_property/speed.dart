@@ -1,14 +1,14 @@
 // ignore_for_file: non_constant_identifier_names
-import '../measurement/compound_measurement.dart';
-import '../measurement/measurement.dart';
+import '../measurement/compound_physical_property.dart';
+import '../measurement/unit.dart';
 import '../quantity/quantity.dart';
 import 'length.dart';
 import 'time.dart';
 
 class Speed extends DividedPhysicalProperties<Length, Time> {
-  factory Speed() => _instance ??= Speed._internal('speed');
+  factory Speed() => _instance ??= Speed._('speed');
 
-  Speed._internal(String kind) : super(Length(), Time(), kind: kind);
+  Speed._(String kind) : super(Length(), Time(), kind: kind);
 
   static Speed? _instance;
 

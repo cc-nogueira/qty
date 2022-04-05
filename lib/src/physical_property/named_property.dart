@@ -1,4 +1,6 @@
-import '../measurement/measurement.dart';
+import '../measurement/physical_property.dart';
+import '../measurement/systems_of_units.dart';
+import '../measurement/unit.dart';
 import '../quantity/quantity.dart';
 
 /// NamedProperty.
@@ -6,9 +8,9 @@ import '../quantity/quantity.dart';
 /// NamedProperty with FixedSystemOfUnits.
 class NamedProperty extends PhysicalProperty {
   factory NamedProperty(String name) =>
-      _instances.putIfAbsent(name, () => NamedProperty._internal(name));
+      _instances.putIfAbsent(name, () => NamedProperty._(name));
 
-  NamedProperty._internal(String name) : super(kind: name) {
+  NamedProperty._(String name) : super(kind: name) {
     _fixedSystem = FixedSystemOfUnits(kind: this);
     _fixedSystem.defineBaseUnit(symbol: name, name: name, factor: 1.0);
 

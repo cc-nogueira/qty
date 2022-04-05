@@ -1,6 +1,7 @@
-import '../measurement/measurement.dart';
+import '../measurement/physical_property.dart';
 import '../measurement/systems_of_units.dart';
-import '../measurement/unit_converters.dart';
+import '../measurement/unit.dart';
+import '../measurement/unit_converter.dart';
 import '../quantity/quantity.dart';
 
 /// Time physical property.
@@ -9,9 +10,9 @@ import '../quantity/quantity.dart';
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
 class Time extends LinearConvertiblePhysicalProperty {
-  factory Time() => _instance ??= Time._internal('time');
+  factory Time() => _instance ??= Time._('time');
 
-  Time._internal(String kind) : super(kind: kind) {
+  Time._(String kind) : super(kind: kind) {
     _internationalSystemOfUnits = InternationalSystemOfUnits(
         kind: this, unitConverter: LinearUnitConverter());
     _internationalSystemOfUnits.defineBaseUnit(

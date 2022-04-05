@@ -1,6 +1,28 @@
 import 'dart:math';
 
-import 'measurement.dart';
+import 'unit.dart';
+
+/// Dimensionless function to convert a quantity magnitude for an asked unit transformation
+typedef QuantityConverter = double Function(double);
+
+/// Interface for unit conversion.
+///
+/// Exposes an abstract QuantityConverter getter.
+abstract class UnitConverter {
+  const UnitConverter();
+
+  QuantityConverter quantityConverter(
+      {required Unit fromUnit, required Unit toUnit});
+}
+
+class FixedUnitConverter extends UnitConverter {
+  const FixedUnitConverter();
+
+  @override
+  QuantityConverter quantityConverter(
+          {required Unit fromUnit, required Unit toUnit}) =>
+      (double value) => value;
+}
 
 /// Most common [UnitConverter] for linear conversions.
 ///

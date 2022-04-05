@@ -46,8 +46,7 @@ void main() {
   });
 
   test('Length convertion factors', () {
-    expect(Time.ms.quantityConverterTo(Time.us)(1.0),
-        inInclusiveRange(1000.0, 1000.0000000000001));
+    expect(Time.ms.quantityConverterTo(Time.us)(1.0), closeToValue(1000.0));
     expect(Time.ms.quantityConverterTo(Time.s)(1.0), 0.001);
     expect(Time.s.quantityConverterTo(Time.min)(1.0), 1.0 / 60.0);
     expect(Time.s.quantityConverterTo(Time.hr)(1.0), 1.0 / 3600.0);
@@ -66,3 +65,6 @@ void main() {
     expect(Time.y.quantityConverterTo(Time.d)(1.0), 365.25);
   });
 }
+
+Matcher closeToValue(double value) =>
+    inInclusiveRange(value - 0.000000001, value + 0.000000001);

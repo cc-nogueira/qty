@@ -36,13 +36,16 @@ void main() {
   test('Speed convertion factors', () {
     expect(Speed.m_s.quantityConverterTo(Speed.km_h)(1.0), 3.6);
     expect(Speed.km_h.quantityConverterTo(Speed.m_s)(1.0),
-        inInclusiveRange(0.277777777, 0.27777778));
+        closeToValue(0.277777777));
     expect(Speed.mi_h.quantityConverterTo(Speed.km_h)(1.0), 1.609344);
     expect(Speed.km_h.quantityConverterTo(Speed.mi_h)(1.0),
-        inInclusiveRange(0.621371192, 0.621371193));
+        closeToValue(0.621371192));
     expect(Speed.m_s.quantityConverterTo(Speed.kt)(1.0),
-        inInclusiveRange(1.943844492, 1.943844493));
+        closeToValue(1.943844492));
     expect(Speed.kt.quantityConverterTo(Speed.m_s)(1.0),
-        inInclusiveRange(0.514444444, 0.514444445));
+        closeToValue(0.514444444));
   });
 }
+
+Matcher closeToValue(double value) =>
+    inInclusiveRange(value - 0.000000001, value + 0.000000001);

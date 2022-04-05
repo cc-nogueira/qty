@@ -1,13 +1,15 @@
-import '../measurement/measurement.dart';
+import '../measurement/physical_property.dart';
+import '../measurement/systems_of_units.dart';
+import '../measurement/unit.dart';
 import '../quantity/quantity.dart';
 
 /// Dimensionless property.
 ///
 /// Dimensionless with FixedSystemOfUnits.
 class Dimensionless extends PhysicalProperty {
-  factory Dimensionless() => _instance ??= Dimensionless._internal('unit');
+  factory Dimensionless() => _instance ??= Dimensionless._('unit');
 
-  Dimensionless._internal(String kind) : super(kind: kind) {
+  Dimensionless._(String kind) : super(kind: kind) {
     _fixedSystem = FixedSystemOfUnits(kind: this);
     _fixedSystem.defineBaseUnit(symbol: 'un', name: 'unit', factor: 1.0);
 
