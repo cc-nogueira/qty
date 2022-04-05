@@ -1,5 +1,9 @@
 # Quantities representation and unit conversions
 
+## 0.4.1
+Removed all exports but qty/qty.dart 
+Fix missing exports post last refactoring.
+
 ## 0.4.0
 Introduction of Temperature quantities
 Suport for the 4 known units (Kelvin, Celcius, Fahrenheit and Rankine).

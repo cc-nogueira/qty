@@ -1,0 +1,24 @@
+{
+  "files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/Thumbs.db": true,
+		"**/.dart_tool": true,
+		"**/.idea": true,
+		"**/*.iml": true,
+		"**/.packages": true,
+		"**/CHANGELOG.md": true,
+		"**/LICENSE": true,
+		"**/README.md": true,
+		"**/analysis_options.yaml": true,
+		"**/pubspec.lock": true,
+		".gitignore": true,
+		".packages": true,
+		".vscode": true,
+		"build": true
+	},
+  "explorerExclude.backup": null
+}

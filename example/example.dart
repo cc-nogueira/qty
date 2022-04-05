@@ -1,5 +1,4 @@
-import 'package:qty/mass.dart';
-import 'package:qty/quantities.dart';
+import 'package:qty/qty.dart';
 
 /// This example walk through different funcionalities using Mass.
 /// Same API also works for other physical properties, such as Volume and Length.

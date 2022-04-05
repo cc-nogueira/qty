@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
+import 'package:qty/qty.dart';
 
-import 'package:qty/speed.dart';
-import 'package:qty/volume.dart';
 import 'package:test/test.dart';
 
 void main() {

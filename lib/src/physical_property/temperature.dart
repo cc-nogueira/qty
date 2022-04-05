@@ -1,7 +1,8 @@
-import '../../qty.dart';
+import '../measurement/physical_property.dart';
 import '../measurement/systems_of_units.dart';
 import '../measurement/unit.dart';
 import '../measurement/unit_converter.dart';
+import '../quantity/quantity.dart';
 
 class TemperatureSystemOfUnits extends SystemOfMeasurent {
   TemperatureSystemOfUnits({required Temperature kind})
