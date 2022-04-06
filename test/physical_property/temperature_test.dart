@@ -2,7 +2,7 @@ import 'package:qty/qty.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('Speed singleton', () {
+  test('Temperature singleton', () {
     final anUnitKind = Temperature();
     final sameUnitKind = Temperature();
     final anotherUnitKind = Volume();
@@ -10,7 +10,7 @@ void main() {
     expect(identical(anUnitKind, anotherUnitKind), isFalse);
   });
 
-  test('Speed units', () {
+  test('Temperature units', () {
     final temp = Temperature();
     final none = temp.unitWith(symbol: 'unknown');
     final k = temp.unitWith(symbol: 'K')!;
@@ -22,18 +22,18 @@ void main() {
     expect(k.symbol, 'K');
     expect(k.name, 'Kelvin');
     expect(c.symbol, '°C');
-    expect(c.name, 'degrees Celcius');
+    expect(c.name, 'Celcius');
     expect(f.symbol, '°F');
-    expect(f.name, 'degrees Fahrenheit');
+    expect(f.name, 'Fahrenheit');
     expect(r.symbol, '°R');
-    expect(r.name, 'degrees Rankine');
+    expect(r.name, 'Rankine');
     expect(k, same(Temperature.K));
     expect(c, same(Temperature.C));
     expect(f, same(Temperature.F));
     expect(r, same(Temperature.R));
   });
 
-  test('Speed convertion factors', () {
+  test('Temperature convertion factors', () {
     expect(Temperature.K.quantityConverterTo(Temperature.C)(1.0), -272.15);
     expect(Temperature.K.quantityConverterTo(Temperature.C)(100.0),
         closeToValue(-173.15));

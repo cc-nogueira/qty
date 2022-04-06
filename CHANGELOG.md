@@ -1,5 +1,12 @@
 # Quantities representation and unit conversions
 
+## 0.5.0
+Introduction of generics to define the kind of Unit and kind of Quantity,
+such as in `Unit<Mass>` or `Quantity<Length>`.
+
+## 0.4.2
+Fix CompoundUnits constructors to maintain original PhysicalProperty reference.
+
 ## 0.4.1
 Removed all exports but qty/qty.dart 
 Fix missing exports post last refactoring.

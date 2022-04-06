@@ -10,18 +10,19 @@ class Dimensionless extends PhysicalProperty {
   factory Dimensionless() => _instance ??= Dimensionless._('unit');
 
   Dimensionless._(String kind) : super(kind: kind) {
-    _fixedSystem = FixedSystemOfUnits(kind: this);
+    _fixedSystem = FixedSystemOfUnits<Dimensionless>(kind: this);
     _fixedSystem.defineBaseUnit(symbol: 'un', name: 'unit', factor: 1.0);
 
     systemsOfMeasurent.addAll([_fixedSystem]);
   }
 
   static Dimensionless? _instance;
-  late FixedSystemOfUnits _fixedSystem;
+  late FixedSystemOfUnits<Dimensionless> _fixedSystem;
 
-  static Quantity units({required double amount}) =>
+  static Quantity<Dimensionless> units({required double amount}) =>
       Quantity(unit: un, amount: amount);
-  static Unit get un => Dimensionless().unUnit;
 
-  Unit get unUnit => _fixedSystem.unitWith(symbol: 'un')!;
+  static Unit<Dimensionless> get un => Dimensionless().unUnit;
+
+  Unit<Dimensionless> get unUnit => _fixedSystem.unitWith(symbol: 'un')!;
 }

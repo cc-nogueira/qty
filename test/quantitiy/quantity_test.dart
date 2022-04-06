@@ -66,7 +66,7 @@ void main() {
 
   test('Unit quantity plus operator', () {
     final fiveUnits = Dimensionless.units(amount: 5.0);
-    final sixAndAHalfUnits = Quantity(amount: 6.5);
+    final sixAndAHalfUnits = Quantity(amount: 6.5, unit: Dimensionless.un);
     final nineGrams = Mass.grams(amount: 9.0);
     final tenGrams = Mass.grams(amount: 10.0);
     final elevenKilos = Mass.kilograms(amount: 11.0);
@@ -89,7 +89,7 @@ void main() {
     final nineKtPlusTenMps = nineKnots + tenMetersPerSecond;
 
     expect(fivePlusSixAndAHalf, Dimensionless.units(amount: 11.5));
-    expect(fivePlusSixAndAHalf, Quantity(amount: 11.5));
+    expect(fivePlusSixAndAHalf, Quantity(amount: 11.5, unit: Dimensionless.un));
     expect(nineGramsPlusTenGrams, Mass.grams(amount: 19.0));
     expect(nineGramsPlusElevenKilos, Mass.grams(amount: 11009.0));
     expect(nineGramsPlusTwelveMillis, Mass.grams(amount: 9.012));
@@ -107,7 +107,7 @@ void main() {
 
   test('Unit quantity minus operator', () {
     final fiveUnits = Dimensionless.units(amount: 5.0);
-    final sixAndAHalfUnits = Quantity(amount: 6.5);
+    final sixAndAHalfUnits = Quantity(amount: 6.5, unit: Dimensionless.un);
     final nineGrams = Mass.grams(amount: 9.0);
     final tenGrams = Mass.grams(amount: 10.0);
     final elevenKilos = Mass.kilograms(amount: 11.0);
@@ -130,8 +130,9 @@ void main() {
     final tenMpsMinusNineKt = tenMetersPerSecond - nineKnots;
     final nineKtMinusTenMps = nineKnots - tenMetersPerSecond;
 
-    expect(fiveMinusSixAndAHalf, Quantity(amount: -1.5));
-    expect(sixAndAHalfMinusFive, Quantity(amount: 1.5));
+    expect(
+        fiveMinusSixAndAHalf, Quantity(amount: -1.5, unit: Dimensionless.un));
+    expect(sixAndAHalfMinusFive, Quantity(amount: 1.5, unit: Dimensionless.un));
     expect(nineGramsMinusTenGrams, Mass.grams(amount: -1.0));
     expect(nineGramsMinusElevenKilos, Mass.grams(amount: -10991.0));
     expect(nineGramsMinusTwelveMillis, Mass.grams(amount: 8.988));
@@ -151,8 +152,8 @@ void main() {
     final fiveUnits = Dimensionless.units(amount: 5.0);
     final nineGrams = Mass.grams(amount: 9.0);
     final nineKnots = Speed.knots(amount: 9.0);
-    expect(fiveUnits * 3.0, Quantity(amount: 15.0));
-    expect(fiveUnits * 3.5, Quantity(amount: 17.5));
+    expect(fiveUnits * 3.0, Quantity(amount: 15.0, unit: Dimensionless.un));
+    expect(fiveUnits * 3.5, Quantity(amount: 17.5, unit: Dimensionless.un));
     expect(nineGrams * 3.0, Mass.grams(amount: 27.0));
     expect(nineGrams * 3.5, Mass.grams(amount: 31.5));
     expect(nineKnots * 3.0, Speed.knots(amount: 27.0));
@@ -163,8 +164,8 @@ void main() {
     final fiveUnits = Dimensionless.units(amount: 5.0);
     final nineGrams = Mass.grams(amount: 9.0);
     final nineKnots = Speed.knots(amount: 9.0);
-    expect(fiveUnits / 2.0, Quantity(amount: 2.5));
-    expect(fiveUnits / 2.5, Quantity(amount: 2.0));
+    expect(fiveUnits / 2.0, Quantity(amount: 2.5, unit: Dimensionless.un));
+    expect(fiveUnits / 2.5, Quantity(amount: 2.0, unit: Dimensionless.un));
     expect(nineGrams / 3.0, Mass.grams(amount: 3.0));
     expect(nineGrams / 2.0, Mass.grams(amount: 4.5));
     expect(nineKnots / 3.0, Speed.knots(amount: 3.0));

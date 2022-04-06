@@ -11,13 +11,20 @@ abstract class CompoundPhysicalProperty<
 
   final A a;
   final B b;
+  final unitsCash =
+      <String, CompoundUnit<A, B, CompoundPhysicalProperty<A, B>>>{};
 
   @override
-  LinearConvertibleUnit get baseUnit => compoundUnit(a.baseUnit, b.baseUnit);
+  CompoundUnit<A, B, CompoundPhysicalProperty<A, B>> get baseUnit =>
+      compoundUnit(
+        a.baseUnit as LinearConvertibleUnit<A>,
+        b.baseUnit as LinearConvertibleUnit<B>,
+      );
 
   /// Finds an unit with a symbol in my SystemOfMeasurement list
   @override
-  LinearConvertibleUnit? unitWith({required String symbol}) {
+  CompoundUnit<A, B, CompoundPhysicalProperty<A, B>>? unitWith(
+      {required String symbol}) {
     final cached = unitsCash[symbol];
     if (cached != null) {
       return cached;
@@ -26,8 +33,8 @@ abstract class CompoundPhysicalProperty<
     if (parts.length != 2) {
       return null;
     }
-    final unitA = a.unitWith(symbol: parts[0]);
-    final unitB = b.unitWith(symbol: parts[1]);
+    final unitA = a.unitWith(symbol: parts[0]) as LinearConvertibleUnit<A>?;
+    final unitB = b.unitWith(symbol: parts[1]) as LinearConvertibleUnit<B>?;
     if (unitA == null || unitB == null) {
       return null;
     }
@@ -36,9 +43,11 @@ abstract class CompoundPhysicalProperty<
     return unit;
   }
 
-  final unitsCash = <String, LinearConvertibleUnit>{};
+  CompoundUnit<A, B, CompoundPhysicalProperty<A, B>> compoundUnit(
+    LinearConvertibleUnit<A> a,
+    LinearConvertibleUnit<B> b,
+  );
 
-  CompoundUnit compoundUnit(LinearConvertibleUnit a, LinearConvertibleUnit b);
   Pattern get compoundOperationSymbolPattern;
 }
 
@@ -49,8 +58,11 @@ class MultipliedPhysicalProperties<A extends LinearConvertiblePhysicalProperty,
       : super(a, b, kind: kind);
 
   @override
-  CompoundUnit compoundUnit(LinearConvertibleUnit a, LinearConvertibleUnit b) =>
-      MultipliedUnits(a, b);
+  MultipliedUnits<A, B, MultipliedPhysicalProperties<A, B>> compoundUnit(
+    LinearConvertibleUnit<A> a,
+    LinearConvertibleUnit<B> b,
+  ) =>
+      MultipliedUnits<A, B, MultipliedPhysicalProperties<A, B>>(this, a, b);
 
   @override
   Pattern get compoundOperationSymbolPattern => RegExp('[.*]');
@@ -63,8 +75,11 @@ class DividedPhysicalProperties<A extends LinearConvertiblePhysicalProperty,
       : super(a, b, kind: kind);
 
   @override
-  CompoundUnit compoundUnit(LinearConvertibleUnit a, LinearConvertibleUnit b) =>
-      DividedUnits(a, b);
+  DividedUnits<A, B, DividedPhysicalProperties<A, B>> compoundUnit(
+    LinearConvertibleUnit<A> a,
+    LinearConvertibleUnit<B> b,
+  ) =>
+      DividedUnits<A, B, DividedPhysicalProperties<A, B>>(this, a, b);
 
   @override
   Pattern get compoundOperationSymbolPattern => '/';

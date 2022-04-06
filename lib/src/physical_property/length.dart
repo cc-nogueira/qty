@@ -12,7 +12,8 @@ class Length extends LinearConvertiblePhysicalProperty {
   factory Length() => _instance ??= Length._('length');
 
   Length._(String kind) : super(kind: kind) {
-    _internationalSystemOfUnits = InternationalSystemOfUnits(kind: this);
+    _internationalSystemOfUnits =
+        InternationalSystemOfUnits<Length>(kind: this);
     _internationalSystemOfUnits.defineBaseUnit(
         symbol: 'm', name: 'meter', factor: 1.0);
     _internationalSystemOfUnits.defineUnitWithFactor(
@@ -28,7 +29,7 @@ class Length extends LinearConvertiblePhysicalProperty {
     _internationalSystemOfUnits.defineUnitWithFactor(
         symbol: 'km', name: 'kilometer', factor: 1000.0);
 
-    _imperialSystemOfUnits = ImperialSystemOfUnits(kind: this);
+    _imperialSystemOfUnits = ImperialSystemOfUnits<Length>(kind: this);
     _imperialSystemOfUnits.defineBaseUnit(
         symbol: 'ft', name: 'foot', factor: 0.3048);
     _imperialSystemOfUnits.defineUnitWithFactor(
@@ -40,7 +41,7 @@ class Length extends LinearConvertiblePhysicalProperty {
     _imperialSystemOfUnits.defineUnitWithFactor(
         symbol: 'fa', name: 'fathom', factor: 6.0);
 
-    _nauticalSystemOfUnits = NauticalSystemOfUnits(kind: this);
+    _nauticalSystemOfUnits = NauticalSystemOfUnits<Length>(kind: this);
     _nauticalSystemOfUnits.defineBaseUnit(
         symbol: 'nm', name: 'nautical mile', factor: 1852.0);
 
@@ -52,64 +53,64 @@ class Length extends LinearConvertiblePhysicalProperty {
   }
 
   static Length? _instance;
-  late InternationalSystemOfUnits _internationalSystemOfUnits;
-  late ImperialSystemOfUnits _imperialSystemOfUnits;
-  late NauticalSystemOfUnits _nauticalSystemOfUnits;
+  late InternationalSystemOfUnits<Length> _internationalSystemOfUnits;
+  late ImperialSystemOfUnits<Length> _imperialSystemOfUnits;
+  late NauticalSystemOfUnits<Length> _nauticalSystemOfUnits;
 
-  static Quantity millimeters({required double amount}) =>
+  static Quantity<Length> millimeters({required double amount}) =>
       Quantity(unit: mm, amount: amount);
-  static Quantity centimeters({required double amount}) =>
+  static Quantity<Length> centimeters({required double amount}) =>
       Quantity(unit: cm, amount: amount);
-  static Quantity decimeters({required double amount}) =>
+  static Quantity<Length> decimeters({required double amount}) =>
       Quantity(unit: dm, amount: amount);
-  static Quantity meters({required double amount}) =>
+  static Quantity<Length> meters({required double amount}) =>
       Quantity(unit: m, amount: amount);
-  static Quantity kilometers({required double amount}) =>
+  static Quantity<Length> kilometers({required double amount}) =>
       Quantity(unit: km, amount: amount);
 
-  static Quantity feet({required double amount}) =>
+  static Quantity<Length> feet({required double amount}) =>
       Quantity(unit: ft, amount: amount);
-  static Quantity inches({required double amount}) =>
+  static Quantity<Length> inches({required double amount}) =>
       Quantity(unit: inch, amount: amount);
-  static Quantity yards({required double amount}) =>
+  static Quantity<Length> yards({required double amount}) =>
       Quantity(unit: yd, amount: amount);
-  static Quantity miles({required double amount}) =>
+  static Quantity<Length> miles({required double amount}) =>
       Quantity(unit: mi, amount: amount);
-  static Quantity fathoms({required double amount}) =>
+  static Quantity<Length> fathoms({required double amount}) =>
       Quantity(unit: fa, amount: amount);
 
-  static LinearConvertibleUnit get mm => Length().mmUnit;
-  static LinearConvertibleUnit get cm => Length().cmUnit;
-  static LinearConvertibleUnit get dm => Length().dmUnit;
-  static LinearConvertibleUnit get m => Length().mUnit;
-  static LinearConvertibleUnit get km => Length().kmUnit;
-  static LinearConvertibleUnit get ft => Length().ftUnit;
-  static LinearConvertibleUnit get inch => Length().inUnit;
-  static LinearConvertibleUnit get yd => Length().ydUnit;
-  static LinearConvertibleUnit get mi => Length().miUnit;
-  static LinearConvertibleUnit get fa => Length().faUnit;
-  static LinearConvertibleUnit get nm => Length().nmUnit;
+  static LinearConvertibleUnit<Length> get mm => Length().mmUnit;
+  static LinearConvertibleUnit<Length> get cm => Length().cmUnit;
+  static LinearConvertibleUnit<Length> get dm => Length().dmUnit;
+  static LinearConvertibleUnit<Length> get m => Length().mUnit;
+  static LinearConvertibleUnit<Length> get km => Length().kmUnit;
+  static LinearConvertibleUnit<Length> get ft => Length().ftUnit;
+  static LinearConvertibleUnit<Length> get inch => Length().inUnit;
+  static LinearConvertibleUnit<Length> get yd => Length().ydUnit;
+  static LinearConvertibleUnit<Length> get mi => Length().miUnit;
+  static LinearConvertibleUnit<Length> get fa => Length().faUnit;
+  static LinearConvertibleUnit<Length> get nm => Length().nmUnit;
 
-  LinearConvertibleUnit get mmUnit =>
+  LinearConvertibleUnit<Length> get mmUnit =>
       _internationalSystemOfUnits.unitWith(symbol: 'mm')!;
-  LinearConvertibleUnit get cmUnit =>
+  LinearConvertibleUnit<Length> get cmUnit =>
       _internationalSystemOfUnits.unitWith(symbol: 'cm')!;
-  LinearConvertibleUnit get dmUnit =>
+  LinearConvertibleUnit<Length> get dmUnit =>
       _internationalSystemOfUnits.unitWith(symbol: 'dm')!;
-  LinearConvertibleUnit get mUnit =>
+  LinearConvertibleUnit<Length> get mUnit =>
       _internationalSystemOfUnits.unitWith(symbol: 'm')!;
-  LinearConvertibleUnit get kmUnit =>
+  LinearConvertibleUnit<Length> get kmUnit =>
       _internationalSystemOfUnits.unitWith(symbol: 'km')!;
-  LinearConvertibleUnit get ftUnit =>
+  LinearConvertibleUnit<Length> get ftUnit =>
       _imperialSystemOfUnits.unitWith(symbol: 'ft')!;
-  LinearConvertibleUnit get inUnit =>
+  LinearConvertibleUnit<Length> get inUnit =>
       _imperialSystemOfUnits.unitWith(symbol: 'in')!;
-  LinearConvertibleUnit get ydUnit =>
+  LinearConvertibleUnit<Length> get ydUnit =>
       _imperialSystemOfUnits.unitWith(symbol: 'yd')!;
-  LinearConvertibleUnit get miUnit =>
+  LinearConvertibleUnit<Length> get miUnit =>
       _imperialSystemOfUnits.unitWith(symbol: 'mi')!;
-  LinearConvertibleUnit get faUnit =>
+  LinearConvertibleUnit<Length> get faUnit =>
       _imperialSystemOfUnits.unitWith(symbol: 'fa')!;
-  LinearConvertibleUnit get nmUnit =>
+  LinearConvertibleUnit<Length> get nmUnit =>
       _nauticalSystemOfUnits.unitWith(symbol: 'nm')!;
 }

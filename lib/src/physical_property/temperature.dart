@@ -4,7 +4,7 @@ import '../measurement/unit.dart';
 import '../measurement/unit_converter.dart';
 import '../quantity/quantity.dart';
 
-class TemperatureSystemOfUnits extends SystemOfMeasurent {
+class TemperatureSystemOfUnits extends SystemOfMeasurent<Temperature> {
   TemperatureSystemOfUnits({required Temperature kind})
       : super(
             name: 'Temperature System of Units',
@@ -12,7 +12,7 @@ class TemperatureSystemOfUnits extends SystemOfMeasurent {
             unitConverter: TemperatureConverter());
 }
 
-class TemperatureConverter extends UnitConverter {
+class TemperatureConverter extends UnitConverter<Temperature> {
   @override
   QuantityConverter quantityConverter(
       {required Unit fromUnit, required Unit toUnit}) {
@@ -48,31 +48,31 @@ class Temperature extends PhysicalProperty {
   Temperature._(String kind) : super(kind: kind) {
     final _system = TemperatureSystemOfUnits(kind: this);
     kUnit = _system.defineBaseUnit(symbol: 'K', name: 'Kelvin', factor: 1.0);
-    cUnit = _system.defineUnit(symbol: '°C', name: 'degrees Celcius');
-    fUnit = _system.defineUnit(symbol: '°F', name: 'degrees Fahrenheit');
-    rUnit = _system.defineUnit(symbol: '°R', name: 'degrees Rankine');
+    cUnit = _system.defineUnit(symbol: '°C', name: 'Celcius');
+    fUnit = _system.defineUnit(symbol: '°F', name: 'Fahrenheit');
+    rUnit = _system.defineUnit(symbol: '°R', name: 'Rankine');
 
     systemsOfMeasurent.add(_system);
   }
 
   static Temperature? _instance;
 
-  static Quantity kelvins({required double amount}) =>
+  static Quantity<Temperature> kelvins({required double amount}) =>
       Quantity(unit: K, amount: amount);
-  static Quantity degreesCelcius({required double amount}) =>
+  static Quantity<Temperature> degreesCelcius({required double amount}) =>
       Quantity(unit: C, amount: amount);
-  static Quantity degreesFahrenheit({required double amount}) =>
+  static Quantity<Temperature> degreesFahrenheit({required double amount}) =>
       Quantity(unit: F, amount: amount);
-  static Quantity degreesRankine({required double amount}) =>
+  static Quantity<Temperature> degreesRankine({required double amount}) =>
       Quantity(unit: R, amount: amount);
 
-  static Unit get K => Temperature().kUnit;
-  static Unit get C => Temperature().cUnit;
-  static Unit get F => Temperature().fUnit;
-  static Unit get R => Temperature().rUnit;
+  static Unit<Temperature> get K => Temperature().kUnit;
+  static Unit<Temperature> get C => Temperature().cUnit;
+  static Unit<Temperature> get F => Temperature().fUnit;
+  static Unit<Temperature> get R => Temperature().rUnit;
 
-  late final Unit kUnit;
-  late final Unit cUnit;
-  late final Unit fUnit;
-  late final Unit rUnit;
+  late final Unit<Temperature> kUnit;
+  late final Unit<Temperature> cUnit;
+  late final Unit<Temperature> fUnit;
+  late final Unit<Temperature> rUnit;
 }

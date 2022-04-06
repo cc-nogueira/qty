@@ -7,16 +7,16 @@ import 'unit_converter.dart';
 /// Defines a system of measuremnt with an appropriate [UnitCovnerter] and a collection of [Unit] instances mapped by their symbol.
 /// Exposes an API to define and manage a domain of [Unit]s, and a single [baseUnit].
 /// Provides access to [QuantityConverter] between units of its domains and to the base unit of another [SystemOfMeasure].
-abstract class SystemOfMeasurent {
+abstract class SystemOfMeasurent<K extends PhysicalProperty> {
   SystemOfMeasurent(
       {required this.name, required this.kind, required this.unitConverter})
       : _units = {};
 
   final String name;
-  final PhysicalProperty kind;
-  final UnitConverter unitConverter;
-  final Map<String, Unit> _units;
-  late final Unit _baseUnit;
+  final K kind;
+  final UnitConverter<K> unitConverter;
+  final Map<String, Unit<K>> _units;
+  late final Unit<K> _baseUnit;
   late final double _baseUnitConversionFactor;
 
   /// Compare two SystemOfMEasurement to verify if they are for the same [PhysicalProperty]
@@ -24,7 +24,7 @@ abstract class SystemOfMeasurent {
 
   /// Define the baseUnit for this SystemOfMeasuremnt and its conversionFactor to the other SystemOfMeasurements of the same kind.
   /// This method can be called only once for each SystemOfMeasument.
-  Unit defineBaseUnit(
+  Unit<K> defineBaseUnit(
       {required String symbol, required String name, required double factor}) {
     final unit = defineUnit(symbol: symbol, name: name);
     _baseUnit = unit;
@@ -32,25 +32,25 @@ abstract class SystemOfMeasurent {
     return unit;
   }
 
-  Unit get baseUnit => _baseUnit;
+  Unit<K> get baseUnit => _baseUnit;
 
   /// Defines a unit with symbol and name
-  Unit defineUnit({required String symbol, required String name}) {
-    final unit = Unit(this, name: name, symbol: symbol);
+  Unit<K> defineUnit({required String symbol, required String name}) {
+    final unit = Unit<K>(this, name: name, symbol: symbol);
     registerUnit(unit);
     return unit;
   }
 
-  void registerUnit(Unit unit) => _units[unit.symbol] = unit;
+  void registerUnit(Unit<K> unit) => _units[unit.symbol] = unit;
 
   /// List all units in this SystemOfMeasurement
-  List<Unit> get units => _units.values.toList();
+  List<Unit<K>> get units => _units.values.toList();
 
   /// Finds an unit by its symbol. Retuns null if none is found
-  Unit? unitWith({required String symbol}) => _units[symbol];
+  Unit<K>? unitWith({required String symbol}) => _units[symbol];
 
   /// Compose a QuantityConverter function to convert amounts from one SystemOfMeasurement baseUnit to another SystemOfMeasurement baseUnit
-  QuantityConverter baseUnitConverterTo(SystemOfMeasurent anotherSystem) =>
+  QuantityConverter baseUnitConverterTo(SystemOfMeasurent<K> anotherSystem) =>
       (quantity) =>
           quantity *
           _baseUnitConversionFactor /
@@ -58,7 +58,7 @@ abstract class SystemOfMeasurent {
 
   /// Compose a QuantityConverter function to convert amounts from one unit to another
   QuantityConverter quantityConverter(
-      {required Unit fromUnit, required Unit toUnit}) {
+      {required Unit<K> fromUnit, required Unit<K> toUnit}) {
     if (fromUnit.systemOfMeasurent != this) {
       return fromUnit.quantityConverterTo(toUnit);
     }
@@ -76,8 +76,9 @@ abstract class SystemOfMeasurent {
   int get hashCode => kind.hashCode ^ name.hashCode;
 }
 
-class FixedSystemOfUnits extends SystemOfMeasurent {
-  FixedSystemOfUnits({required PhysicalProperty kind})
+class FixedSystemOfUnits<K extends PhysicalProperty>
+    extends SystemOfMeasurent<K> {
+  FixedSystemOfUnits({required K kind})
       : super(
             kind: kind,
             name: 'FixedSystemOfUnits',
@@ -88,36 +89,34 @@ class FixedSystemOfUnits extends SystemOfMeasurent {
 ///
 /// This is a full functional class that supports most [SystemOfMeasurent] units, such as [InternationalSystemOfUnits] (SI), [ImperialSystemOfUnits] and [NauticalSystemOfUnits].
 /// It does not support more complex units conversions such as the Fahrenheit scale for Temperature.
-class LinearConvertibleSystemOfUnits extends SystemOfMeasurent {
+class LinearConvertibleSystemOfUnits<
+    K extends LinearConvertiblePhysicalProperty> extends SystemOfMeasurent<K> {
   LinearConvertibleSystemOfUnits(
       {required String name,
-      required PhysicalProperty kind,
-      LinearUnitConverter? unitConverter})
+      required K kind,
+      LinearUnitConverter<K>? unitConverter})
       : super(
             name: name,
             kind: kind,
-            unitConverter: unitConverter ?? LinearUnitConverter());
+            unitConverter: unitConverter ?? LinearUnitConverter<K>());
 
   @override
-  LinearConvertiblePhysicalProperty get kind =>
-      super.kind as LinearConvertiblePhysicalProperty;
+  LinearUnitConverter<K> get unitConverter =>
+      super.unitConverter as LinearUnitConverter<K>;
 
   @override
-  LinearUnitConverter get unitConverter =>
-      super.unitConverter as LinearUnitConverter;
-
-  @override
-  LinearConvertibleUnit defineUnit(
+  LinearConvertibleUnit<K> defineUnit(
           {required String symbol, required String name}) =>
       defineUnitWithFactor(symbol: symbol, name: name, factor: 1.0);
 
   @override
-  LinearConvertibleUnit get baseUnit => super.baseUnit as LinearConvertibleUnit;
+  LinearConvertibleUnit<K> get baseUnit =>
+      super.baseUnit as LinearConvertibleUnit<K>;
 
   /// Defines an Unit with a conversion factor to the baseUnit of this SystemOfMeasurent
-  LinearConvertibleUnit defineUnitWithFactor(
+  LinearConvertibleUnit<K> defineUnitWithFactor(
       {required String symbol, required String name, required double factor}) {
-    final unit = LinearConvertibleUnit(this, name: name, symbol: symbol);
+    final unit = LinearConvertibleUnit<K>(this, name: name, symbol: symbol);
     registerUnit(unit);
     unitConverter.add(unit: unit, factor: factor);
     return unit;
@@ -125,18 +124,18 @@ class LinearConvertibleSystemOfUnits extends SystemOfMeasurent {
 
   /// List all units in this SystemOfMeasurement
   @override
-  List<LinearConvertibleUnit> get units =>
-      super.units.cast<LinearConvertibleUnit>();
+  List<LinearConvertibleUnit<K>> get units =>
+      super.units.cast<LinearConvertibleUnit<K>>();
 
   /// Finds an unit by its symbol. Retuns null if none is found
   @override
-  LinearConvertibleUnit? unitWith({required String symbol}) =>
-      super.unitWith(symbol: symbol) as LinearConvertibleUnit?;
+  LinearConvertibleUnit<K>? unitWith({required String symbol}) =>
+      super.unitWith(symbol: symbol) as LinearConvertibleUnit<K>?;
 
   /// Returns the conversionFactor between two units of this SystemOfMeasurement
   double conversionFactor(
-      {required LinearConvertibleUnit fromUnit,
-      required LinearConvertibleUnit toUnit}) {
+      {required LinearConvertibleUnit<K> fromUnit,
+      required LinearConvertibleUnit<K> toUnit}) {
     if (fromUnit.systemOfMeasurent != this) {
       throw IncompatibleSystemOfMeasureException(
           systemOfMeasure: this, unit: fromUnit);
@@ -153,21 +152,23 @@ class LinearConvertibleSystemOfUnits extends SystemOfMeasurent {
 ///
 /// It is the international statandard following the metric system of units.
 /// Will be configured by each [PhysicalProperty] especialization with its collection of [Unit] instances.
-class InternationalSystemOfUnits extends LinearConvertibleSystemOfUnits {
+class InternationalSystemOfUnits<K extends LinearConvertiblePhysicalProperty>
+    extends LinearConvertibleSystemOfUnits<K> {
   InternationalSystemOfUnits(
-      {required PhysicalProperty kind, LinearUnitConverter? unitConverter})
+      {required K kind, LinearUnitConverter<K>? unitConverter})
       : super(
           name: 'International System of Units (SI)',
           kind: kind,
-          unitConverter: unitConverter ?? PowerOfTenUnitConverter(),
+          unitConverter: unitConverter ?? PowerOfTenUnitConverter<K>(),
         );
 }
 
 /// Imperial or British System of Units.
 ///
 /// Will be configured by each [PhysicalProperty] especialization with its collection of [Unit] instances.
-class ImperialSystemOfUnits extends LinearConvertibleSystemOfUnits {
-  ImperialSystemOfUnits({required PhysicalProperty kind})
+class ImperialSystemOfUnits<K extends LinearConvertiblePhysicalProperty>
+    extends LinearConvertibleSystemOfUnits<K> {
+  ImperialSystemOfUnits({required K kind})
       : super(
           name: 'Imperial System of Units',
           kind: kind,
@@ -177,8 +178,9 @@ class ImperialSystemOfUnits extends LinearConvertibleSystemOfUnits {
 /// Nautical System of Units.
 ///
 /// Will be configured by each [PhysicalProperty] especialization with its collection of [Unit] instances.
-class NauticalSystemOfUnits extends LinearConvertibleSystemOfUnits {
-  NauticalSystemOfUnits({required PhysicalProperty kind})
+class NauticalSystemOfUnits<K extends LinearConvertiblePhysicalProperty>
+    extends LinearConvertibleSystemOfUnits<K> {
+  NauticalSystemOfUnits({required K kind})
       : super(
           name: 'Nautical System of Units',
           kind: kind,

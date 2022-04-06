@@ -12,7 +12,7 @@ class Mass extends LinearConvertiblePhysicalProperty {
   factory Mass() => _instance ??= Mass._('mass');
 
   Mass._(String kind) : super(kind: kind) {
-    _internationalSystemOfUnits = InternationalSystemOfUnits(kind: this);
+    _internationalSystemOfUnits = InternationalSystemOfUnits<Mass>(kind: this);
     _internationalSystemOfUnits.defineBaseUnit(
         symbol: 'kg', name: 'kilogram', factor: 1.0);
     _internationalSystemOfUnits.defineUnitWithFactor(
@@ -22,7 +22,7 @@ class Mass extends LinearConvertiblePhysicalProperty {
     _internationalSystemOfUnits.defineUnitWithFactor(
         symbol: 't', name: 'ton', factor: 1000.0);
 
-    _imperialSystemOfUnits = ImperialSystemOfUnits(kind: this);
+    _imperialSystemOfUnits = ImperialSystemOfUnits<Mass>(kind: this);
     _imperialSystemOfUnits.defineBaseUnit(
         symbol: 'lb', name: 'pound', factor: 0.45359237);
     _imperialSystemOfUnits.defineUnitWithFactor(
@@ -37,50 +37,50 @@ class Mass extends LinearConvertiblePhysicalProperty {
   }
 
   static Mass? _instance;
-  late InternationalSystemOfUnits _internationalSystemOfUnits;
-  late ImperialSystemOfUnits _imperialSystemOfUnits;
+  late InternationalSystemOfUnits<Mass> _internationalSystemOfUnits;
+  late ImperialSystemOfUnits<Mass> _imperialSystemOfUnits;
 
-  static Quantity milligrams({required double amount}) =>
+  static Quantity<Mass> milligrams({required double amount}) =>
       Quantity(unit: mg, amount: amount);
-  static Quantity grams({required double amount}) =>
+  static Quantity<Mass> grams({required double amount}) =>
       Quantity(unit: g, amount: amount);
-  static Quantity kilograms({required double amount}) =>
+  static Quantity<Mass> kilograms({required double amount}) =>
       Quantity(unit: kg, amount: amount);
-  static Quantity tons({required double amount}) =>
+  static Quantity<Mass> tons({required double amount}) =>
       Quantity(unit: t, amount: amount);
 
-  static Quantity ounces({required double amount}) =>
+  static Quantity<Mass> ounces({required double amount}) =>
       Quantity(unit: oz, amount: amount);
-  static Quantity pounds({required double amount}) =>
+  static Quantity<Mass> pounds({required double amount}) =>
       Quantity(unit: lb, amount: amount);
-  static Quantity stones({required double amount}) =>
+  static Quantity<Mass> stones({required double amount}) =>
       Quantity(unit: st, amount: amount);
-  static Quantity quarters({required double amount}) =>
+  static Quantity<Mass> quarters({required double amount}) =>
       Quantity(unit: qr, amount: amount);
 
-  static LinearConvertibleUnit get g => Mass().gUnit;
-  static LinearConvertibleUnit get kg => Mass().kgUnit;
-  static LinearConvertibleUnit get mg => Mass().mgUnit;
-  static LinearConvertibleUnit get t => Mass().tUnit;
-  static LinearConvertibleUnit get oz => Mass().ozUnit;
-  static LinearConvertibleUnit get lb => Mass().lbUnit;
-  static LinearConvertibleUnit get st => Mass().stUnit;
-  static LinearConvertibleUnit get qr => Mass().qrUnit;
+  static LinearConvertibleUnit<Mass> get g => Mass().gUnit;
+  static LinearConvertibleUnit<Mass> get kg => Mass().kgUnit;
+  static LinearConvertibleUnit<Mass> get mg => Mass().mgUnit;
+  static LinearConvertibleUnit<Mass> get t => Mass().tUnit;
+  static LinearConvertibleUnit<Mass> get oz => Mass().ozUnit;
+  static LinearConvertibleUnit<Mass> get lb => Mass().lbUnit;
+  static LinearConvertibleUnit<Mass> get st => Mass().stUnit;
+  static LinearConvertibleUnit<Mass> get qr => Mass().qrUnit;
 
-  LinearConvertibleUnit get gUnit =>
+  LinearConvertibleUnit<Mass> get gUnit =>
       _internationalSystemOfUnits.unitWith(symbol: 'g')!;
-  LinearConvertibleUnit get kgUnit =>
+  LinearConvertibleUnit<Mass> get kgUnit =>
       _internationalSystemOfUnits.unitWith(symbol: 'kg')!;
-  LinearConvertibleUnit get mgUnit =>
+  LinearConvertibleUnit<Mass> get mgUnit =>
       _internationalSystemOfUnits.unitWith(symbol: 'mg')!;
-  LinearConvertibleUnit get tUnit =>
+  LinearConvertibleUnit<Mass> get tUnit =>
       _internationalSystemOfUnits.unitWith(symbol: 't')!;
-  LinearConvertibleUnit get ozUnit =>
+  LinearConvertibleUnit<Mass> get ozUnit =>
       _imperialSystemOfUnits.unitWith(symbol: 'oz')!;
-  LinearConvertibleUnit get lbUnit =>
+  LinearConvertibleUnit<Mass> get lbUnit =>
       _imperialSystemOfUnits.unitWith(symbol: 'lb')!;
-  LinearConvertibleUnit get stUnit =>
+  LinearConvertibleUnit<Mass> get stUnit =>
       _imperialSystemOfUnits.unitWith(symbol: 'st')!;
-  LinearConvertibleUnit get qrUnit =>
+  LinearConvertibleUnit<Mass> get qrUnit =>
       _imperialSystemOfUnits.unitWith(symbol: 'qr')!;
 }

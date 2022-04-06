@@ -1,20 +1,27 @@
 import 'compound_physical_property.dart';
+import 'physical_property.dart';
 import 'systems_of_units.dart';
 import 'unit.dart';
 import 'unit_converter.dart';
 
-abstract class CompoundUnit extends LinearConvertibleUnit {
-  const CompoundUnit(this.a, this.b,
-      {required String name,
-      required String symbol,
-      required LinearConvertibleSystemOfUnits systemOfMeasurement})
-      : super(systemOfMeasurement, name: name, symbol: symbol);
+abstract class CompoundUnit<
+    A extends LinearConvertiblePhysicalProperty,
+    B extends LinearConvertiblePhysicalProperty,
+    K extends CompoundPhysicalProperty<A, B>> extends LinearConvertibleUnit<K> {
+  const CompoundUnit(
+    this.a,
+    this.b, {
+    required String name,
+    required String symbol,
+    required LinearConvertibleSystemOfUnits<K> systemOfMeasurement,
+  }) : super(systemOfMeasurement, name: name, symbol: symbol);
 
-  final LinearConvertibleUnit a;
-  final LinearConvertibleUnit b;
+  final LinearConvertibleUnit<A> a;
+  final LinearConvertibleUnit<B> b;
 
   @override
-  QuantityConverter quantityConverterTo(covariant CompoundUnit anotherUnit) {
+  QuantityConverter quantityConverterTo(
+      covariant CompoundUnit<A, B, K> anotherUnit) {
     final qcA = a.quantityConverterTo(anotherUnit.a);
     final qcB = b.quantityConverterTo(anotherUnit.b);
 
@@ -25,22 +32,20 @@ abstract class CompoundUnit extends LinearConvertibleUnit {
       QuantityConverter qcA, QuantityConverter qcB);
 }
 
-class MultipliedUnits<A extends LinearConvertibleUnit,
-    B extends LinearConvertibleUnit> extends CompoundUnit {
-  MultipliedUnits(LinearConvertibleUnit a, LinearConvertibleUnit b)
+class MultipliedUnits<
+    A extends LinearConvertiblePhysicalProperty,
+    B extends LinearConvertiblePhysicalProperty,
+    K extends CompoundPhysicalProperty<A, B>> extends CompoundUnit<A, B, K> {
+  MultipliedUnits(
+      K kind, LinearConvertibleUnit<A> a, LinearConvertibleUnit<B> b)
       : super(
           a,
           b,
           name: '${a.name} ${b.name}',
           symbol: '${a.symbol}.${b.symbol}',
-          systemOfMeasurement: LinearConvertibleSystemOfUnits(
+          systemOfMeasurement: LinearConvertibleSystemOfUnits<K>(
             name: '${a.systemOfMeasurent.name} ${b.systemOfMeasurent.name}',
-            kind: MultipliedPhysicalProperties(
-              a.systemOfMeasurent.kind,
-              b.systemOfMeasurent.kind,
-              kind:
-                  '${a.systemOfMeasurent.kind.kind}.${b.systemOfMeasurent.kind.kind}',
-            ),
+            kind: kind,
           ),
         );
 
@@ -50,21 +55,19 @@ class MultipliedUnits<A extends LinearConvertibleUnit,
       (double value) => qcA(value) * qcB(value);
 }
 
-class DividedUnits<A extends LinearConvertibleUnit,
-    B extends LinearConvertibleUnit> extends CompoundUnit {
-  DividedUnits(LinearConvertibleUnit a, LinearConvertibleUnit b)
+class DividedUnits<
+    A extends LinearConvertiblePhysicalProperty,
+    B extends LinearConvertiblePhysicalProperty,
+    K extends CompoundPhysicalProperty<A, B>> extends CompoundUnit<A, B, K> {
+  DividedUnits(K kind, LinearConvertibleUnit<A> a, LinearConvertibleUnit<B> b)
       : super(
           a,
           b,
           name: '${a.name}s per ${b.name}',
           symbol: '${a.symbol}/${b.symbol}',
-          systemOfMeasurement: LinearConvertibleSystemOfUnits(
+          systemOfMeasurement: LinearConvertibleSystemOfUnits<K>(
             name: '${a.systemOfMeasurent.name} per ${b.systemOfMeasurent.name}',
-            kind: DividedPhysicalProperties(
-              a.systemOfMeasurent.kind,
-              b.systemOfMeasurent.kind,
-              kind: '${a.systemOfMeasurent.name}/${b.systemOfMeasurent.name}',
-            ),
+            kind: kind,
           ),
         );
   @override

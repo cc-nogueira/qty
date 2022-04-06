@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'physical_property.dart';
 import 'unit.dart';
 
 /// Dimensionless function to convert a quantity magnitude for an asked unit transformation
@@ -8,42 +9,43 @@ typedef QuantityConverter = double Function(double);
 /// Interface for unit conversion.
 ///
 /// Exposes an abstract QuantityConverter getter.
-abstract class UnitConverter {
+abstract class UnitConverter<K extends PhysicalProperty> {
   const UnitConverter();
 
   QuantityConverter quantityConverter(
-      {required Unit fromUnit, required Unit toUnit});
+      {required Unit<K> fromUnit, required Unit<K> toUnit});
 }
 
-class FixedUnitConverter extends UnitConverter {
+class FixedUnitConverter<K extends PhysicalProperty> extends UnitConverter<K> {
   const FixedUnitConverter();
 
   @override
   QuantityConverter quantityConverter(
-          {required Unit fromUnit, required Unit toUnit}) =>
+          {required Unit<K> fromUnit, required Unit<K> toUnit}) =>
       (double value) => value;
 }
 
 /// Most common [UnitConverter] for linear conversions.
 ///
 /// Use a table of unit factors to convert values linearly.
-class LinearUnitConverter extends UnitConverter {
+class LinearUnitConverter<K extends LinearConvertiblePhysicalProperty>
+    extends UnitConverter<K> {
   LinearUnitConverter();
 
   final Map<LinearConvertibleUnit, double> _factors = {};
 
-  void add({required LinearConvertibleUnit unit, required double factor}) =>
+  void add({required LinearConvertibleUnit<K> unit, required double factor}) =>
       _factors[unit] = factor;
 
   double convertionFactor(
-          {required LinearConvertibleUnit fromUnit,
-          required LinearConvertibleUnit toUnit}) =>
+          {required LinearConvertibleUnit<K> fromUnit,
+          required LinearConvertibleUnit<K> toUnit}) =>
       fromUnit == toUnit ? 1.0 : _factors[fromUnit]! / _factors[toUnit]!;
 
   @override
   QuantityConverter quantityConverter(
-          {required covariant LinearConvertibleUnit fromUnit,
-          required covariant LinearConvertibleUnit toUnit}) =>
+          {required covariant LinearConvertibleUnit<K> fromUnit,
+          required covariant LinearConvertibleUnit<K> toUnit}) =>
       (quantity) =>
           quantity * convertionFactor(fromUnit: fromUnit, toUnit: toUnit);
 }
@@ -52,19 +54,20 @@ class LinearUnitConverter extends UnitConverter {
 ///
 /// Has better precisicion using the difference in the power of ten factor for [Unit] conversion,
 /// better then a plain double [LinearUnitConverter].
-class PowerOfTenUnitConverter extends LinearUnitConverter {
+class PowerOfTenUnitConverter<K extends LinearConvertiblePhysicalProperty>
+    extends LinearUnitConverter<K> {
   final Map<Unit, int> _powers = {};
 
   @override
-  void add({required LinearConvertibleUnit unit, required double factor}) {
+  void add({required LinearConvertibleUnit<K> unit, required double factor}) {
     super.add(unit: unit, factor: factor);
     _powers[unit] = (log10e * log(factor)).round();
   }
 
   @override
   double convertionFactor(
-      {required LinearConvertibleUnit fromUnit,
-      required LinearConvertibleUnit toUnit}) {
+      {required LinearConvertibleUnit<K> fromUnit,
+      required LinearConvertibleUnit<K> toUnit}) {
     return pow(10, _powers[fromUnit]! - _powers[toUnit]!).toDouble();
   }
 }

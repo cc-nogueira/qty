@@ -44,6 +44,12 @@ void main() {
     expect(Speed.kt.quantityConverterTo(Speed.m_s)(1.0),
         closeToValue(0.514444444));
   });
+
+  test('Compound unit kind test', () {
+    expect(Speed.kt.kind, same(Speed()));
+    expect(Speed.mi_h.kind, same(Speed()));
+    expect(Speed.km_h.kind, same(Speed()));
+  });
 }
 
 Matcher closeToValue(double value) =>
