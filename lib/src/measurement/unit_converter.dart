@@ -12,24 +12,21 @@ typedef QuantityConverter = double Function(double);
 abstract class UnitConverter<K extends PhysicalProperty> {
   const UnitConverter();
 
-  QuantityConverter quantityConverter(
-      {required Unit<K> fromUnit, required Unit<K> toUnit});
+  QuantityConverter quantityConverter({required Unit<K> fromUnit, required Unit<K> toUnit});
 }
 
-class FixedUnitConverter<K extends PhysicalProperty> extends UnitConverter<K> {
-  const FixedUnitConverter();
+class FixedAmountUnitConverter<K extends PhysicalProperty> extends UnitConverter<K> {
+  const FixedAmountUnitConverter();
 
   @override
-  QuantityConverter quantityConverter(
-          {required Unit<K> fromUnit, required Unit<K> toUnit}) =>
+  QuantityConverter quantityConverter({required Unit<K> fromUnit, required Unit<K> toUnit}) =>
       (double value) => value;
 }
 
 /// Most common [UnitConverter] for linear conversions.
 ///
 /// Use a table of unit factors to convert values linearly.
-class LinearUnitConverter<K extends LinearConvertiblePhysicalProperty>
-    extends UnitConverter<K> {
+class LinearUnitConverter<K extends LinearConvertiblePhysicalProperty> extends UnitConverter<K> {
   LinearUnitConverter();
 
   final Map<LinearConvertibleUnit, double> _factors = {};
@@ -38,16 +35,14 @@ class LinearUnitConverter<K extends LinearConvertiblePhysicalProperty>
       _factors[unit] = factor;
 
   double convertionFactor(
-          {required LinearConvertibleUnit<K> fromUnit,
-          required LinearConvertibleUnit<K> toUnit}) =>
+          {required LinearConvertibleUnit<K> fromUnit, required LinearConvertibleUnit<K> toUnit}) =>
       fromUnit == toUnit ? 1.0 : _factors[fromUnit]! / _factors[toUnit]!;
 
   @override
   QuantityConverter quantityConverter(
           {required covariant LinearConvertibleUnit<K> fromUnit,
           required covariant LinearConvertibleUnit<K> toUnit}) =>
-      (quantity) =>
-          quantity * convertionFactor(fromUnit: fromUnit, toUnit: toUnit);
+      (quantity) => quantity * convertionFactor(fromUnit: fromUnit, toUnit: toUnit);
 }
 
 /// [UnitConverter] that uses the decimal system for [Unit] conversion.
@@ -66,8 +61,7 @@ class PowerOfTenUnitConverter<K extends LinearConvertiblePhysicalProperty>
 
   @override
   double convertionFactor(
-      {required LinearConvertibleUnit<K> fromUnit,
-      required LinearConvertibleUnit<K> toUnit}) {
+      {required LinearConvertibleUnit<K> fromUnit, required LinearConvertibleUnit<K> toUnit}) {
     return pow(10, _powers[fromUnit]! - _powers[toUnit]!).toDouble();
   }
 }
