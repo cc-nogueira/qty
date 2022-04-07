@@ -1,6 +1,6 @@
 import 'compound_physical_property.dart';
+import 'compound_system_of_units.dart';
 import 'physical_property.dart';
-import 'systems_of_units.dart';
 import 'unit.dart';
 import 'unit_converter.dart';
 
@@ -8,13 +8,13 @@ abstract class CompoundUnit<
     A extends LinearConvertiblePhysicalProperty,
     B extends LinearConvertiblePhysicalProperty,
     K extends CompoundPhysicalProperty<A, B>> extends LinearConvertibleUnit<K> {
-  const CompoundUnit(
+  CompoundUnit(
+    K kind,
     this.a,
     this.b, {
     required String name,
     required String symbol,
-    required LinearConvertibleSystemOfUnits<K> systemOfMeasurement,
-  }) : super(systemOfMeasurement, name: name, symbol: symbol);
+  }) : super(CompoundSystemOfUnits<A, B, K>(kind), name: name, symbol: symbol);
 
   final LinearConvertibleUnit<A> a;
   final LinearConvertibleUnit<B> b;
@@ -37,16 +37,17 @@ class MultipliedUnits<
     B extends LinearConvertiblePhysicalProperty,
     K extends CompoundPhysicalProperty<A, B>> extends CompoundUnit<A, B, K> {
   MultipliedUnits(
-      K kind, LinearConvertibleUnit<A> a, LinearConvertibleUnit<B> b)
-      : super(
+    K kind,
+    LinearConvertibleUnit<A> a,
+    LinearConvertibleUnit<B> b, {
+    String? name,
+    String? symbol,
+  }) : super(
+          kind,
           a,
           b,
-          name: '${a.name} ${b.name}',
-          symbol: '${a.symbol}.${b.symbol}',
-          systemOfMeasurement: LinearConvertibleSystemOfUnits<K>(
-            name: '${a.systemOfMeasurent.name} ${b.systemOfMeasurent.name}',
-            kind: kind,
-          ),
+          name: name ?? '${a.name} ${b.name}',
+          symbol: symbol ?? '${a.symbol}.${b.symbol}',
         );
 
   @override
@@ -59,16 +60,18 @@ class DividedUnits<
     A extends LinearConvertiblePhysicalProperty,
     B extends LinearConvertiblePhysicalProperty,
     K extends CompoundPhysicalProperty<A, B>> extends CompoundUnit<A, B, K> {
-  DividedUnits(K kind, LinearConvertibleUnit<A> a, LinearConvertibleUnit<B> b)
-      : super(
+  DividedUnits(
+    K kind,
+    LinearConvertibleUnit<A> a,
+    LinearConvertibleUnit<B> b, {
+    String? name,
+    String? symbol,
+  }) : super(
+          kind,
           a,
           b,
-          name: '${a.name}s per ${b.name}',
-          symbol: '${a.symbol}/${b.symbol}',
-          systemOfMeasurement: LinearConvertibleSystemOfUnits<K>(
-            name: '${a.systemOfMeasurent.name} per ${b.systemOfMeasurent.name}',
-            kind: kind,
-          ),
+          name: name ?? '${a.name}s per ${b.name}',
+          symbol: symbol ?? '${a.symbol}/${b.symbol}',
         );
   @override
   QuantityConverter compoundQuantityConverter(

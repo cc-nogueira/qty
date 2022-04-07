@@ -19,13 +19,13 @@ void main() {
     final km_h = speed.unitWith(symbol: 'km/h')!;
     final cm_s = speed.unitWith(symbol: 'cm/s')!;
     final mi_h = speed.unitWith(symbol: 'mi/h')!;
-    final kt = speed.unitWith(symbol: 'nm/h')!;
+    final kt = speed.unitWith(symbol: 'kt')!;
     expect(none, isNull);
     expect(m_s.symbol, 'm/s');
     expect(km_h.name, 'kilometers per hour');
     expect(cm_s.symbol, 'cm/s');
     expect(mi_h.name, 'miles per hour');
-    expect(kt.symbol, 'nm/h');
+    expect(kt.symbol, 'kt');
     expect(m_s, same(Speed.m_s));
     expect(km_h, same(Speed.km_h));
     expect(mi_h, same(Speed.mi_h));
