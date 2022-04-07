@@ -7,8 +7,7 @@ import '../measurement/unit.dart';
 ///
 /// Expressed as some [amount] of a [unit].
 /// Defines math operations for quantities.
-class Quantity<K extends PhysicalProperty> extends Equatable
-    implements Comparable<Quantity> {
+class Quantity<K extends PhysicalProperty<K>> extends Equatable implements Comparable<Quantity> {
   const Quantity({required this.amount, required this.unit});
 
   final Unit<K> unit;
@@ -23,12 +22,10 @@ class Quantity<K extends PhysicalProperty> extends Equatable
       Quantity<K>(unit: unit, amount: amount - qtd.convertTo(unit).amount);
 
   /// Returns a new Quantity with the same unit and my amount multiplied by a factor
-  Quantity<K> operator *(double factor) =>
-      Quantity<K>(unit: unit, amount: amount * factor);
+  Quantity<K> operator *(double factor) => Quantity<K>(unit: unit, amount: amount * factor);
 
   /// Returns a new Quantity with the same unit and my amount divided by a factor
-  Quantity<K> operator /(double factor) =>
-      Quantity<K>(unit: unit, amount: amount / factor);
+  Quantity<K> operator /(double factor) => Quantity<K>(unit: unit, amount: amount / factor);
 
   /// Returns a new Quantity with the same unit and this amount negated
   Quantity<K> get negated => Quantity<K>(unit: unit, amount: -amount);
@@ -53,9 +50,8 @@ class Quantity<K extends PhysicalProperty> extends Equatable
 
   String print({bool useName = false, int? fractionDigits}) {
     final unitPrint = useName ? unit.name : unit.symbol;
-    final valuePrint = fractionDigits == null
-        ? amount.toString()
-        : amount.toStringAsFixed(fractionDigits);
+    final valuePrint =
+        fractionDigits == null ? amount.toString() : amount.toStringAsFixed(fractionDigits);
     return valuePrint + ' ' + unitPrint + (useName && amount != 1.0 ? 's' : '');
   }
 

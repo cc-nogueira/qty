@@ -4,7 +4,7 @@ import 'package:qty/qty.dart';
 /// Same API also works for other physical properties, such as Volume and Length.
 void main() {
   print('Available units of mass:');
-  for (var system in Mass().systemsOfMeasurement) {
+  for (var system in Mass().systemsOfUnits) {
     final units = system.units..sort((a, b) => a.symbol.compareTo(b.symbol));
     print('In ${system.name}:');
     for (var unit in units) {

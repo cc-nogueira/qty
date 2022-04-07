@@ -8,33 +8,29 @@ import '../quantity/quantity.dart';
 /// Configures Internation (SI) and Imperial (British) systems of units defining their [Volume] [Unit] instances.
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
-class Volume extends LinearConvertiblePhysicalProperty<Volume> {
+class Volume extends PhysicalProperty<Volume> {
   factory Volume() => _instance ??= Volume._('volume');
 
   Volume._(String kind) : super(kind: kind) {
     _internationalSystemOfUnits = InternationalSystemOfUnits<Volume>(kind: this);
     _internationalSystemOfUnits.defineBaseUnit(symbol: 'l', name: 'litre', factor: 1.0);
-    _internationalSystemOfUnits.defineUnitWithFactor(
+    _internationalSystemOfUnits.defineUnit(
         symbol: 'mm3', name: 'cubic millimeter', factor: 0.000001);
-    _internationalSystemOfUnits.defineUnitWithFactor(
-        symbol: 'cm3', name: 'cubic centimeter', factor: 0.001);
-    _internationalSystemOfUnits.defineUnitWithFactor(
-        symbol: 'dm3', name: 'cubic decimeter', factor: 1.0);
-    _internationalSystemOfUnits.defineUnitWithFactor(
-        symbol: 'm3', name: 'cubic meter', factor: 1000.0);
+    _internationalSystemOfUnits.defineUnit(symbol: 'cm3', name: 'cubic centimeter', factor: 0.001);
+    _internationalSystemOfUnits.defineUnit(symbol: 'dm3', name: 'cubic decimeter', factor: 1.0);
+    _internationalSystemOfUnits.defineUnit(symbol: 'm3', name: 'cubic meter', factor: 1000.0);
 
     _imperialSystemOfUnits = ImperialSystemOfUnits<Volume>(kind: this);
     _imperialSystemOfUnits.defineBaseUnit(symbol: 'gal', name: 'galon', factor: 4.54609);
-    _imperialSystemOfUnits.defineUnitWithFactor(
-        symbol: 'fl oz', name: 'fluid ounce', factor: 1.0 / 160.0);
-    _imperialSystemOfUnits.defineUnitWithFactor(symbol: 'gi', name: 'gill', factor: 1.0 / 32.0);
-    _imperialSystemOfUnits.defineUnitWithFactor(symbol: 'pt', name: 'pint', factor: 1.0 / 8.0);
-    _imperialSystemOfUnits.defineUnitWithFactor(symbol: 'qt', name: 'quart', factor: 1.0 / 4.0);
-    _imperialSystemOfUnits.defineUnitWithFactor(symbol: 'peck', name: 'peck', factor: 2.0);
-    _imperialSystemOfUnits.defineUnitWithFactor(symbol: 'bu', name: 'bushel', factor: 8.0);
-    _imperialSystemOfUnits.defineUnitWithFactor(symbol: 'qr', name: 'quarter', factor: 64.0);
+    _imperialSystemOfUnits.defineUnit(symbol: 'fl oz', name: 'fluid ounce', factor: 1.0 / 160.0);
+    _imperialSystemOfUnits.defineUnit(symbol: 'gi', name: 'gill', factor: 1.0 / 32.0);
+    _imperialSystemOfUnits.defineUnit(symbol: 'pt', name: 'pint', factor: 1.0 / 8.0);
+    _imperialSystemOfUnits.defineUnit(symbol: 'qt', name: 'quart', factor: 1.0 / 4.0);
+    _imperialSystemOfUnits.defineUnit(symbol: 'peck', name: 'peck', factor: 2.0);
+    _imperialSystemOfUnits.defineUnit(symbol: 'bu', name: 'bushel', factor: 8.0);
+    _imperialSystemOfUnits.defineUnit(symbol: 'qr', name: 'quarter', factor: 64.0);
 
-    systemsOfMeasurement.addAll([_internationalSystemOfUnits, _imperialSystemOfUnits]);
+    systemsOfUnits.addAll([_internationalSystemOfUnits, _imperialSystemOfUnits]);
   }
 
   static Volume? _instance;
@@ -59,31 +55,31 @@ class Volume extends LinearConvertiblePhysicalProperty<Volume> {
   static Quantity<Volume> bushels({required double amount}) => Quantity(unit: bu, amount: amount);
   static Quantity<Volume> quarters({required double amount}) => Quantity(unit: qr, amount: amount);
 
-  static LinearConvertibleUnit<Volume> get mm3 => Volume().mm3Unit;
-  static LinearConvertibleUnit<Volume> get cm3 => Volume().cm3Unit;
-  static LinearConvertibleUnit<Volume> get dm3 => Volume().dm3Unit;
-  static LinearConvertibleUnit<Volume> get m3 => Volume().m3Unit;
-  static LinearConvertibleUnit<Volume> get l => Volume().lUnit;
-  static LinearConvertibleUnit<Volume> get flOz => Volume().flOzUnit;
-  static LinearConvertibleUnit<Volume> get gi => Volume().giUnit;
-  static LinearConvertibleUnit<Volume> get pt => Volume().ptUnit;
-  static LinearConvertibleUnit<Volume> get qt => Volume().qtUnit;
-  static LinearConvertibleUnit<Volume> get gal => Volume().galUnit;
-  static LinearConvertibleUnit<Volume> get peck => Volume().peckUnit;
-  static LinearConvertibleUnit<Volume> get bu => Volume().buUnit;
-  static LinearConvertibleUnit<Volume> get qr => Volume().qrUnit;
+  static Unit<Volume> get mm3 => Volume().mm3Unit;
+  static Unit<Volume> get cm3 => Volume().cm3Unit;
+  static Unit<Volume> get dm3 => Volume().dm3Unit;
+  static Unit<Volume> get m3 => Volume().m3Unit;
+  static Unit<Volume> get l => Volume().lUnit;
+  static Unit<Volume> get flOz => Volume().flOzUnit;
+  static Unit<Volume> get gi => Volume().giUnit;
+  static Unit<Volume> get pt => Volume().ptUnit;
+  static Unit<Volume> get qt => Volume().qtUnit;
+  static Unit<Volume> get gal => Volume().galUnit;
+  static Unit<Volume> get peck => Volume().peckUnit;
+  static Unit<Volume> get bu => Volume().buUnit;
+  static Unit<Volume> get qr => Volume().qrUnit;
 
-  LinearConvertibleUnit<Volume> get mm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'mm3')!;
-  LinearConvertibleUnit<Volume> get cm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'cm3')!;
-  LinearConvertibleUnit<Volume> get dm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'dm3')!;
-  LinearConvertibleUnit<Volume> get m3Unit => _internationalSystemOfUnits.unitWith(symbol: 'm3')!;
-  LinearConvertibleUnit<Volume> get lUnit => _internationalSystemOfUnits.unitWith(symbol: 'l')!;
-  LinearConvertibleUnit<Volume> get flOzUnit => _imperialSystemOfUnits.unitWith(symbol: 'fl oz')!;
-  LinearConvertibleUnit<Volume> get giUnit => _imperialSystemOfUnits.unitWith(symbol: 'gi')!;
-  LinearConvertibleUnit<Volume> get ptUnit => _imperialSystemOfUnits.unitWith(symbol: 'pt')!;
-  LinearConvertibleUnit<Volume> get qtUnit => _imperialSystemOfUnits.unitWith(symbol: 'qt')!;
-  LinearConvertibleUnit<Volume> get galUnit => _imperialSystemOfUnits.unitWith(symbol: 'gal')!;
-  LinearConvertibleUnit<Volume> get peckUnit => _imperialSystemOfUnits.unitWith(symbol: 'peck')!;
-  LinearConvertibleUnit<Volume> get buUnit => _imperialSystemOfUnits.unitWith(symbol: 'bu')!;
-  LinearConvertibleUnit<Volume> get qrUnit => _imperialSystemOfUnits.unitWith(symbol: 'qr')!;
+  Unit<Volume> get mm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'mm3')!;
+  Unit<Volume> get cm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'cm3')!;
+  Unit<Volume> get dm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'dm3')!;
+  Unit<Volume> get m3Unit => _internationalSystemOfUnits.unitWith(symbol: 'm3')!;
+  Unit<Volume> get lUnit => _internationalSystemOfUnits.unitWith(symbol: 'l')!;
+  Unit<Volume> get flOzUnit => _imperialSystemOfUnits.unitWith(symbol: 'fl oz')!;
+  Unit<Volume> get giUnit => _imperialSystemOfUnits.unitWith(symbol: 'gi')!;
+  Unit<Volume> get ptUnit => _imperialSystemOfUnits.unitWith(symbol: 'pt')!;
+  Unit<Volume> get qtUnit => _imperialSystemOfUnits.unitWith(symbol: 'qt')!;
+  Unit<Volume> get galUnit => _imperialSystemOfUnits.unitWith(symbol: 'gal')!;
+  Unit<Volume> get peckUnit => _imperialSystemOfUnits.unitWith(symbol: 'peck')!;
+  Unit<Volume> get buUnit => _imperialSystemOfUnits.unitWith(symbol: 'bu')!;
+  Unit<Volume> get qrUnit => _imperialSystemOfUnits.unitWith(symbol: 'qr')!;
 }

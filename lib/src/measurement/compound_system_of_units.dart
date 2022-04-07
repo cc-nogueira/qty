@@ -4,10 +4,8 @@ import 'physical_property.dart';
 import 'systems_of_units.dart';
 import 'unit.dart';
 
-class CompoundSystemOfUnits<
-    K extends CompoundPhysicalProperty<K, A, B>,
-    A extends LinearConvertiblePhysicalProperty<A>,
-    B extends LinearConvertiblePhysicalProperty<B>> extends LinearConvertibleSystemOfUnits<K> {
+class CompoundSystemOfUnits<K extends CompoundPhysicalProperty<K, A, B>,
+    A extends PhysicalProperty<A>, B extends PhysicalProperty<B>> extends SystemOfUnits<K> {
   CompoundSystemOfUnits(K kind) : super(name: 'Compound System of Units', kind: kind);
 
   /// Finds an unit by its symbol. Retuns null if none is found

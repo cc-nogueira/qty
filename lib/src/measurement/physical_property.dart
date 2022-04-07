@@ -2,47 +2,33 @@ import '../../qty.dart';
 import 'systems_of_units.dart';
 import 'unit.dart';
 
-abstract class Kind {
-  const Kind(this.kind);
+/// Quantifiable physical property by an amount of an [Unit] of one of its [SystemOfUnits]s.
+///
+/// Represented with a [kind] description and a collection of [SystemOfUnits] instances.
+/// Provides an API to return an unit by its symbol from any of its systems of measurement.
+
+abstract class PhysicalProperty<T extends PhysicalProperty<T>> {
+  PhysicalProperty({required this.kind});
 
   // Texttual name for this PhysicalProperty
   final String kind;
 
-  @override
-  bool operator ==(Object other) =>
-      other is Kind && other.runtimeType == runtimeType && kind == other.kind;
-
-  @override
-  int get hashCode => kind.hashCode;
-
-  @override
-  String toString() => kind;
-}
-
-/// Quantifiable physical property by an amount of an [Unit] of one of its [SystemOfMeasurement]s.
-///
-/// Represented with a [kind] description and a collection of [SystemOfMeasurement] instances.
-/// Provides an API to return an unit by its symbol from any of its systems of measurement.
-
-abstract class PhysicalProperty<K extends Kind> extends Kind {
-  PhysicalProperty({required String kind}) : super(kind);
-
   // Collection of SystemOfMeasurement for this PhysicalProperty
-  final List<SystemOfMeasurement<K>> systemsOfMeasurement = [];
+  final List<SystemOfUnits<T>> systemsOfUnits = [];
 
   /// Return the baseUnit of my first SystemOfMeasurement
-  Unit<K> get baseUnit => systemsOfMeasurement[0].baseUnit;
+  Unit<T> get baseUnit => systemsOfUnits[0].baseUnit;
 
   /// Return all units in all of my SystemOfMeasurement list
-  List<Unit<K>> get unitList =>
-      systemsOfMeasurement.fold([], (list, systemOfMeasure) => list..addAll(systemOfMeasure.units));
+  List<Unit<T>> get unitList =>
+      systemsOfUnits.fold([], (list, system) => list..addAll(system.units));
 
   /// Finds an unit with a symbol in my SystemOfMeasurement list
-  Unit<K>? unitWith({required String symbol}) {
-    Unit<K>? unit;
+  Unit<T>? unitWith({required String symbol}) {
+    Unit<T>? unit;
     try {
-      systemsOfMeasurement.firstWhere((systemOfMeasure) {
-        unit ??= systemOfMeasure.unitWith(symbol: symbol);
+      systemsOfUnits.firstWhere((system) {
+        unit ??= system.unitWith(symbol: symbol);
         return unit != null;
       });
     } on StateError {
@@ -50,35 +36,15 @@ abstract class PhysicalProperty<K extends Kind> extends Kind {
     }
     return unit;
   }
-}
-
-/// Abstract class for all LinearConvertible Physical Properties.
-///
-/// Defines common api for most Physical Properties, those whose units are
-/// linerarly convertible (proportional conversions). Ex.: Length, Mass, Times, etc.
-///
-/// Most methods are redifened just to return a covariant types.
-abstract class LinearConvertiblePhysicalProperty<K extends LinearConvertiblePhysicalProperty<K>>
-    extends PhysicalProperty<K> {
-  LinearConvertiblePhysicalProperty({required String kind}) : super(kind: kind);
 
   @override
-  List<LinearConvertibleSystemOfUnits<K>> get systemsOfMeasurement =>
-      super.systemsOfMeasurement.cast<LinearConvertibleSystemOfUnits<K>>();
+  bool operator ==(Object other) => other is PhysicalProperty && kind == other.kind;
 
-  /// Return the baseUnit of my first SystemOfMeasurement
   @override
-  LinearConvertibleUnit<K> get baseUnit => systemsOfMeasurement[0].baseUnit;
+  int get hashCode => kind.hashCode;
 
-  /// Return all units in all of my SystemOfMeasurement list
   @override
-  List<LinearConvertibleUnit<K>> get unitList =>
-      systemsOfMeasurement.fold([], (list, systemOfMeasure) => list..addAll(systemOfMeasure.units));
-
-  /// Finds an unit with a symbol in my SystemOfMeasurement list
-  @override
-  LinearConvertibleUnit<K>? unitWith({required String symbol}) =>
-      super.unitWith(symbol: symbol) as LinearConvertibleUnit<K>?;
+  String toString() => kind;
 }
 
 /// Exception class for incompatible unit conversion.

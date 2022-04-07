@@ -5,44 +5,32 @@ import 'unit_converter.dart';
 
 /// Unit of a physical property.
 ///
-/// Expressed with a [symbol] in a [systemOfMeasurement] for its kind of [PhysicalProperty] (volume, mass, legnth, etc).
+/// Expressed with a [symbol] in a [systemOfUnits] for its kind of [PhysicalProperty] (volume, mass, legnth, etc).
 /// Provides access to a [QuantityConverter] to another [Unit] of the same kind of [PhysicalProperty].
-class Unit<K extends Kind> extends Equatable {
-  const Unit(this.systemOfMeasurent, {required this.name, required this.symbol});
+class Unit<K extends PhysicalProperty<K>> extends Equatable {
+  const Unit(this.systemOfUnits, {required this.name, required this.symbol});
 
-  final SystemOfMeasurement<K> systemOfMeasurent;
+  final SystemOfUnits<K> systemOfUnits;
   final String symbol;
   final String name;
 
-  Kind get kind => systemOfMeasurent.kind;
+  PhysicalProperty get kind => systemOfUnits.kind;
 
   /// Compare if another unit is of the same kind
-  bool sameKind(Unit unit) => systemOfMeasurent.sameKind(unit.systemOfMeasurent);
+  bool sameKind(Unit unit) => systemOfUnits.sameKind(unit.systemOfUnits);
 
   /// Compose a QuantityConverter function to convert amounts to another unit.
-  QuantityConverter quantityConverterTo(Unit<K> anotherUnit) {
-    if (systemOfMeasurent == anotherUnit.systemOfMeasurent) {
-      return systemOfMeasurent.quantityConverter(fromUnit: this, toUnit: anotherUnit);
+  QuantityConverter quantityConverterTo(Unit<K> newUnit) {
+    if (systemOfUnits == newUnit.systemOfUnits) {
+      return systemOfUnits.quantityConverter(fromUnit: this, toUnit: newUnit);
     }
-    final anotherFromBaseUnitConverter =
-        anotherUnit.systemOfMeasurent.baseUnit.quantityConverterTo(anotherUnit);
-    final thisToBaseConverter = quantityConverterTo(systemOfMeasurent.baseUnit);
-    final baseToAnotherBaseConver =
-        systemOfMeasurent.baseUnitConverterTo(anotherUnit.systemOfMeasurent);
-    return (quantity) =>
-        anotherFromBaseUnitConverter(baseToAnotherBaseConver(thisToBaseConverter(quantity)));
+    final newBaseUnitConverter = newUnit.systemOfUnits.baseUnit.quantityConverterTo(newUnit);
+    final thisToBaseConverter = quantityConverterTo(systemOfUnits.baseUnit);
+    final thisBaseToNewBaseConverter = systemOfUnits.baseUnitConverterTo(newUnit.systemOfUnits);
+    return (amount) =>
+        newBaseUnitConverter(thisBaseToNewBaseConverter(thisToBaseConverter(amount)));
   }
 
   @override
-  List<Object> get props => [systemOfMeasurent.kind, systemOfMeasurent.name, symbol, name];
-}
-
-class LinearConvertibleUnit<K extends LinearConvertiblePhysicalProperty<K>> extends Unit<K> {
-  const LinearConvertibleUnit(LinearConvertibleSystemOfUnits<K> systemOfMeasurent,
-      {required String name, required String symbol})
-      : super(systemOfMeasurent, name: name, symbol: symbol);
-
-  @override
-  LinearConvertibleSystemOfUnits<K> get systemOfMeasurent =>
-      super.systemOfMeasurent as LinearConvertibleSystemOfUnits<K>;
+  List<Object> get props => [systemOfUnits.kind, systemOfUnits.name, symbol, name];
 }

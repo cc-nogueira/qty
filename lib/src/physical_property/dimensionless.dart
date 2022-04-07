@@ -6,14 +6,14 @@ import '../quantity/quantity.dart';
 /// Dimensionless property.
 ///
 /// Dimensionless with FixedSystemOfUnits.
-class Dimensionless extends PhysicalProperty {
+class Dimensionless extends PhysicalProperty<Dimensionless> {
   factory Dimensionless() => _instance ??= Dimensionless._('unit');
 
   Dimensionless._(String kind) : super(kind: kind) {
     _fixedSystem = FixedSystemOfUnits<Dimensionless>(kind: this);
     _fixedSystem.defineBaseUnit(symbol: 'un', name: 'unit', factor: 1.0);
 
-    systemsOfMeasurement.addAll([_fixedSystem]);
+    systemsOfUnits.addAll([_fixedSystem]);
   }
 
   static Dimensionless? _instance;

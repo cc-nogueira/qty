@@ -20,7 +20,7 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
     _systemOfUnits.defineNamedUnit(symbol: 'ft/s', name: 'feet per second');
     _systemOfUnits.defineNamedUnit(symbol: 'kt', name: 'knots', units: 'nm/h');
 
-    systemsOfMeasurement.add(_systemOfUnits);
+    systemsOfUnits.add(_systemOfUnits);
   }
 
   static Speed? _instance;
@@ -61,8 +61,7 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
   //     super.unitWith(symbol: symbol) as CompoundUnit<Speed, Length, Time>?;
 
   @override
-  DividedUnits<Speed, Length, Time> compoundUnit(
-          LinearConvertibleUnit<Length> a, LinearConvertibleUnit<Time> b,
+  DividedUnits<Speed, Length, Time> compoundUnit(Unit<Length> a, Unit<Time> b,
           {String? symbol, String? name}) =>
       DividedUnits<Speed, Length, Time>(this, a, b, name: name, symbol: symbol);
 }

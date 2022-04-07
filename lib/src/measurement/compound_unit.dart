@@ -4,10 +4,8 @@ import 'physical_property.dart';
 import 'unit.dart';
 import 'unit_converter.dart';
 
-abstract class CompoundUnit<
-    K extends CompoundPhysicalProperty<K, A, B>,
-    A extends LinearConvertiblePhysicalProperty<A>,
-    B extends LinearConvertiblePhysicalProperty<B>> extends LinearConvertibleUnit<K> {
+abstract class CompoundUnit<K extends CompoundPhysicalProperty<K, A, B>,
+    A extends PhysicalProperty<A>, B extends PhysicalProperty<B>> extends Unit<K> {
   CompoundUnit(
     K kind,
     this.a,
@@ -16,13 +14,13 @@ abstract class CompoundUnit<
     required String symbol,
   }) : super(CompoundSystemOfUnits<K, A, B>(kind), name: name, symbol: symbol);
 
-  final LinearConvertibleUnit<A> a;
-  final LinearConvertibleUnit<B> b;
+  final Unit<A> a;
+  final Unit<B> b;
 
   @override
-  QuantityConverter quantityConverterTo(covariant CompoundUnit<K, A, B> anotherUnit) {
-    final qcA = a.quantityConverterTo(anotherUnit.a);
-    final qcB = b.quantityConverterTo(anotherUnit.b);
+  QuantityConverter quantityConverterTo(covariant CompoundUnit<K, A, B> newUnit) {
+    final qcA = a.quantityConverterTo(newUnit.a);
+    final qcB = b.quantityConverterTo(newUnit.b);
 
     return compoundQuantityConverter(qcA, qcB);
   }
@@ -30,14 +28,12 @@ abstract class CompoundUnit<
   QuantityConverter compoundQuantityConverter(QuantityConverter qcA, QuantityConverter qcB);
 }
 
-class MultipliedUnits<
-    K extends CompoundPhysicalProperty<K, A, B>,
-    A extends LinearConvertiblePhysicalProperty<A>,
-    B extends LinearConvertiblePhysicalProperty<B>> extends CompoundUnit<K, A, B> {
+class MultipliedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
+    B extends PhysicalProperty<B>> extends CompoundUnit<K, A, B> {
   MultipliedUnits(
     K kind,
-    LinearConvertibleUnit<A> a,
-    LinearConvertibleUnit<B> b, {
+    Unit<A> a,
+    Unit<B> b, {
     String? name,
     String? symbol,
   }) : super(
@@ -53,14 +49,12 @@ class MultipliedUnits<
       (double value) => qcA(value) * qcB(value);
 }
 
-class DividedUnits<
-    K extends CompoundPhysicalProperty<K, A, B>,
-    A extends LinearConvertiblePhysicalProperty<A>,
-    B extends LinearConvertiblePhysicalProperty<B>> extends CompoundUnit<K, A, B> {
+class DividedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
+    B extends PhysicalProperty<B>> extends CompoundUnit<K, A, B> {
   DividedUnits(
     K kind,
-    LinearConvertibleUnit<A> a,
-    LinearConvertibleUnit<B> b, {
+    Unit<A> a,
+    Unit<B> b, {
     String? name,
     String? symbol,
   }) : super(

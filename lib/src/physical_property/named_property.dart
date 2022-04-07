@@ -6,14 +6,14 @@ import '../quantity/quantity.dart';
 /// NamedProperty.
 ///
 /// NamedProperty with FixedSystemOfUnits.
-class NamedProperty extends PhysicalProperty {
+class NamedProperty extends PhysicalProperty<NamedProperty> {
   factory NamedProperty(String name) => _instances.putIfAbsent(name, () => NamedProperty._(name));
 
   NamedProperty._(String name) : super(kind: name) {
     _fixedSystem = FixedSystemOfUnits<NamedProperty>(kind: this);
     _fixedSystem.defineBaseUnit(symbol: name, name: name, factor: 1.0);
 
-    systemsOfMeasurement.addAll([_fixedSystem]);
+    systemsOfUnits.addAll([_fixedSystem]);
   }
 
   static final Map<String, NamedProperty> _instances = {};

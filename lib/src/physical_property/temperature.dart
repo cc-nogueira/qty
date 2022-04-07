@@ -4,13 +4,13 @@ import '../measurement/unit.dart';
 import '../measurement/unit_converter.dart';
 import '../quantity/quantity.dart';
 
-class TemperatureSystemOfUnits extends LinearConvertibleSystemOfUnits<Temperature> {
+class TemperatureSystemOfUnits extends SystemOfUnits<Temperature> {
   TemperatureSystemOfUnits({required Temperature kind})
       : super(
             name: 'Temperature System of Units', kind: kind, unitConverter: TemperatureConverter());
 }
 
-class TemperatureConverter extends LinearUnitConverter<Temperature> {
+class TemperatureConverter extends UnitConverter<Temperature> {
   @override
   QuantityConverter quantityConverter({required Unit fromUnit, required Unit toUnit}) {
     if (fromUnit == toUnit) return (double value) => value;
@@ -38,7 +38,7 @@ class TemperatureConverter extends LinearUnitConverter<Temperature> {
   }
 }
 
-class Temperature extends LinearConvertiblePhysicalProperty<Temperature> {
+class Temperature extends PhysicalProperty<Temperature> {
   factory Temperature() => _instance ??= Temperature._('temperature');
 
   Temperature._(String kind) : super(kind: kind) {
@@ -48,7 +48,7 @@ class Temperature extends LinearConvertiblePhysicalProperty<Temperature> {
     fUnit = _system.defineUnit(symbol: '°F', name: 'Fahrenheit');
     rUnit = _system.defineUnit(symbol: '°R', name: 'Rankine');
 
-    systemsOfMeasurement.add(_system);
+    systemsOfUnits.add(_system);
   }
 
   static Temperature? _instance;
