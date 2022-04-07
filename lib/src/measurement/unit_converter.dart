@@ -9,13 +9,13 @@ typedef QuantityConverter = double Function(double);
 /// Interface for unit conversion.
 ///
 /// Exposes an abstract QuantityConverter getter.
-abstract class UnitConverter<K extends PhysicalProperty> {
+abstract class UnitConverter<K extends Kind> {
   const UnitConverter();
 
   QuantityConverter quantityConverter({required Unit<K> fromUnit, required Unit<K> toUnit});
 }
 
-class FixedAmountUnitConverter<K extends PhysicalProperty> extends UnitConverter<K> {
+class FixedAmountUnitConverter<K extends Kind> extends UnitConverter<K> {
   const FixedAmountUnitConverter();
 
   @override
@@ -26,10 +26,10 @@ class FixedAmountUnitConverter<K extends PhysicalProperty> extends UnitConverter
 /// Most common [UnitConverter] for linear conversions.
 ///
 /// Use a table of unit factors to convert values linearly.
-class LinearUnitConverter<K extends LinearConvertiblePhysicalProperty> extends UnitConverter<K> {
+class LinearUnitConverter<K extends LinearConvertiblePhysicalProperty<K>> extends UnitConverter<K> {
   LinearUnitConverter();
 
-  final Map<LinearConvertibleUnit, double> _factors = {};
+  final Map<LinearConvertibleUnit<K>, double> _factors = {};
 
   void add({required LinearConvertibleUnit<K> unit, required double factor}) =>
       _factors[unit] = factor;
@@ -49,9 +49,9 @@ class LinearUnitConverter<K extends LinearConvertiblePhysicalProperty> extends U
 ///
 /// Has better precisicion using the difference in the power of ten factor for [Unit] conversion,
 /// better then a plain double [LinearUnitConverter].
-class PowerOfTenUnitConverter<K extends LinearConvertiblePhysicalProperty>
+class PowerOfTenUnitConverter<K extends LinearConvertiblePhysicalProperty<K>>
     extends LinearUnitConverter<K> {
-  final Map<Unit, int> _powers = {};
+  final Map<Unit<K>, int> _powers = {};
 
   @override
   void add({required LinearConvertibleUnit<K> unit, required double factor}) {

@@ -4,18 +4,15 @@ import '../measurement/unit.dart';
 import '../measurement/unit_converter.dart';
 import '../quantity/quantity.dart';
 
-class TemperatureSystemOfUnits extends SystemOfMeasurent<Temperature> {
+class TemperatureSystemOfUnits extends LinearConvertibleSystemOfUnits<Temperature> {
   TemperatureSystemOfUnits({required Temperature kind})
       : super(
-            name: 'Temperature System of Units',
-            kind: kind,
-            unitConverter: TemperatureConverter());
+            name: 'Temperature System of Units', kind: kind, unitConverter: TemperatureConverter());
 }
 
-class TemperatureConverter extends UnitConverter<Temperature> {
+class TemperatureConverter extends LinearUnitConverter<Temperature> {
   @override
-  QuantityConverter quantityConverter(
-      {required Unit fromUnit, required Unit toUnit}) {
+  QuantityConverter quantityConverter({required Unit fromUnit, required Unit toUnit}) {
     if (fromUnit == toUnit) return (double value) => value;
     if (fromUnit == Temperature.K) {
       if (toUnit == Temperature.C) return (double k) => k - 273.15;
@@ -37,12 +34,11 @@ class TemperatureConverter extends UnitConverter<Temperature> {
       if (toUnit == Temperature.C) return (double r) => (r - 491.67) / 1.8;
       if (toUnit == Temperature.F) return (double r) => r - 459.67;
     }
-    throw ArgumentError(
-        'Unknown temperature convertion from $fromUnit to $toUnit');
+    throw ArgumentError('Unknown temperature convertion from $fromUnit to $toUnit');
   }
 }
 
-class Temperature extends PhysicalProperty {
+class Temperature extends LinearConvertiblePhysicalProperty<Temperature> {
   factory Temperature() => _instance ??= Temperature._('temperature');
 
   Temperature._(String kind) : super(kind: kind) {
@@ -52,7 +48,7 @@ class Temperature extends PhysicalProperty {
     fUnit = _system.defineUnit(symbol: '°F', name: 'Fahrenheit');
     rUnit = _system.defineUnit(symbol: '°R', name: 'Rankine');
 
-    systemsOfMeasurent.add(_system);
+    systemsOfMeasurement.add(_system);
   }
 
   static Temperature? _instance;

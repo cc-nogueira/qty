@@ -13,7 +13,7 @@ class Dimensionless extends PhysicalProperty {
     _fixedSystem = FixedSystemOfUnits<Dimensionless>(kind: this);
     _fixedSystem.defineBaseUnit(symbol: 'un', name: 'unit', factor: 1.0);
 
-    systemsOfMeasurent.addAll([_fixedSystem]);
+    systemsOfMeasurement.addAll([_fixedSystem]);
   }
 
   static Dimensionless? _instance;

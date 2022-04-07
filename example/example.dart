@@ -4,7 +4,7 @@ import 'package:qty/qty.dart';
 /// Same API also works for other physical properties, such as Volume and Length.
 void main() {
   print('Available units of mass:');
-  for (var system in Mass().systemsOfMeasurent) {
+  for (var system in Mass().systemsOfMeasurement) {
     final units = system.units..sort((a, b) => a.symbol.compareTo(b.symbol));
     print('In ${system.name}:');
     for (var unit in units) {
@@ -17,13 +17,11 @@ void main() {
   print('Quantity q1 = Mass.grams(amount: 200.0);');
   print('Quantity q2 = Quantity(amount: 2.0, unit: Mass.kg);');
   print('Quantity q3 = Mass.ounces(amount: 10.0);');
-  print(
-      'Quantity q4 = Quantity(amount: 5.0, unit: Mass().unitWith(symbol: \'lb\'));');
+  print('Quantity q4 = Quantity(amount: 5.0, unit: Mass().unitWith(symbol: \'lb\'));');
   final q1 = Mass.grams(amount: 200.0);
   final q2 = Quantity(amount: 2.0, unit: Mass.kg);
   final q3 = Mass.ounces(amount: 10.0);
-  final q4 =
-      Quantity(amount: 5.0, unit: Mass().unitWith(symbol: 'lb')! as Unit<Mass>);
+  final q4 = Quantity(amount: 5.0, unit: Mass().unitWith(symbol: 'lb')!);
 
   print('');
   print('Yields:');
