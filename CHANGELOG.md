@@ -1,5 +1,11 @@
 # Quantities representation and unit conversions
 
+## 0.6.0
+Large refactoring.
+Removed classes representing LinearConvertible variants. Code moved to superclass that is now "Linear".
+Simplified all PhysicalProperties subclasses API to its units (in Length, Mass, etc).
+Revised all unit names inside PhysicalProperties subclasses.
+
 ## 0.5.0
 Introduction of generics to define the kind of Unit and kind of Quantity,
 such as in `Unit<Mass>` or `Quantity<Length>`.
