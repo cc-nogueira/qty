@@ -49,11 +49,24 @@ void main() {
     expect(Volume().cubicCentimeter.quantityConverterTo(Volume().cubicMeter)(1.0), 0.000001);
     expect(Volume().cubicMillimeter.quantityConverterTo(Volume().cubicCentimeter)(1.0), 0.001);
     expect(Volume().cubicMillimeter.quantityConverterTo(Volume().liter)(1.0), 0.000001);
-    expect(Volume().gallon.quantityConverterTo(Volume().pint)(1.0), 8.0);
-    expect(Volume().gallon.quantityConverterTo(Volume().fluidOunce)(1.0), 160.0);
-    expect(Volume().quart.quantityConverterTo(Volume().gallon)(1.0), 1.0 / 4.0);
-    expect(Volume().pint.quantityConverterTo(Volume().fluidOunce)(1.0), 20.0);
-    expect(Volume().gallon.quantityConverterTo(Volume().cubicMillimeter)(1.0), 4546090.0);
-    expect(Volume().gallon.quantityConverterTo(Volume().liter)(1.0), 4.54609);
+
+    expect(
+        Volume().gallonUS.quantityConverterTo(Volume().gallonUK)(1.0), _closeToValue(0.8326741846));
+
+    expect(Volume().gallonUS.quantityConverterTo(Volume().pintUS)(1.0), 8.0);
+    expect(Volume().gallonUS.quantityConverterTo(Volume().fluidOunceUS)(1.0), 160.0);
+    expect(Volume().quartUS.quantityConverterTo(Volume().gallonUS)(1.0), 1.0 / 4.0);
+    expect(Volume().pintUS.quantityConverterTo(Volume().fluidOunceUS)(1.0), 20.0);
+    expect(Volume().gallonUS.quantityConverterTo(Volume().cubicMillimeter)(1.0), 3785411.784);
+    expect(Volume().gallonUS.quantityConverterTo(Volume().liter)(1.0), 3.785411784);
+
+    expect(Volume().gallonUK.quantityConverterTo(Volume().pintUK)(1.0), 8.0);
+    expect(Volume().gallonUK.quantityConverterTo(Volume().fluidOunceUK)(1.0), 160.0);
+    expect(Volume().quartUK.quantityConverterTo(Volume().gallonUK)(1.0), 1.0 / 4.0);
+    expect(Volume().pintUK.quantityConverterTo(Volume().fluidOunceUK)(1.0), 20.0);
+    expect(Volume().gallonUK.quantityConverterTo(Volume().cubicMillimeter)(1.0), 4546090.0);
+    expect(Volume().gallonUK.quantityConverterTo(Volume().liter)(1.0), 4.54609);
   });
 }
+
+Matcher _closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);
