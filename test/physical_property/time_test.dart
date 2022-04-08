@@ -44,13 +44,13 @@ void main() {
     expect(y, same(Time().year));
   });
 
-  test('Length convertion factors', () {
+  test('Time convertion factors', () {
     expect(Time().millisecond.quantityConverterTo(Time().microsecond)(1.0), closeToValue(1000.0));
     expect(Time().millisecond.quantityConverterTo(Time().second)(1.0), 0.001);
     expect(Time().second.quantityConverterTo(Time().minute)(1.0), 1.0 / 60.0);
     expect(Time().second.quantityConverterTo(Time().hour)(1.0), 1.0 / 3600.0);
     expect(Time().second.quantityConverterTo(Time().day)(1.0), 1.0 / 3600.0 / 24.0);
-    expect(Time().year.quantityConverterTo(Time().second)(1.0), 365.25 * 24.0 * 3600.0);
+    expect(Time().year.quantityConverterTo(Time().second)(1.0), 365.2425 * 24.0 * 3600.0);
     expect(Time().minute.quantityConverterTo(Time().second)(1.0), 60.0);
     expect(Time().minute.quantityConverterTo(Time().hour)(1.0), 1 / 60.0);
     expect(Time().hour.quantityConverterTo(Time().millisecond)(1.0), 3600000.0);
@@ -61,7 +61,7 @@ void main() {
     expect(Time().week.quantityConverterTo(Time().second)(1.0), 3600.0 * 24.0 * 7.0);
     expect(Time().week.quantityConverterTo(Time().day)(1.0), 7.0);
     expect(Time().week.quantityConverterTo(Time().hour)(1.0), 7.0 * 24.0);
-    expect(Time().year.quantityConverterTo(Time().day)(1.0), 365.25);
+    expect(Time().year.quantityConverterTo(Time().day)(1.0), 365.2425);
   });
 }
 
