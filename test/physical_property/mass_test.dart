@@ -60,11 +60,11 @@ void main() {
     expect(Mass().pound.quantityConverterTo(Mass().gram)(1.0), 453.59237);
     expect(Mass().ounce.quantityConverterTo(Mass().pound)(1.0), 1.0 / 16.0);
     expect(Mass().stone.quantityConverterTo(Mass().pound)(1.0), 14.0);
-    expect(Mass().stone.quantityConverterTo(Mass().gram)(1.0), closeToValue(6350.29318));
+    expect(Mass().stone.quantityConverterTo(Mass().gram)(1.0), _closeToValue(6350.29318));
     expect(Mass().stone.quantityConverterTo(Mass().kilogram)(1.0), 6.35029318);
     expect(Mass().quarter.quantityConverterTo(Mass().pound)(1.0), 28.0);
     expect(Mass().quarter.quantityConverterTo(Mass().kilogram)(1.0), 12.70058636);
   });
 }
 
-Matcher closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);
+Matcher _closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);

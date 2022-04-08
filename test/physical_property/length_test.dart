@@ -56,5 +56,3 @@ void main() {
     expect(Length().nauticalMile.quantityConverterTo(Length().meter)(1.0), 1852.0);
   });
 }
-
-Matcher closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);

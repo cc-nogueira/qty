@@ -132,7 +132,7 @@ class Mass extends PhysicalProperty<Mass> {
     ton = si.defineUnit(symbol: 't', name: 'tonne', factor: 1e6);
 
     // Imperial/US
-    final imperial = ImperialSystemOfUnits<Mass>(kind: this);
+    final imperial = SystemOfUnits<Mass>(kind: this, name: 'Imperial/US System of Units');
     pound = imperial.defineBaseUnit(symbol: 'lb', name: 'pound', factor: 453.59237);
 
     ounce = imperial.defineUnit(symbol: 'oz', name: 'ounce', factor: 1.0 / 16.0);

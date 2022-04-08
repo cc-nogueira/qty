@@ -45,7 +45,7 @@ void main() {
   });
 
   test('Time convertion factors', () {
-    expect(Time().millisecond.quantityConverterTo(Time().microsecond)(1.0), closeToValue(1000.0));
+    expect(Time().millisecond.quantityConverterTo(Time().microsecond)(1.0), _closeToValue(1000.0));
     expect(Time().millisecond.quantityConverterTo(Time().second)(1.0), 0.001);
     expect(Time().second.quantityConverterTo(Time().minute)(1.0), 1.0 / 60.0);
     expect(Time().second.quantityConverterTo(Time().hour)(1.0), 1.0 / 3600.0);
@@ -65,4 +65,4 @@ void main() {
   });
 }
 
-Matcher closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);
+Matcher _closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);

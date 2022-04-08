@@ -8,9 +8,10 @@ import 'unit_converter.dart';
 /// Exposes an API to define and manage a domain of [Unit]s, and a single [baseUnit].
 /// Provides access to [QuantityConverter] between units of its domains and to the base unit of another [SystemOfMeasure].
 ///
-/// This is a full functional class that supports most [SystemOfUnits] units, such as [InternationalSystemOfUnits] (SI), [ImperialSystemOfUnits] and [NauticalSystemOfUnits].
-/// It does not support more complex units conversions such as the Fahrenheit scale for Temperature.
-abstract class SystemOfUnits<K extends PhysicalProperty<K>> {
+/// This is a full functional class that supports most [SystemOfUnits] units.
+/// It may be subclassed to use a speciallized unitConverter as it happens in by [InternationalSystemOfUnits] (SI).
+/// And it may be sublclassed to support more complex units conversions such as the Fahrenheit scale for Temperature.
+class SystemOfUnits<K extends PhysicalProperty<K>> {
   SystemOfUnits({required this.name, required this.kind, UnitConverter<K>? unitConverter})
       : unitConverter = unitConverter ?? UnitConverter();
 
@@ -88,13 +89,6 @@ abstract class SystemOfUnits<K extends PhysicalProperty<K>> {
     }
     return unitConverter.convertionFactor(fromUnit: fromUnit, toUnit: toUnit);
   }
-
-  @override
-  bool operator ==(Object other) =>
-      other is SystemOfUnits && kind == other.kind && name == other.name;
-
-  @override
-  int get hashCode => kind.hashCode ^ name.hashCode;
 }
 
 /// A System of Units without unit conversion.
@@ -117,20 +111,6 @@ class InternationalSystemOfUnits<K extends PhysicalProperty<K>> extends SystemOf
           kind: kind,
           unitConverter: unitConverter ?? PowerOfTenUnitConverter<K>(),
         );
-}
-
-/// Imperial or British System of Units.
-///
-/// Will be configured by each [PhysicalProperty] especialization with its collection of [Unit] instances.
-class ImperialSystemOfUnits<K extends PhysicalProperty<K>> extends SystemOfUnits<K> {
-  ImperialSystemOfUnits({required K kind}) : super(name: 'Imperial System of Units', kind: kind);
-}
-
-/// Nautical System of Units.
-///
-/// Will be configured by each [PhysicalProperty] especialization with its collection of [Unit] instances.
-class NauticalSystemOfUnits<K extends PhysicalProperty<K>> extends SystemOfUnits<K> {
-  NauticalSystemOfUnits({required K kind}) : super(name: 'Nautical System of Units', kind: kind);
 }
 
 /// Exception for incompatible [SystemOfMeasurement] instances.

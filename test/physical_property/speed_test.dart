@@ -34,14 +34,14 @@ void main() {
   test('Speed convertion factors', () {
     expect(Speed().meterPerSecond.quantityConverterTo(Speed().kilometerPerHour)(1.0), 3.6);
     expect(Speed().kilometerPerHour.quantityConverterTo(Speed().meterPerSecond)(1.0),
-        closeToValue(0.277777777));
+        _closeToValue(0.277777777));
     expect(Speed().milePerHour.quantityConverterTo(Speed().kilometerPerHour)(1.0), 1.609344);
     expect(Speed().kilometerPerHour.quantityConverterTo(Speed().milePerHour)(1.0),
-        closeToValue(0.621371192));
+        _closeToValue(0.621371192));
     expect(
-        Speed().meterPerSecond.quantityConverterTo(Speed().knot)(1.0), closeToValue(1.943844492));
+        Speed().meterPerSecond.quantityConverterTo(Speed().knot)(1.0), _closeToValue(1.943844492));
     expect(
-        Speed().knot.quantityConverterTo(Speed().meterPerSecond)(1.0), closeToValue(0.514444444));
+        Speed().knot.quantityConverterTo(Speed().meterPerSecond)(1.0), _closeToValue(0.514444444));
   });
 
   test('Compound unit kind test', () {
@@ -51,4 +51,4 @@ void main() {
   });
 }
 
-Matcher closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);
+Matcher _closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);

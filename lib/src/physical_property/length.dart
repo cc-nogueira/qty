@@ -154,7 +154,7 @@ class Length extends PhysicalProperty<Length> {
     micron = si.defineUnit(symbol: 'micron', name: 'micron', factor: 1e-6);
 
     // Imperial/US
-    final imperial = ImperialSystemOfUnits<Length>(kind: this);
+    final imperial = SystemOfUnits<Length>(kind: this, name: 'Imperial/US System of Units');
     yard = imperial.defineBaseUnit(symbol: 'yd', name: 'yard', factor: 0.9144);
     foot = imperial.defineUnit(symbol: 'ft', name: 'foot', factor: 1.0 / 3.0);
     hand = imperial.defineUnit(symbol: 'h', name: 'hand', factor: 1.0 / 9.0);
@@ -162,7 +162,7 @@ class Length extends PhysicalProperty<Length> {
     mil = imperial.defineUnit(symbol: 'mil', name: 'mil', factor: 1.0 / 36e3);
     mile = imperial.defineUnit(symbol: 'mi', name: 'mile', factor: 1760.0);
 
-    final nautical = NauticalSystemOfUnits<Length>(kind: this);
+    final nautical = SystemOfUnits<Length>(kind: this, name: 'Nautical System of Units');
     nauticalMile = nautical.defineBaseUnit(symbol: 'NM', name: 'nautical mile', factor: 1852.0);
     cable = nautical.defineUnit(symbol: 'cb', name: 'cable', factor: 1e-1);
 
