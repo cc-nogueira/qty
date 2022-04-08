@@ -28,7 +28,7 @@ void main() {
     expect(m.name, 'meter');
     expect(km.symbol, 'km');
     expect(km.name, 'kilometer');
-    expect(mm, same(Length().millimiter));
+    expect(mm, same(Length().millimeter));
     expect(cm, same(Length().centimeter));
     expect(dm, same(Length().decimeter));
     expect(m, same(Length().meter));
@@ -36,23 +36,22 @@ void main() {
   });
 
   test('Length convertion factors', () {
-    expect(Length().kilometer.quantityConverterTo(Length().centimeter)(1.0), 100000.0);
+    expect(Length().kilometer.quantityConverterTo(Length().centimeter)(1.0), 1e5);
     expect(Length().kilometer.quantityConverterTo(Length().meter)(1.0), 1000.0);
     expect(Length().meter.quantityConverterTo(Length().decimeter)(1.0), 10.0);
     expect(Length().meter.quantityConverterTo(Length().meter)(1.0), 1.0);
     expect(Length().meter.quantityConverterTo(Length().centimeter)(1.0), 100.0);
-    expect(Length().meter.quantityConverterTo(Length().millimiter)(1.0), 1000.0);
+    expect(Length().meter.quantityConverterTo(Length().millimeter)(1.0), 1000.0);
     expect(Length().decimeter.quantityConverterTo(Length().meter)(1.0), 0.1);
     expect(Length().decimeter.quantityConverterTo(Length().centimeter)(1.0), 10.0);
     expect(Length().centimeter.quantityConverterTo(Length().decimeter)(1.0), 0.1);
     expect(Length().centimeter.quantityConverterTo(Length().meter)(1.0), 0.01);
-    expect(Length().millimiter.quantityConverterTo(Length().centimeter)(1.0), 0.1);
-    expect(Length().millimiter.quantityConverterTo(Length().meter)(1.0), 0.001);
+    expect(Length().millimeter.quantityConverterTo(Length().centimeter)(1.0), 0.1);
+    expect(Length().millimeter.quantityConverterTo(Length().meter)(1.0), 0.001);
     expect(Length().foot.quantityConverterTo(Length().inch)(1.0), 12.0);
     expect(Length().inch.quantityConverterTo(Length().centimeter)(1.0), 2.54);
+    expect(Length().mil.quantityConverterTo(Length().yard)(1.0), 1 / 1 / 36e3);
     expect(Length().mile.quantityConverterTo(Length().yard)(1.0), 1760.0);
-    expect(Length().fathom.quantityConverterTo(Length().inch)(1.0), 72.0);
-    expect(Length().fathom.quantityConverterTo(Length().meter)(1.0), closeToValue(1.8288));
     expect(Length().yard.quantityConverterTo(Length().foot)(1.0), 3.0);
     expect(Length().nauticalMile.quantityConverterTo(Length().meter)(1.0), 1852.0);
   });

@@ -45,7 +45,7 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
     milePerHour = si.defineNamedUnit(symbol: 'mi/h', name: 'miles per hour');
     footPerMinute = si.defineNamedUnit(symbol: 'ft/min', name: 'feet per minute');
     footPerSecond = si.defineNamedUnit(symbol: 'ft/s', name: 'feet per second');
-    knot = si.defineNamedUnit(symbol: 'kt', name: 'knots', units: 'nm/h');
+    knot = si.defineNamedUnit(symbol: 'kt', name: 'knots', units: 'NM/h');
 
     systemsOfUnits.add(si);
   }
