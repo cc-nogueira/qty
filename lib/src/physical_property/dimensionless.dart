@@ -7,22 +7,21 @@ import '../quantity/quantity.dart';
 ///
 /// Dimensionless with FixedSystemOfUnits.
 class Dimensionless extends PhysicalProperty<Dimensionless> {
-  factory Dimensionless() => _instance ??= Dimensionless._('unit');
-
-  Dimensionless._(String kind) : super(kind: kind) {
-    _fixedSystem = FixedSystemOfUnits<Dimensionless>(kind: this);
-    _fixedSystem.defineBaseUnit(symbol: 'un', name: 'unit', factor: 1.0);
-
-    systemsOfUnits.addAll([_fixedSystem]);
-  }
+  factory Dimensionless() => _instance ??= Dimensionless._();
+  Dimensionless._() : super(kind: 'unit');
 
   static Dimensionless? _instance;
-  late FixedSystemOfUnits<Dimensionless> _fixedSystem;
 
-  static Quantity<Dimensionless> units({required double amount}) =>
-      Quantity(unit: un, amount: amount);
+  late Unit<Dimensionless> un;
 
-  static Unit<Dimensionless> get un => Dimensionless().unUnit;
+  static Quantity<Dimensionless> units(amount) =>
+      Quantity(unit: Dimensionless().un, amount: amount);
 
-  Unit<Dimensionless> get unUnit => _fixedSystem.unitWith(symbol: 'un')!;
+  @override
+  void defineUnits() {
+    final fixedSystem = FixedSystemOfUnits<Dimensionless>(kind: this);
+    un = fixedSystem.defineBaseUnit(symbol: 'un', name: 'unit', factor: 1.0);
+
+    systemsOfUnits.addAll([fixedSystem]);
+  }
 }

@@ -20,7 +20,7 @@ abstract class CompoundPhysicalProperty<K extends CompoundPhysicalProperty<K, A,
   Pattern get compoundOperationSymbolPattern;
 }
 
-class MultipliedPhysicalProperties<
+abstract class MultipliedPhysicalProperties<
     K extends MultipliedPhysicalProperties<K, A, B>,
     A extends PhysicalProperty<A>,
     B extends PhysicalProperty<B>> extends CompoundPhysicalProperty<K, A, B> {
@@ -34,7 +34,7 @@ class MultipliedPhysicalProperties<
   Pattern get compoundOperationSymbolPattern => RegExp('[.*]');
 }
 
-class DividedPhysicalProperties<
+abstract class DividedPhysicalProperties<
     K extends DividedPhysicalProperties<K, A, B>,
     A extends PhysicalProperty<A>,
     B extends PhysicalProperty<B>> extends CompoundPhysicalProperty<K, A, B> {

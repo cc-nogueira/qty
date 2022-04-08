@@ -12,15 +12,15 @@ void main() {
 
   test('Mass units', () {
     final mass = Mass();
-    final none = mass.unitWith(symbol: 'unknown');
-    final g = mass.unitWith(symbol: 'g')!;
-    final kg = mass.unitWith(symbol: 'kg')!;
-    final mg = mass.unitWith(symbol: 'mg')!;
-    final t = mass.unitWith(symbol: 't')!;
-    final lb = mass.unitWith(symbol: 'lb')!;
-    final oz = mass.unitWith(symbol: 'oz')!;
-    final st = mass.unitWith(symbol: 'st')!;
-    final qr = mass.unitWith(symbol: 'qr')!;
+    final none = Mass().unitWith(symbol: 'unknown');
+    final g = Mass().unitWith(symbol: 'g')!;
+    final kg = Mass().unitWith(symbol: 'kg')!;
+    final mg = Mass().unitWith(symbol: 'mg')!;
+    final t = Mass().unitWith(symbol: 't')!;
+    final lb = Mass().unitWith(symbol: 'lb')!;
+    final oz = Mass().unitWith(symbol: 'oz')!;
+    final st = Mass().unitWith(symbol: 'st')!;
+    final qr = Mass().unitWith(symbol: 'qr')!;
     expect(none, isNull);
     expect(g.symbol, 'g');
     expect(g.name, 'gram');
@@ -38,35 +38,34 @@ void main() {
     expect(st.name, 'stone');
     expect(qr.symbol, 'qr');
     expect(qr.name, 'quarter');
-    expect(g, same(Mass.g));
-    expect(kg, same(Mass.kg));
-    expect(mg, same(Mass.mg));
-    expect(t, same(Mass.t));
-    expect(lb, same(Mass.lb));
-    expect(oz, same(Mass.oz));
-    expect(st, same(Mass.st));
-    expect(qr, same(Mass.qr));
+    expect(g, same(Mass().gram));
+    expect(kg, same(Mass().kilogram));
+    expect(mg, same(Mass().milligram));
+    expect(t, same(Mass().ton));
+    expect(lb, same(Mass().pound));
+    expect(oz, same(Mass().ounce));
+    expect(st, same(Mass().stone));
+    expect(qr, same(Mass().quarter));
   });
 
   test('Mass convertion factors', () {
-    expect(Mass.mg.quantityConverterTo(Mass.g)(1.0), 0.001);
-    expect(Mass.mg.quantityConverterTo(Mass.kg)(1.0), 0.000001);
-    expect(Mass.g.quantityConverterTo(Mass.kg)(1.0), 0.001);
-    expect(Mass.g.quantityConverterTo(Mass.mg)(1.0), 1000.0);
-    expect(Mass.kg.quantityConverterTo(Mass.g)(1.0), 1000.0);
-    expect(Mass.kg.quantityConverterTo(Mass.mg)(1.0), 1000000.0);
-    expect(Mass.lb.quantityConverterTo(Mass.oz)(1.0), 16.0);
-    expect(Mass.lb.quantityConverterTo(Mass.kg)(1.0), 0.45359237);
-    expect(Mass.lb.quantityConverterTo(Mass.g)(1.0), 453.59237);
-    expect(Mass.lb.quantityConverterTo(Mass.g)(1.0), 453.59237);
-    expect(Mass.oz.quantityConverterTo(Mass.lb)(1.0), 1.0 / 16.0);
-    expect(Mass.st.quantityConverterTo(Mass.lb)(1.0), 14.0);
-    expect(Mass.st.quantityConverterTo(Mass.g)(1.0), closeToValue(6350.29318));
-    expect(Mass.st.quantityConverterTo(Mass.kg)(1.0), 6.35029318);
-    expect(Mass.qr.quantityConverterTo(Mass.lb)(1.0), 28.0);
-    expect(Mass.qr.quantityConverterTo(Mass.kg)(1.0), 12.70058636);
+    expect(Mass().milligram.quantityConverterTo(Mass().gram)(1.0), 0.001);
+    expect(Mass().milligram.quantityConverterTo(Mass().kilogram)(1.0), 0.000001);
+    expect(Mass().gram.quantityConverterTo(Mass().kilogram)(1.0), 0.001);
+    expect(Mass().gram.quantityConverterTo(Mass().milligram)(1.0), 1000.0);
+    expect(Mass().kilogram.quantityConverterTo(Mass().gram)(1.0), 1000.0);
+    expect(Mass().kilogram.quantityConverterTo(Mass().milligram)(1.0), 1000000.0);
+    expect(Mass().pound.quantityConverterTo(Mass().ounce)(1.0), 16.0);
+    expect(Mass().pound.quantityConverterTo(Mass().kilogram)(1.0), 0.45359237);
+    expect(Mass().pound.quantityConverterTo(Mass().gram)(1.0), 453.59237);
+    expect(Mass().pound.quantityConverterTo(Mass().gram)(1.0), 453.59237);
+    expect(Mass().ounce.quantityConverterTo(Mass().pound)(1.0), 1.0 / 16.0);
+    expect(Mass().stone.quantityConverterTo(Mass().pound)(1.0), 14.0);
+    expect(Mass().stone.quantityConverterTo(Mass().gram)(1.0), closeToValue(6350.29318));
+    expect(Mass().stone.quantityConverterTo(Mass().kilogram)(1.0), 6.35029318);
+    expect(Mass().quarter.quantityConverterTo(Mass().pound)(1.0), 28.0);
+    expect(Mass().quarter.quantityConverterTo(Mass().kilogram)(1.0), 12.70058636);
   });
 }
 
-Matcher closeToValue(double value) =>
-    inInclusiveRange(value - 0.000000001, value + 0.000000001);
+Matcher closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);

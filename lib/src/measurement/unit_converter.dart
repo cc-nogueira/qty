@@ -24,14 +24,6 @@ class UnitConverter<K extends PhysicalProperty<K>> {
       (quantity) => quantity * convertionFactor(fromUnit: fromUnit, toUnit: toUnit);
 }
 
-class FixedAmountUnitConverter<K extends PhysicalProperty<K>> extends UnitConverter<K> {
-  FixedAmountUnitConverter();
-
-  @override
-  QuantityConverter quantityConverter({required Unit<K> fromUnit, required Unit<K> toUnit}) =>
-      (double value) => value;
-}
-
 /// [UnitConverter] that uses the decimal system for [Unit] conversion.
 ///
 /// Has better precisicion using the difference in the power of ten factor for [Unit] conversion,
@@ -49,4 +41,12 @@ class PowerOfTenUnitConverter<K extends PhysicalProperty<K>> extends UnitConvert
   double convertionFactor({required Unit<K> fromUnit, required Unit<K> toUnit}) {
     return pow(10, _powers[fromUnit]! - _powers[toUnit]!).toDouble();
   }
+}
+
+class FixedAmountUnitConverter<K extends PhysicalProperty<K>> extends UnitConverter<K> {
+  FixedAmountUnitConverter();
+
+  @override
+  QuantityConverter quantityConverter({required Unit<K> fromUnit, required Unit<K> toUnit}) =>
+      (double value) => value;
 }

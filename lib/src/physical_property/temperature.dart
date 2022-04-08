@@ -14,61 +14,59 @@ class TemperatureConverter extends UnitConverter<Temperature> {
   @override
   QuantityConverter quantityConverter({required Unit fromUnit, required Unit toUnit}) {
     if (fromUnit == toUnit) return (double value) => value;
-    if (fromUnit == Temperature.K) {
-      if (toUnit == Temperature.C) return (double k) => k - 273.15;
-      if (toUnit == Temperature.F) return (double k) => k * 1.8 - 459.67;
-      if (toUnit == Temperature.R) return (double k) => k * 1.8;
+    if (fromUnit == Temperature().kelvin) {
+      if (toUnit == Temperature().celcius) return (double k) => k - 273.15;
+      if (toUnit == Temperature().fahrenheit) return (double k) => k * 1.8 - 459.67;
+      if (toUnit == Temperature().rankine) return (double k) => k * 1.8;
     }
-    if (fromUnit == Temperature.C) {
-      if (toUnit == Temperature.K) return (double c) => c + 273.15;
-      if (toUnit == Temperature.F) return (double c) => c * 1.8 + 32.0;
-      if (toUnit == Temperature.R) return (double c) => (c + 273.15) * 1.8;
+    if (fromUnit == Temperature().celcius) {
+      if (toUnit == Temperature().kelvin) return (double c) => c + 273.15;
+      if (toUnit == Temperature().fahrenheit) return (double c) => c * 1.8 + 32.0;
+      if (toUnit == Temperature().rankine) return (double c) => (c + 273.15) * 1.8;
     }
-    if (fromUnit == Temperature.F) {
-      if (toUnit == Temperature.K) return (double f) => (f - 32) / 1.8 + 273.15;
-      if (toUnit == Temperature.C) return (double f) => (f - 32.0) / 1.8;
-      if (toUnit == Temperature.R) return (double f) => f + 459.67;
+    if (fromUnit == Temperature().fahrenheit) {
+      if (toUnit == Temperature().kelvin) return (double f) => (f - 32) / 1.8 + 273.15;
+      if (toUnit == Temperature().celcius) return (double f) => (f - 32.0) / 1.8;
+      if (toUnit == Temperature().rankine) return (double f) => f + 459.67;
     }
-    if (fromUnit == Temperature.R) {
-      if (toUnit == Temperature.K) return (double r) => r / 1.8;
-      if (toUnit == Temperature.C) return (double r) => (r - 491.67) / 1.8;
-      if (toUnit == Temperature.F) return (double r) => r - 459.67;
+    if (fromUnit == Temperature().rankine) {
+      if (toUnit == Temperature().kelvin) return (double r) => r / 1.8;
+      if (toUnit == Temperature().celcius) return (double r) => (r - 491.67) / 1.8;
+      if (toUnit == Temperature().fahrenheit) return (double r) => r - 459.67;
     }
     throw ArgumentError('Unknown temperature convertion from $fromUnit to $toUnit');
   }
 }
 
 class Temperature extends PhysicalProperty<Temperature> {
-  factory Temperature() => _instance ??= Temperature._('temperature');
+  factory Temperature() => _instance ??= Temperature._();
 
-  Temperature._(String kind) : super(kind: kind) {
-    final _system = TemperatureSystemOfUnits(kind: this);
-    kUnit = _system.defineBaseUnit(symbol: 'K', name: 'Kelvin', factor: 1.0);
-    cUnit = _system.defineUnit(symbol: '°C', name: 'Celcius');
-    fUnit = _system.defineUnit(symbol: '°F', name: 'Fahrenheit');
-    rUnit = _system.defineUnit(symbol: '°R', name: 'Rankine');
-
-    systemsOfUnits.add(_system);
-  }
+  Temperature._() : super(kind: 'temperature');
 
   static Temperature? _instance;
 
-  static Quantity<Temperature> kelvins({required double amount}) =>
-      Quantity(unit: K, amount: amount);
-  static Quantity<Temperature> degreesCelcius({required double amount}) =>
-      Quantity(unit: C, amount: amount);
-  static Quantity<Temperature> degreesFahrenheit({required double amount}) =>
-      Quantity(unit: F, amount: amount);
-  static Quantity<Temperature> degreesRankine({required double amount}) =>
-      Quantity(unit: R, amount: amount);
+  late final Unit<Temperature> kelvin;
+  late final Unit<Temperature> celcius;
+  late final Unit<Temperature> fahrenheit;
+  late final Unit<Temperature> rankine;
 
-  static Unit<Temperature> get K => Temperature().kUnit;
-  static Unit<Temperature> get C => Temperature().cUnit;
-  static Unit<Temperature> get F => Temperature().fUnit;
-  static Unit<Temperature> get R => Temperature().rUnit;
+  static Quantity<Temperature> kelvins(double amount) =>
+      Quantity(unit: Temperature().kelvin, amount: amount);
+  static Quantity<Temperature> degreesCelcius(double amount) =>
+      Quantity(unit: Temperature().celcius, amount: amount);
+  static Quantity<Temperature> degreesFahrenheit(double amount) =>
+      Quantity(unit: Temperature().fahrenheit, amount: amount);
+  static Quantity<Temperature> degreesRankine(double amount) =>
+      Quantity(unit: Temperature().rankine, amount: amount);
 
-  late final Unit<Temperature> kUnit;
-  late final Unit<Temperature> cUnit;
-  late final Unit<Temperature> fUnit;
-  late final Unit<Temperature> rUnit;
+  @override
+  void defineUnits() {
+    final _system = TemperatureSystemOfUnits(kind: this);
+    kelvin = _system.defineBaseUnit(symbol: 'K', name: 'Kelvin', factor: 1.0);
+    celcius = _system.defineUnit(symbol: '°C', name: 'Celcius');
+    fahrenheit = _system.defineUnit(symbol: '°F', name: 'Fahrenheit');
+    rankine = _system.defineUnit(symbol: '°R', name: 'Rankine');
+
+    systemsOfUnits.add(_system);
+  }
 }

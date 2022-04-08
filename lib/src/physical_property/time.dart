@@ -10,58 +10,45 @@ import '../quantity/quantity.dart';
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
 class Time extends PhysicalProperty<Time> {
-  factory Time() => _instance ??= Time._('time');
-
-  Time._(String kind) : super(kind: kind) {
-    _internationalSystemOfUnits =
-        InternationalSystemOfUnits<Time>(kind: this, unitConverter: UnitConverter<Time>());
-    _internationalSystemOfUnits.defineBaseUnit(symbol: 's', name: 'second', factor: 1.0);
-    _internationalSystemOfUnits.defineUnit(symbol: 'ns', name: 'nanosecond', factor: 0.000000001);
-    _internationalSystemOfUnits.defineUnit(symbol: 'us', name: 'microsecond', factor: 0.000001);
-    _internationalSystemOfUnits.defineUnit(symbol: 'ms', name: 'millisecond', factor: 0.001);
-    _internationalSystemOfUnits.defineUnit(symbol: 'min', name: 'minute', factor: 60.0);
-    _internationalSystemOfUnits.defineUnit(symbol: 'hr', name: 'hour', factor: 3600.0);
-    _internationalSystemOfUnits.defineUnit(symbol: 'h', name: 'hour', factor: 3600.0);
-    _internationalSystemOfUnits.defineUnit(symbol: 'd', name: 'day', factor: 86400.0);
-    _internationalSystemOfUnits.defineUnit(symbol: 'w', name: 'week', factor: 604800.0);
-    _internationalSystemOfUnits.defineUnit(symbol: 'y', name: 'Julian year', factor: 31557600.0);
-
-    systemsOfUnits.addAll([_internationalSystemOfUnits]);
-  }
+  factory Time() => _instance ??= Time._();
+  Time._() : super(kind: 'time');
 
   static Time? _instance;
-  late InternationalSystemOfUnits<Time> _internationalSystemOfUnits;
+  late Unit<Time> second;
+  late Unit<Time> nanosecond;
+  late Unit<Time> microsecond;
+  late Unit<Time> millisecond;
+  late Unit<Time> minute;
+  late Unit<Time> hour;
+  late Unit<Time> day;
+  late Unit<Time> week;
+  late Unit<Time> year;
 
-  static Quantity<Time> seconds({required double amount}) => Quantity(unit: s, amount: amount);
-  static Quantity<Time> nanoseconds({required double amount}) => Quantity(unit: ns, amount: amount);
-  static Quantity<Time> microseconds({required double amount}) =>
-      Quantity(unit: us, amount: amount);
-  static Quantity<Time> milliseconds({required double amount}) =>
-      Quantity(unit: ms, amount: amount);
-  static Quantity<Time> minutes({required double amount}) => Quantity(unit: min, amount: amount);
-  static Quantity<Time> hours({required double amount}) => Quantity(unit: h, amount: amount);
-  static Quantity<Time> days({required double amount}) => Quantity(unit: d, amount: amount);
-  static Quantity<Time> weeks({required double amount}) => Quantity(unit: w, amount: amount);
+  static Quantity<Time> seconds(double amount) => Quantity(unit: Time().second, amount: amount);
+  static Quantity<Time> nanoseconds(double amount) =>
+      Quantity(unit: Time().nanosecond, amount: amount);
+  static Quantity<Time> microseconds(double amount) =>
+      Quantity(unit: Time().microsecond, amount: amount);
+  static Quantity<Time> milliseconds(double amount) =>
+      Quantity(unit: Time().millisecond, amount: amount);
+  static Quantity<Time> minutes(double amount) => Quantity(unit: Time().minute, amount: amount);
+  static Quantity<Time> hours(double amount) => Quantity(unit: Time().hour, amount: amount);
+  static Quantity<Time> days(double amount) => Quantity(unit: Time().day, amount: amount);
+  static Quantity<Time> weeks(double amount) => Quantity(unit: Time().week, amount: amount);
 
-  static Unit<Time> get s => Time().sUnit;
-  static Unit<Time> get ns => Time().nsUnit;
-  static Unit<Time> get us => Time().usUnit;
-  static Unit<Time> get ms => Time().msUnit;
-  static Unit<Time> get min => Time().minUnit;
-  static Unit<Time> get hr => Time().hrUnit;
-  static Unit<Time> get h => Time().hUnit;
-  static Unit<Time> get d => Time().dUnit;
-  static Unit<Time> get w => Time().wUnit;
-  static Unit<Time> get y => Time().yUnit;
+  @override
+  void defineUnits() {
+    final si = InternationalSystemOfUnits<Time>(kind: this, unitConverter: UnitConverter<Time>());
+    second = si.defineBaseUnit(symbol: 's', name: 'second', factor: 1.0);
+    nanosecond = si.defineUnit(symbol: 'ns', name: 'nanosecond', factor: 0.000000001);
+    microsecond = si.defineUnit(symbol: 'us', name: 'microsecond', factor: 0.000001);
+    millisecond = si.defineUnit(symbol: 'ms', name: 'millisecond', factor: 0.001);
+    minute = si.defineUnit(symbol: 'min', name: 'minute', factor: 60.0);
+    hour = si.defineUnit(symbol: 'h', name: 'hour', factor: 3600.0);
+    day = si.defineUnit(symbol: 'd', name: 'day', factor: 86400.0);
+    week = si.defineUnit(symbol: 'w', name: 'week', factor: 604800.0);
+    year = si.defineUnit(symbol: 'y', name: 'year', factor: 31557600.0);
 
-  Unit<Time> get sUnit => _internationalSystemOfUnits.unitWith(symbol: 's')!;
-  Unit<Time> get nsUnit => _internationalSystemOfUnits.unitWith(symbol: 'ns')!;
-  Unit<Time> get usUnit => _internationalSystemOfUnits.unitWith(symbol: 'us')!;
-  Unit<Time> get msUnit => _internationalSystemOfUnits.unitWith(symbol: 'ms')!;
-  Unit<Time> get minUnit => _internationalSystemOfUnits.unitWith(symbol: 'min')!;
-  Unit<Time> get hrUnit => _internationalSystemOfUnits.unitWith(symbol: 'hr')!;
-  Unit<Time> get hUnit => _internationalSystemOfUnits.unitWith(symbol: 'h')!;
-  Unit<Time> get dUnit => _internationalSystemOfUnits.unitWith(symbol: 'd')!;
-  Unit<Time> get wUnit => _internationalSystemOfUnits.unitWith(symbol: 'w')!;
-  Unit<Time> get yUnit => _internationalSystemOfUnits.unitWith(symbol: 'y')!;
+    systemsOfUnits.addAll([si]);
+  }
 }

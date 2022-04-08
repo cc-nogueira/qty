@@ -18,9 +18,9 @@ void main() {
   print('Quantity q2 = Quantity(amount: 2.0, unit: Mass.kg);');
   print('Quantity q3 = Mass.ounces(amount: 10.0);');
   print('Quantity q4 = Quantity(amount: 5.0, unit: Mass().unitWith(symbol: \'lb\'));');
-  final q1 = Mass.grams(amount: 200.0);
-  final q2 = Quantity(amount: 2.0, unit: Mass.kg);
-  final q3 = Mass.ounces(amount: 10.0);
+  final q1 = Mass.grams(200.0);
+  final q2 = Quantity(amount: 2.0, unit: Mass().kilogram);
+  final q3 = Mass.ounces(10.0);
   final q4 = Quantity(amount: 5.0, unit: Mass().unitWith(symbol: 'lb')!);
 
   print('');
@@ -38,5 +38,5 @@ void main() {
 
   print('');
   print('Unit conversion:');
-  print('q2 in lb = ${q2.convertTo(Mass.lb)}');
+  print('q2 in lb = ${q2.convertTo(Mass().pound)}');
 }

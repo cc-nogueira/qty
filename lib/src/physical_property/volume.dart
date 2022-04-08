@@ -9,77 +9,93 @@ import '../quantity/quantity.dart';
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
 class Volume extends PhysicalProperty<Volume> {
-  factory Volume() => _instance ??= Volume._('volume');
+  factory Volume() => _instance ??= Volume._();
 
-  Volume._(String kind) : super(kind: kind) {
-    _internationalSystemOfUnits = InternationalSystemOfUnits<Volume>(kind: this);
-    _internationalSystemOfUnits.defineBaseUnit(symbol: 'l', name: 'litre', factor: 1.0);
-    _internationalSystemOfUnits.defineUnit(
-        symbol: 'mm3', name: 'cubic millimeter', factor: 0.000001);
-    _internationalSystemOfUnits.defineUnit(symbol: 'cm3', name: 'cubic centimeter', factor: 0.001);
-    _internationalSystemOfUnits.defineUnit(symbol: 'dm3', name: 'cubic decimeter', factor: 1.0);
-    _internationalSystemOfUnits.defineUnit(symbol: 'm3', name: 'cubic meter', factor: 1000.0);
-
-    _imperialSystemOfUnits = ImperialSystemOfUnits<Volume>(kind: this);
-    _imperialSystemOfUnits.defineBaseUnit(symbol: 'gal', name: 'galon', factor: 4.54609);
-    _imperialSystemOfUnits.defineUnit(symbol: 'fl oz', name: 'fluid ounce', factor: 1.0 / 160.0);
-    _imperialSystemOfUnits.defineUnit(symbol: 'gi', name: 'gill', factor: 1.0 / 32.0);
-    _imperialSystemOfUnits.defineUnit(symbol: 'pt', name: 'pint', factor: 1.0 / 8.0);
-    _imperialSystemOfUnits.defineUnit(symbol: 'qt', name: 'quart', factor: 1.0 / 4.0);
-    _imperialSystemOfUnits.defineUnit(symbol: 'peck', name: 'peck', factor: 2.0);
-    _imperialSystemOfUnits.defineUnit(symbol: 'bu', name: 'bushel', factor: 8.0);
-    _imperialSystemOfUnits.defineUnit(symbol: 'qr', name: 'quarter', factor: 64.0);
-
-    systemsOfUnits.addAll([_internationalSystemOfUnits, _imperialSystemOfUnits]);
-  }
+  Volume._() : super(kind: 'volume');
 
   static Volume? _instance;
-  late InternationalSystemOfUnits<Volume> _internationalSystemOfUnits;
-  late ImperialSystemOfUnits<Volume> _imperialSystemOfUnits;
 
-  static Quantity<Volume> cubicMillimimeters({required double amount}) =>
-      Quantity(unit: mm3, amount: amount);
-  static Quantity<Volume> cubicCentimeters({required double amount}) =>
-      Quantity(unit: cm3, amount: amount);
-  static Quantity<Volume> cubicDecimimeters({required double amount}) =>
-      Quantity(unit: dm3, amount: amount);
-  static Quantity<Volume> cubicMeters({required double amount}) =>
-      Quantity(unit: m3, amount: amount);
-  static Quantity<Volume> liters({required double amount}) => Quantity(unit: l, amount: amount);
-  static Quantity<Volume> galons({required double amount}) => Quantity(unit: gal, amount: amount);
-  static Quantity<Volume> ounces({required double amount}) => Quantity(unit: flOz, amount: amount);
-  static Quantity<Volume> gills({required double amount}) => Quantity(unit: gi, amount: amount);
-  static Quantity<Volume> pints({required double amount}) => Quantity(unit: pt, amount: amount);
-  static Quantity<Volume> quarts({required double amount}) => Quantity(unit: qt, amount: amount);
-  static Quantity<Volume> pecks({required double amount}) => Quantity(unit: peck, amount: amount);
-  static Quantity<Volume> bushels({required double amount}) => Quantity(unit: bu, amount: amount);
-  static Quantity<Volume> quarters({required double amount}) => Quantity(unit: qr, amount: amount);
+  late Unit<Volume> cubicMillimeter;
+  late Unit<Volume> cubicCentimeter;
+  late Unit<Volume> cubicDecimeter;
+  late Unit<Volume> cubicMeter;
+  late Unit<Volume> milliliter;
+  late Unit<Volume> centiliter;
+  late Unit<Volume> deciliter;
+  late Unit<Volume> liter;
 
-  static Unit<Volume> get mm3 => Volume().mm3Unit;
-  static Unit<Volume> get cm3 => Volume().cm3Unit;
-  static Unit<Volume> get dm3 => Volume().dm3Unit;
-  static Unit<Volume> get m3 => Volume().m3Unit;
-  static Unit<Volume> get l => Volume().lUnit;
-  static Unit<Volume> get flOz => Volume().flOzUnit;
-  static Unit<Volume> get gi => Volume().giUnit;
-  static Unit<Volume> get pt => Volume().ptUnit;
-  static Unit<Volume> get qt => Volume().qtUnit;
-  static Unit<Volume> get gal => Volume().galUnit;
-  static Unit<Volume> get peck => Volume().peckUnit;
-  static Unit<Volume> get bu => Volume().buUnit;
-  static Unit<Volume> get qr => Volume().qrUnit;
+  late Unit<Volume> gallon;
+  late Unit<Volume> fluidOunce;
+  late Unit<Volume> gill;
+  late Unit<Volume> pint;
+  late Unit<Volume> quart;
+  late Unit<Volume> peck;
+  late Unit<Volume> bushel;
+  late Unit<Volume> quarter;
 
-  Unit<Volume> get mm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'mm3')!;
-  Unit<Volume> get cm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'cm3')!;
-  Unit<Volume> get dm3Unit => _internationalSystemOfUnits.unitWith(symbol: 'dm3')!;
-  Unit<Volume> get m3Unit => _internationalSystemOfUnits.unitWith(symbol: 'm3')!;
-  Unit<Volume> get lUnit => _internationalSystemOfUnits.unitWith(symbol: 'l')!;
-  Unit<Volume> get flOzUnit => _imperialSystemOfUnits.unitWith(symbol: 'fl oz')!;
-  Unit<Volume> get giUnit => _imperialSystemOfUnits.unitWith(symbol: 'gi')!;
-  Unit<Volume> get ptUnit => _imperialSystemOfUnits.unitWith(symbol: 'pt')!;
-  Unit<Volume> get qtUnit => _imperialSystemOfUnits.unitWith(symbol: 'qt')!;
-  Unit<Volume> get galUnit => _imperialSystemOfUnits.unitWith(symbol: 'gal')!;
-  Unit<Volume> get peckUnit => _imperialSystemOfUnits.unitWith(symbol: 'peck')!;
-  Unit<Volume> get buUnit => _imperialSystemOfUnits.unitWith(symbol: 'bu')!;
-  Unit<Volume> get qrUnit => _imperialSystemOfUnits.unitWith(symbol: 'qr')!;
+  static Quantity<Volume> cubicMillimeters(double amount) =>
+      Quantity(unit: Volume().cubicMillimeter, amount: amount);
+
+  static Quantity<Volume> cubicCentimeters(double amount) =>
+      Quantity(unit: Volume().cubicCentimeter, amount: amount);
+
+  static Quantity<Volume> cubicDecimeters(double amount) =>
+      Quantity(unit: Volume().cubicDecimeter, amount: amount);
+
+  static Quantity<Volume> cubicMeters(double amount) =>
+      Quantity(unit: Volume().cubicMeter, amount: amount);
+
+  static Quantity<Volume> milliliters(double amount) =>
+      Quantity(unit: Volume().milliliter, amount: amount);
+
+  static Quantity<Volume> centiliters(double amount) =>
+      Quantity(unit: Volume().centiliter, amount: amount);
+
+  static Quantity<Volume> deciliters(double amount) =>
+      Quantity(unit: Volume().deciliter, amount: amount);
+
+  static Quantity<Volume> liters(double amount) => Quantity(unit: Volume().liter, amount: amount);
+
+  static Quantity<Volume> gallons(double amount) => Quantity(unit: Volume().gallon, amount: amount);
+
+  static Quantity<Volume> ounces(double amount) =>
+      Quantity(unit: Volume().fluidOunce, amount: amount);
+
+  static Quantity<Volume> gills(double amount) => Quantity(unit: Volume().gill, amount: amount);
+
+  static Quantity<Volume> pints(double amount) => Quantity(unit: Volume().pint, amount: amount);
+
+  static Quantity<Volume> quarts(double amount) => Quantity(unit: Volume().quart, amount: amount);
+
+  static Quantity<Volume> pecks(double amount) => Quantity(unit: Volume().peck, amount: amount);
+
+  static Quantity<Volume> bushels(double amount) => Quantity(unit: Volume().bushel, amount: amount);
+
+  static Quantity<Volume> quarters(double amount) =>
+      Quantity(unit: Volume().quarter, amount: amount);
+
+  @override
+  void defineUnits() {
+    final si = InternationalSystemOfUnits<Volume>(kind: this);
+    liter = si.defineBaseUnit(symbol: 'l', name: 'liter', factor: 1.0);
+    cubicMillimeter = si.defineUnit(symbol: 'mm3', name: 'cubic millimeter', factor: 0.000001);
+    cubicCentimeter = si.defineUnit(symbol: 'cm3', name: 'cubic centimeter', factor: 0.001);
+    cubicDecimeter = si.defineUnit(symbol: 'dm3', name: 'cubic decimeter', factor: 1.0);
+    cubicMeter = si.defineUnit(symbol: 'm3', name: 'cubic meter', factor: 1000.0);
+    milliliter = si.defineUnit(symbol: 'ml', name: 'milliliter', factor: 0.001);
+    centiliter = si.defineUnit(symbol: 'cl', name: 'centiliter', factor: 0.01);
+    deciliter = si.defineUnit(symbol: 'dl', name: 'deciliter', factor: 0.1);
+
+    final imperial = ImperialSystemOfUnits<Volume>(kind: this);
+    gallon = imperial.defineBaseUnit(symbol: 'gal', name: 'gallon', factor: 4.54609);
+    fluidOunce = imperial.defineUnit(symbol: 'fl oz', name: 'fluid ounce', factor: 1.0 / 160.0);
+    gill = imperial.defineUnit(symbol: 'gi', name: 'gill', factor: 1.0 / 32.0);
+    pint = imperial.defineUnit(symbol: 'pt', name: 'pint', factor: 1.0 / 8.0);
+    quart = imperial.defineUnit(symbol: 'qt', name: 'quart', factor: 1.0 / 4.0);
+    peck = imperial.defineUnit(symbol: 'peck', name: 'peck', factor: 2.0);
+    bushel = imperial.defineUnit(symbol: 'bu', name: 'bushel', factor: 8.0);
+    quarter = imperial.defineUnit(symbol: 'qr', name: 'quarter', factor: 64.0);
+
+    systemsOfUnits.addAll([si, imperial]);
+  }
 }

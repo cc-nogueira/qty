@@ -1,5 +1,4 @@
-import 'package:qty/src/physical_property/time.dart';
-import 'package:qty/src/physical_property/volume.dart';
+import 'package:qty/qty.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -17,7 +16,7 @@ void main() {
     final ms = time.unitWith(symbol: 'ms')!;
     final s = time.unitWith(symbol: 's')!;
     final min = time.unitWith(symbol: 'min')!;
-    final hr = time.unitWith(symbol: 'hr')!;
+    final hr = time.unitWith(symbol: 'h')!;
     final d = time.unitWith(symbol: 'd')!;
     final w = time.unitWith(symbol: 'w')!;
     final y = time.unitWith(symbol: 'y')!;
@@ -28,43 +27,42 @@ void main() {
     expect(s.name, 'second');
     expect(min.symbol, 'min');
     expect(min.name, 'minute');
-    expect(hr.symbol, 'hr');
+    expect(hr.symbol, 'h');
     expect(hr.name, 'hour');
     expect(d.symbol, 'd');
     expect(d.name, 'day');
     expect(w.symbol, 'w');
     expect(w.name, 'week');
     expect(y.symbol, 'y');
-    expect(y.name, 'Julian year');
-    expect(ms, same(Time.ms));
-    expect(s, same(Time.s));
-    expect(min, same(Time.min));
-    expect(hr, same(Time.hr));
-    expect(d, same(Time.d));
-    expect(w, same(Time.w));
-    expect(y, same(Time.y));
+    expect(y.name, 'year');
+    expect(ms, same(Time().millisecond));
+    expect(s, same(Time().second));
+    expect(min, same(Time().minute));
+    expect(hr, same(Time().hour));
+    expect(d, same(Time().day));
+    expect(w, same(Time().week));
+    expect(y, same(Time().year));
   });
 
   test('Length convertion factors', () {
-    expect(Time.ms.quantityConverterTo(Time.us)(1.0), closeToValue(1000.0));
-    expect(Time.ms.quantityConverterTo(Time.s)(1.0), 0.001);
-    expect(Time.s.quantityConverterTo(Time.min)(1.0), 1.0 / 60.0);
-    expect(Time.s.quantityConverterTo(Time.hr)(1.0), 1.0 / 3600.0);
-    expect(Time.s.quantityConverterTo(Time.d)(1.0), 1.0 / 3600.0 / 24.0);
-    expect(Time.y.quantityConverterTo(Time.s)(1.0), 365.25 * 24.0 * 3600.0);
-    expect(Time.min.quantityConverterTo(Time.s)(1.0), 60.0);
-    expect(Time.min.quantityConverterTo(Time.hr)(1.0), 1 / 60.0);
-    expect(Time.hr.quantityConverterTo(Time.ms)(1.0), 3600000.0);
-    expect(Time.hr.quantityConverterTo(Time.s)(1.0), 3600.0);
-    expect(Time.hr.quantityConverterTo(Time.d)(1.0), 1.0 / 24.0);
-    expect(Time.d.quantityConverterTo(Time.min)(1.0), 24.0 * 60.0);
-    expect(Time.d.quantityConverterTo(Time.hr)(1.0), 24.0);
-    expect(Time.w.quantityConverterTo(Time.s)(1.0), 3600.0 * 24.0 * 7.0);
-    expect(Time.w.quantityConverterTo(Time.d)(1.0), 7.0);
-    expect(Time.w.quantityConverterTo(Time.hr)(1.0), 7.0 * 24.0);
-    expect(Time.y.quantityConverterTo(Time.d)(1.0), 365.25);
+    expect(Time().millisecond.quantityConverterTo(Time().microsecond)(1.0), closeToValue(1000.0));
+    expect(Time().millisecond.quantityConverterTo(Time().second)(1.0), 0.001);
+    expect(Time().second.quantityConverterTo(Time().minute)(1.0), 1.0 / 60.0);
+    expect(Time().second.quantityConverterTo(Time().hour)(1.0), 1.0 / 3600.0);
+    expect(Time().second.quantityConverterTo(Time().day)(1.0), 1.0 / 3600.0 / 24.0);
+    expect(Time().year.quantityConverterTo(Time().second)(1.0), 365.25 * 24.0 * 3600.0);
+    expect(Time().minute.quantityConverterTo(Time().second)(1.0), 60.0);
+    expect(Time().minute.quantityConverterTo(Time().hour)(1.0), 1 / 60.0);
+    expect(Time().hour.quantityConverterTo(Time().millisecond)(1.0), 3600000.0);
+    expect(Time().hour.quantityConverterTo(Time().second)(1.0), 3600.0);
+    expect(Time().hour.quantityConverterTo(Time().day)(1.0), 1.0 / 24.0);
+    expect(Time().day.quantityConverterTo(Time().minute)(1.0), 24.0 * 60.0);
+    expect(Time().day.quantityConverterTo(Time().hour)(1.0), 24.0);
+    expect(Time().week.quantityConverterTo(Time().second)(1.0), 3600.0 * 24.0 * 7.0);
+    expect(Time().week.quantityConverterTo(Time().day)(1.0), 7.0);
+    expect(Time().week.quantityConverterTo(Time().hour)(1.0), 7.0 * 24.0);
+    expect(Time().year.quantityConverterTo(Time().day)(1.0), 365.25);
   });
 }
 
-Matcher closeToValue(double value) =>
-    inInclusiveRange(value - 0.000000001, value + 0.000000001);
+Matcher closeToValue(double value) => inInclusiveRange(value - 0.000000001, value + 0.000000001);

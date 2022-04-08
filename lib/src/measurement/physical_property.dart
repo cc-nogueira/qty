@@ -6,15 +6,19 @@ import 'unit.dart';
 ///
 /// Represented with a [kind] description and a collection of [SystemOfUnits] instances.
 /// Provides an API to return an unit by its symbol from any of its systems of measurement.
-
 abstract class PhysicalProperty<T extends PhysicalProperty<T>> {
-  PhysicalProperty({required this.kind});
+  PhysicalProperty({required this.kind}) {
+    defineUnits();
+  }
 
   // Texttual name for this PhysicalProperty
   final String kind;
 
   // Collection of SystemOfMeasurement for this PhysicalProperty
   final List<SystemOfUnits<T>> systemsOfUnits = [];
+
+  // Method called by the constructor to define subclass units.
+  void defineUnits();
 
   /// Return the baseUnit of my first SystemOfMeasurement
   Unit<T> get baseUnit => systemsOfUnits[0].baseUnit;
