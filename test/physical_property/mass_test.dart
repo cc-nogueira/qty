@@ -11,7 +11,6 @@ void main() {
   });
 
   test('Mass units', () {
-    final mass = Mass();
     final none = Mass().unitWith(symbol: 'unknown');
     final g = Mass().unitWith(symbol: 'g')!;
     final kg = Mass().unitWith(symbol: 'kg')!;
@@ -29,7 +28,7 @@ void main() {
     expect(mg.symbol, 'mg');
     expect(mg.name, 'milligram');
     expect(t.symbol, 't');
-    expect(t.name, 'ton');
+    expect(t.name, 'tonne');
     expect(lb.symbol, 'lb');
     expect(lb.name, 'pound');
     expect(oz.symbol, 'oz');
