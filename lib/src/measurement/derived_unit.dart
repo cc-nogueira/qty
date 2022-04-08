@@ -1,35 +1,35 @@
-import 'compound_physical_property.dart';
-import 'compound_system_of_units.dart';
+import 'derived_physical_property.dart';
+import 'derived_system_of_units.dart';
 import 'physical_property.dart';
 import 'unit.dart';
 import 'unit_converter.dart';
 
-abstract class CompoundUnit<K extends CompoundPhysicalProperty<K, A, B>,
+abstract class DerivedUnit<K extends DerivedPhysicalProperty<K, A, B>,
     A extends PhysicalProperty<A>, B extends PhysicalProperty<B>> extends Unit<K> {
-  CompoundUnit(
+  DerivedUnit(
     K kind,
     this.a,
     this.b, {
     required String name,
     required String symbol,
-  }) : super(CompoundSystemOfUnits<K, A, B>(kind), name: name, symbol: symbol);
+  }) : super(DerivedSystemOfUnits<K, A, B>(kind), name: name, symbol: symbol);
 
   final Unit<A> a;
   final Unit<B> b;
 
   @override
-  QuantityConverter quantityConverterTo(covariant CompoundUnit<K, A, B> newUnit) {
+  QuantityConverter quantityConverterTo(covariant DerivedUnit<K, A, B> newUnit) {
     final qcA = a.quantityConverterTo(newUnit.a);
     final qcB = b.quantityConverterTo(newUnit.b);
 
-    return compoundQuantityConverter(qcA, qcB);
+    return derivedQuantityConverter(qcA, qcB);
   }
 
-  QuantityConverter compoundQuantityConverter(QuantityConverter qcA, QuantityConverter qcB);
+  QuantityConverter derivedQuantityConverter(QuantityConverter qcA, QuantityConverter qcB);
 }
 
-class MultipliedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
-    B extends PhysicalProperty<B>> extends CompoundUnit<K, A, B> {
+class MultipliedUnits<K extends DerivedPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
+    B extends PhysicalProperty<B>> extends DerivedUnit<K, A, B> {
   MultipliedUnits(
     K kind,
     Unit<A> a,
@@ -45,12 +45,12 @@ class MultipliedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends Phy
         );
 
   @override
-  QuantityConverter compoundQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
+  QuantityConverter derivedQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
       (double value) => qcA(value) * qcB(value);
 }
 
-class DividedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
-    B extends PhysicalProperty<B>> extends CompoundUnit<K, A, B> {
+class DividedUnits<K extends DerivedPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
+    B extends PhysicalProperty<B>> extends DerivedUnit<K, A, B> {
   DividedUnits(
     K kind,
     Unit<A> a,
@@ -65,6 +65,6 @@ class DividedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends Physic
           symbol: symbol ?? '${a.symbol}/${b.symbol}',
         );
   @override
-  QuantityConverter compoundQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
+  QuantityConverter derivedQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
       (double value) => value * qcA(1) / qcB(1);
 }

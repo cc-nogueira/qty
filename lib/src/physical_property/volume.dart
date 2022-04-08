@@ -93,6 +93,7 @@ class Volume extends PhysicalProperty<Volume> {
       Quantity(unit: Volume().bushelUS, amount: amount);
   static Quantity<Volume> quartersUS(double amount) =>
       Quantity(unit: Volume().quarterUS, amount: amount);
+
   static Quantity<Volume> oilBarrels(double amount) =>
       Quantity(unit: Volume().oilBarrel, amount: amount);
 
