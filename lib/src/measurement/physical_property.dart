@@ -4,15 +4,20 @@ import 'unit.dart';
 
 /// Quantifiable physical property by an amount of an [Unit] of one of its [SystemOfUnits]s.
 ///
+/// Dome other common names for PhysicalProperty is Dimension.
+///
 /// Represented with a [kind] description and a collection of [SystemOfUnits] instances.
 /// Provides an API to return an unit by its symbol from any of its systems of measurement.
 abstract class PhysicalProperty<T extends PhysicalProperty<T>> {
-  PhysicalProperty({required this.kind}) {
+  PhysicalProperty({required this.kind, required this.symbol}) {
     defineUnits();
   }
 
   // Texttual name for this PhysicalProperty
   final String kind;
+
+  // Dimension symbol
+  final String symbol;
 
   // Collection of SystemOfMeasurement for this PhysicalProperty
   final List<SystemOfUnits<T>> systemsOfUnits = [];
