@@ -10,7 +10,7 @@ import '../quantity/quantity.dart';
 /// Also provides Quantity constructors for all units.
 class Length extends PhysicalProperty<Length> {
   factory Length() => _instance ??= Length._();
-  Length._() : super(kind: 'length');
+  Length._() : super(kind: 'length', symbol: 'L');
 
   static Length? _instance;
 

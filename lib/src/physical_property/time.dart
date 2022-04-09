@@ -11,7 +11,7 @@ import '../quantity/quantity.dart';
 /// Also provides Quantity constructors for all units.
 class Time extends PhysicalProperty<Time> {
   factory Time() => _instance ??= Time._();
-  Time._() : super(kind: 'time');
+  Time._() : super(kind: 'time', symbol: 'T');
 
   static Time? _instance;
   late final Unit<Time> second;

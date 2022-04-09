@@ -11,7 +11,7 @@ import '../quantity/quantity.dart';
 class Mass extends PhysicalProperty<Mass> {
   factory Mass() => _instance ??= Mass._();
 
-  Mass._() : super(kind: 'mass');
+  Mass._() : super(kind: 'mass', symbol: 'M');
 
   static Mass? _instance;
 

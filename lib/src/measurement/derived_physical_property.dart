@@ -4,7 +4,8 @@ import 'unit.dart';
 
 abstract class DerivedPhysicalProperty<K extends DerivedPhysicalProperty<K, A, B>,
     A extends PhysicalProperty<A>, B extends PhysicalProperty<B>> extends PhysicalProperty<K> {
-  DerivedPhysicalProperty(this.a, this.b, {required String kind}) : super(kind: kind);
+  DerivedPhysicalProperty(this.a, this.b, {required String kind, required String symbol})
+      : super(kind: kind, symbol: symbol);
 
   final A a;
   final B b;
@@ -24,7 +25,8 @@ abstract class MultipliedPhysicalProperties<
     K extends MultipliedPhysicalProperties<K, A, B>,
     A extends PhysicalProperty<A>,
     B extends PhysicalProperty<B>> extends DerivedPhysicalProperty<K, A, B> {
-  MultipliedPhysicalProperties(A a, B b, {required String kind}) : super(a, b, kind: kind);
+  MultipliedPhysicalProperties(A a, B b, {required String kind, required String symbol})
+      : super(a, b, kind: kind, symbol: symbol);
 
   @override
   MultipliedUnits<K, A, B> deriveUnit(Unit<A> a, Unit<B> b, {String? symbol, String? name}) =>
@@ -38,7 +40,8 @@ abstract class DividedPhysicalProperties<
     K extends DividedPhysicalProperties<K, A, B>,
     A extends PhysicalProperty<A>,
     B extends PhysicalProperty<B>> extends DerivedPhysicalProperty<K, A, B> {
-  DividedPhysicalProperties(A a, B b, {required String kind}) : super(a, b, kind: kind);
+  DividedPhysicalProperties(A a, B b, {required String kind, required String symbol})
+      : super(a, b, kind: kind, symbol: symbol);
 
   @override
   DividedUnits<K, A, B> deriveUnit(Unit<A> a, Unit<B> b, {String? symbol, String? name}) =>

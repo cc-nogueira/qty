@@ -9,7 +9,7 @@ import '../quantity/quantity.dart';
 class NamedProperty extends PhysicalProperty<NamedProperty> {
   factory NamedProperty(String name) => _instances.putIfAbsent(name, () => NamedProperty._(name));
 
-  NamedProperty._(String name) : super(kind: name);
+  NamedProperty._(String name) : super(kind: name, symbol: '');
 
   static final Map<String, NamedProperty> _instances = {};
 
