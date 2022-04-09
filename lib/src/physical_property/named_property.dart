@@ -1,22 +1,20 @@
 import '../measurement/physical_property.dart';
 import '../measurement/systems_of_units.dart';
 import '../measurement/unit.dart';
-import '../quantity/quantity.dart';
 
 /// NamedProperty.
 ///
 /// NamedProperty with FixedSystemOfUnits.
 class NamedProperty extends PhysicalProperty<NamedProperty> {
-  factory NamedProperty(String name) => _instances.putIfAbsent(name, () => NamedProperty._(name));
+  factory NamedProperty({required String name, required String symbol}) =>
+      _instances.putIfAbsent(name, () => NamedProperty._(name: name, symbol: symbol));
 
-  NamedProperty._(String name) : super(kind: name, symbol: '');
+  NamedProperty._({required String name, required String symbol})
+      : super(kind: name, dimensionSymbol: 'name', quantitySymbol: 'name');
 
   static final Map<String, NamedProperty> _instances = {};
 
   late final Unit<NamedProperty> unit;
-
-  static Quantity<NamedProperty> units({required String name, required double amount}) =>
-      Quantity(unit: NamedProperty(name).unit, amount: amount);
 
   @override
   void defineUnits() {

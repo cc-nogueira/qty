@@ -10,7 +10,8 @@ import '../quantity/quantity.dart';
 /// Also provides Quantity constructors for all units.
 class ElectricalCurrent extends PhysicalProperty<ElectricalCurrent> {
   factory ElectricalCurrent() => _instance ??= ElectricalCurrent._();
-  ElectricalCurrent._() : super(kind: 'electrical current', symbol: 'I');
+  ElectricalCurrent._()
+      : super(kind: 'electrical current', dimensionSymbol: 'I', quantitySymbol: 'I');
 
   static ElectricalCurrent? _instance;
 

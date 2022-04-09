@@ -9,7 +9,8 @@ import 'unit.dart';
 /// Represented with a [kind] description and a collection of [SystemOfUnits] instances.
 /// Provides an API to return an unit by its symbol from any of its systems of measurement.
 abstract class PhysicalProperty<T extends PhysicalProperty<T>> {
-  PhysicalProperty({required this.kind, required this.symbol}) {
+  PhysicalProperty(
+      {required this.kind, required this.dimensionSymbol, required this.quantitySymbol}) {
     defineUnits();
   }
 
@@ -17,7 +18,10 @@ abstract class PhysicalProperty<T extends PhysicalProperty<T>> {
   final String kind;
 
   // Dimension symbol
-  final String symbol;
+  final String dimensionSymbol;
+
+  // Qunatity symbol
+  final String quantitySymbol;
 
   // Collection of SystemOfMeasurement for this PhysicalProperty
   final List<SystemOfUnits<T>> systemsOfUnits = [];

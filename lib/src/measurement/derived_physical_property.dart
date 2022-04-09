@@ -4,8 +4,9 @@ import 'unit.dart';
 
 abstract class DerivedPhysicalProperty<K extends DerivedPhysicalProperty<K, A, B>,
     A extends PhysicalProperty<A>, B extends PhysicalProperty<B>> extends PhysicalProperty<K> {
-  DerivedPhysicalProperty(this.a, this.b, {required String kind, required String symbol})
-      : super(kind: kind, symbol: symbol);
+  DerivedPhysicalProperty(this.a, this.b,
+      {required String kind, required String dimensionSymbol, required String quantitySymbol})
+      : super(kind: kind, dimensionSymbol: dimensionSymbol, quantitySymbol: quantitySymbol);
 
   final A a;
   final B b;
@@ -25,8 +26,13 @@ abstract class MultipliedPhysicalProperties<
     K extends MultipliedPhysicalProperties<K, A, B>,
     A extends PhysicalProperty<A>,
     B extends PhysicalProperty<B>> extends DerivedPhysicalProperty<K, A, B> {
-  MultipliedPhysicalProperties(A a, B b, {required String kind, required String symbol})
-      : super(a, b, kind: kind, symbol: symbol);
+  MultipliedPhysicalProperties(
+    A a,
+    B b, {
+    required String kind,
+    required String dimensionSymbol,
+    required String quantitySymbol,
+  }) : super(a, b, kind: kind, dimensionSymbol: dimensionSymbol, quantitySymbol: quantitySymbol);
 
   @override
   MultipliedUnits<K, A, B> deriveUnit(Unit<A> a, Unit<B> b, {String? symbol, String? name}) =>
@@ -40,8 +46,13 @@ abstract class DividedPhysicalProperties<
     K extends DividedPhysicalProperties<K, A, B>,
     A extends PhysicalProperty<A>,
     B extends PhysicalProperty<B>> extends DerivedPhysicalProperty<K, A, B> {
-  DividedPhysicalProperties(A a, B b, {required String kind, required String symbol})
-      : super(a, b, kind: kind, symbol: symbol);
+  DividedPhysicalProperties(
+    A a,
+    B b, {
+    required String kind,
+    required String dimensionSymbol,
+    required String quantitySymbol,
+  }) : super(a, b, kind: kind, dimensionSymbol: dimensionSymbol, quantitySymbol: quantitySymbol);
 
   @override
   DividedUnits<K, A, B> deriveUnit(Unit<A> a, Unit<B> b, {String? symbol, String? name}) =>

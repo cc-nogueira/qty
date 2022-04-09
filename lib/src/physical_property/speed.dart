@@ -10,7 +10,7 @@ import 'time.dart';
 class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
   factory Speed() => _instance ??= Speed._();
 
-  Speed._() : super(Length(), Time(), kind: 'speed', symbol: 'v');
+  Speed._() : super(Length(), Time(), kind: 'speed', dimensionSymbol: 'v', quantitySymbol: 'v');
 
   static Speed? _instance;
 

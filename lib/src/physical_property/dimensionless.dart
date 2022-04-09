@@ -8,7 +8,7 @@ import '../quantity/quantity.dart';
 /// Dimensionless with FixedSystemOfUnits.
 class Dimensionless extends PhysicalProperty<Dimensionless> {
   factory Dimensionless() => _instance ??= Dimensionless._();
-  Dimensionless._() : super(kind: 'unit', symbol: '');
+  Dimensionless._() : super(kind: 'unit', dimensionSymbol: '', quantitySymbol: '');
 
   static Dimensionless? _instance;
 

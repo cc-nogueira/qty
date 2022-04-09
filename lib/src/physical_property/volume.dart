@@ -11,7 +11,7 @@ import '../quantity/quantity.dart';
 class Volume extends PhysicalProperty<Volume> {
   factory Volume() => _instance ??= Volume._();
 
-  Volume._() : super(kind: 'volume', symbol: 'V');
+  Volume._() : super(kind: 'volume', dimensionSymbol: 'V', quantitySymbol: 'v');
 
   static Volume? _instance;
 

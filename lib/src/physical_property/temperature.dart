@@ -41,7 +41,7 @@ class TemperatureConverter extends UnitConverter<Temperature> {
 class Temperature extends PhysicalProperty<Temperature> {
   factory Temperature() => _instance ??= Temperature._();
 
-  Temperature._() : super(kind: 'temperature', symbol: 'Θ');
+  Temperature._() : super(kind: 'temperature', dimensionSymbol: 'Θ', quantitySymbol: 'T');
 
   static Temperature? _instance;
 
