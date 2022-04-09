@@ -19,10 +19,16 @@ abstract class DerivedUnit<K extends DerivedPhysicalProperty<K, A, B>,
 
   @override
   QuantityConverter quantityConverterTo(covariant DerivedUnit<K, A, B> newUnit) {
+    final cached = cachedConverter(newUnit);
+    if (cached != null) {
+      return cached;
+    }
+
     final qcA = a.quantityConverterTo(newUnit.a);
     final qcB = b.quantityConverterTo(newUnit.b);
 
-    return derivedQuantityConverter(qcA, qcB);
+    final converter = derivedQuantityConverter(qcA, qcB);
+    return cacheConverter(newUnit, converter);
   }
 
   QuantityConverter derivedQuantityConverter(QuantityConverter qcA, QuantityConverter qcB);
