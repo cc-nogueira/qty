@@ -1,5 +1,11 @@
 # Quantities representation and unit conversions
 
+## 0.7.0
+Simplified the use of SystemOfUnits removing Imperial and Nautical subclasses.
+Revised all PhysycalProperties adding various new unit definitions.
+Volume units for both US and UK versions.
+Renamed Compound to Derived units.
+
 ## 0.6.0
 Large refactoring.
 Removed classes representing LinearConvertible variants. Code moved to superclass that is now "Linear".
