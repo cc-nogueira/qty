@@ -16,43 +16,43 @@ class Mass extends PhysicalProperty<Mass> {
   static Mass? _instance;
 
   // SI
-  late Unit<Mass> gram;
+  late final Unit<Mass> gram;
 
-  late Unit<Mass> decigram;
-  late Unit<Mass> centigram;
-  late Unit<Mass> milligram;
-  late Unit<Mass> microgram;
-  late Unit<Mass> nanogram;
-  late Unit<Mass> picogram;
-  late Unit<Mass> femtogram;
-  late Unit<Mass> attogram;
-  late Unit<Mass> zeptogram;
-  late Unit<Mass> yoctogram;
+  late final Unit<Mass> decigram;
+  late final Unit<Mass> centigram;
+  late final Unit<Mass> milligram;
+  late final Unit<Mass> microgram;
+  late final Unit<Mass> nanogram;
+  late final Unit<Mass> picogram;
+  late final Unit<Mass> femtogram;
+  late final Unit<Mass> attogram;
+  late final Unit<Mass> zeptogram;
+  late final Unit<Mass> yoctogram;
 
-  late Unit<Mass> decagram;
-  late Unit<Mass> hectogram;
-  late Unit<Mass> kilogram;
-  late Unit<Mass> megagram;
-  late Unit<Mass> gigagram;
-  late Unit<Mass> teragram;
-  late Unit<Mass> petagram;
-  late Unit<Mass> exagram;
-  late Unit<Mass> zettagram;
-  late Unit<Mass> yottagram;
+  late final Unit<Mass> decagram;
+  late final Unit<Mass> hectogram;
+  late final Unit<Mass> kilogram;
+  late final Unit<Mass> megagram;
+  late final Unit<Mass> gigagram;
+  late final Unit<Mass> teragram;
+  late final Unit<Mass> petagram;
+  late final Unit<Mass> exagram;
+  late final Unit<Mass> zettagram;
+  late final Unit<Mass> yottagram;
 
   // Non-SI
-  late Unit<Mass> ton;
+  late final Unit<Mass> ton;
 
   // Imperial/US
-  late Unit<Mass> pound;
+  late final Unit<Mass> pound;
 
-  late Unit<Mass> ounce;
-  late Unit<Mass> drachm;
-  late Unit<Mass> grain;
+  late final Unit<Mass> ounce;
+  late final Unit<Mass> drachm;
+  late final Unit<Mass> grain;
 
-  late Unit<Mass> stone;
-  late Unit<Mass> quarter;
-  late Unit<Mass> kip;
+  late final Unit<Mass> stone;
+  late final Unit<Mass> quarter;
+  late final Unit<Mass> kip;
 
   // SI
   static Quantity<Mass> grams(double amount) => Quantity(unit: Mass().gram, amount: amount);

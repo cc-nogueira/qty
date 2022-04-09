@@ -14,18 +14,18 @@ class Time extends PhysicalProperty<Time> {
   Time._() : super(kind: 'time');
 
   static Time? _instance;
-  late Unit<Time> second;
-  late Unit<Time> decisecond;
-  late Unit<Time> centisecond;
-  late Unit<Time> millisecond;
-  late Unit<Time> microsecond;
-  late Unit<Time> nanosecond;
+  late final Unit<Time> second;
+  late final Unit<Time> decisecond;
+  late final Unit<Time> centisecond;
+  late final Unit<Time> millisecond;
+  late final Unit<Time> microsecond;
+  late final Unit<Time> nanosecond;
 
-  late Unit<Time> minute;
-  late Unit<Time> hour;
-  late Unit<Time> day;
-  late Unit<Time> week;
-  late Unit<Time> year;
+  late final Unit<Time> minute;
+  late final Unit<Time> hour;
+  late final Unit<Time> day;
+  late final Unit<Time> week;
+  late final Unit<Time> year;
 
   static Quantity<Time> seconds(double amount) => Quantity(unit: Time().second, amount: amount);
   static Quantity<Time> deciseconds(double amount) =>

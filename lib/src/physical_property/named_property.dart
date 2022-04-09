@@ -13,7 +13,7 @@ class NamedProperty extends PhysicalProperty<NamedProperty> {
 
   static final Map<String, NamedProperty> _instances = {};
 
-  late Unit<NamedProperty> unit;
+  late final Unit<NamedProperty> unit;
 
   static Quantity<NamedProperty> units({required String name, required double amount}) =>
       Quantity(unit: NamedProperty(name).unit, amount: amount);

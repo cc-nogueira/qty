@@ -15,46 +15,46 @@ class Length extends PhysicalProperty<Length> {
   static Length? _instance;
 
   // SI
-  late Unit<Length> meter;
+  late final Unit<Length> meter;
 
-  late Unit<Length> decimeter;
-  late Unit<Length> centimeter;
-  late Unit<Length> millimeter;
-  late Unit<Length> micrometer;
-  late Unit<Length> nanometer;
-  late Unit<Length> picometer;
-  late Unit<Length> femtometer;
-  late Unit<Length> attometer;
-  late Unit<Length> zeptometer;
-  late Unit<Length> yoctometer;
+  late final Unit<Length> decimeter;
+  late final Unit<Length> centimeter;
+  late final Unit<Length> millimeter;
+  late final Unit<Length> micrometer;
+  late final Unit<Length> nanometer;
+  late final Unit<Length> picometer;
+  late final Unit<Length> femtometer;
+  late final Unit<Length> attometer;
+  late final Unit<Length> zeptometer;
+  late final Unit<Length> yoctometer;
 
-  late Unit<Length> decameter;
-  late Unit<Length> hectometer;
-  late Unit<Length> kilometer;
-  late Unit<Length> megameter;
-  late Unit<Length> gigameter;
-  late Unit<Length> terameter;
-  late Unit<Length> petameter;
-  late Unit<Length> exameter;
-  late Unit<Length> zettameter;
-  late Unit<Length> yottameter;
+  late final Unit<Length> decameter;
+  late final Unit<Length> hectometer;
+  late final Unit<Length> kilometer;
+  late final Unit<Length> megameter;
+  late final Unit<Length> gigameter;
+  late final Unit<Length> terameter;
+  late final Unit<Length> petameter;
+  late final Unit<Length> exameter;
+  late final Unit<Length> zettameter;
+  late final Unit<Length> yottameter;
 
   // Non-SI
-  late Unit<Length> fermi;
-  late Unit<Length> angstrom;
-  late Unit<Length> micron;
+  late final Unit<Length> fermi;
+  late final Unit<Length> angstrom;
+  late final Unit<Length> micron;
 
   // Imperial/US
-  late Unit<Length> yard;
-  late Unit<Length> foot;
-  late Unit<Length> hand;
-  late Unit<Length> inch;
-  late Unit<Length> mil;
-  late Unit<Length> mile;
+  late final Unit<Length> yard;
+  late final Unit<Length> foot;
+  late final Unit<Length> hand;
+  late final Unit<Length> inch;
+  late final Unit<Length> mil;
+  late final Unit<Length> mile;
 
   // Nautical
-  late Unit<Length> nauticalMile;
-  late Unit<Length> cable;
+  late final Unit<Length> nauticalMile;
+  late final Unit<Length> cable;
 
   // SI
   static Quantity<Length> meters(double amount) => Quantity(unit: Length().meter, amount: amount);

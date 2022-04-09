@@ -36,7 +36,10 @@ class SystemOfUnits<K extends PhysicalProperty<K>> {
   ///
   /// This method can be called only once for each SystemOfUnit.
   Unit<K> defineBaseUnit({required String symbol, required String name, required double factor}) {
-    final unit = defineUnit(symbol: symbol, name: name);
+    if (_units.isNotEmpty) {
+      throw StateError('Base unit already defined');
+    }
+    final unit = _defineUnit(symbol: symbol, name: name);
     _baseUnit = unit;
     _baseUnitConversionFactor = factor;
     return unit;
@@ -47,6 +50,13 @@ class SystemOfUnits<K extends PhysicalProperty<K>> {
 
   /// Defines a unit with symbol and registers it in this System of Units
   Unit<K> defineUnit({required String symbol, required String name, double factor = 1.0}) {
+    if (_units.isEmpty) {
+      throw StateError('It is required to define a base unit first');
+    }
+    return _defineUnit(symbol: symbol, name: name, factor: factor);
+  }
+
+  Unit<K> _defineUnit({required String symbol, required String name, double factor = 1.0}) {
     final unit = Unit<K>(this, name: name, symbol: symbol);
     registerUnit(unit);
     unitConverter.add(unit: unit, factor: factor);

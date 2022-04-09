@@ -16,41 +16,41 @@ class Volume extends PhysicalProperty<Volume> {
   static Volume? _instance;
 
   // SI
-  late Unit<Volume> cubicMillimeter;
-  late Unit<Volume> cubicCentimeter;
-  late Unit<Volume> cubicDecimeter;
-  late Unit<Volume> cubicMeter;
-  late Unit<Volume> milliliter;
-  late Unit<Volume> centiliter;
-  late Unit<Volume> deciliter;
-  late Unit<Volume> liter;
+  late final Unit<Volume> cubicMillimeter;
+  late final Unit<Volume> cubicCentimeter;
+  late final Unit<Volume> cubicDecimeter;
+  late final Unit<Volume> cubicMeter;
+  late final Unit<Volume> milliliter;
+  late final Unit<Volume> centiliter;
+  late final Unit<Volume> deciliter;
+  late final Unit<Volume> liter;
 
   // Imperial/US
-  late Unit<Volume> cubicInch;
-  late Unit<Volume> cubicFoot;
-  late Unit<Volume> cubicYard;
-  late Unit<Volume> cubicMile;
+  late final Unit<Volume> cubicInch;
+  late final Unit<Volume> cubicFoot;
+  late final Unit<Volume> cubicYard;
+  late final Unit<Volume> cubicMile;
 
   // US
-  late Unit<Volume> gallonUS;
-  late Unit<Volume> fluidOunceUS;
-  late Unit<Volume> gillUS;
-  late Unit<Volume> pintUS;
-  late Unit<Volume> quartUS;
-  late Unit<Volume> peckUS;
-  late Unit<Volume> bushelUS;
-  late Unit<Volume> quarterUS;
-  late Unit<Volume> oilBarrel;
+  late final Unit<Volume> gallonUS;
+  late final Unit<Volume> fluidOunceUS;
+  late final Unit<Volume> gillUS;
+  late final Unit<Volume> pintUS;
+  late final Unit<Volume> quartUS;
+  late final Unit<Volume> peckUS;
+  late final Unit<Volume> bushelUS;
+  late final Unit<Volume> quarterUS;
+  late final Unit<Volume> oilBarrel;
 
   // Imperial
-  late Unit<Volume> gallonUK;
-  late Unit<Volume> fluidOunceUK;
-  late Unit<Volume> gillUK;
-  late Unit<Volume> pintUK;
-  late Unit<Volume> quartUK;
-  late Unit<Volume> peckUK;
-  late Unit<Volume> bushelUK;
-  late Unit<Volume> quarterUK;
+  late final Unit<Volume> gallonUK;
+  late final Unit<Volume> fluidOunceUK;
+  late final Unit<Volume> gillUK;
+  late final Unit<Volume> pintUK;
+  late final Unit<Volume> quartUK;
+  late final Unit<Volume> peckUK;
+  late final Unit<Volume> bushelUK;
+  late final Unit<Volume> quarterUK;
 
   // SI
   static Quantity<Volume> cubicMillimeters(double amount) =>

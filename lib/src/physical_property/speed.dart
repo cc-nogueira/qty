@@ -15,17 +15,17 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
   static Speed? _instance;
 
   // SI
-  late Unit<Speed> meterPerSecond;
-  late Unit<Speed> centimeterPerSecond;
-  late Unit<Speed> kilometerPerHour;
+  late final Unit<Speed> meterPerSecond;
+  late final Unit<Speed> centimeterPerSecond;
+  late final Unit<Speed> kilometerPerHour;
 
   // Imperial/US
-  late Unit<Speed> milePerHour;
-  late Unit<Speed> footPerMinute;
-  late Unit<Speed> footPerSecond;
+  late final Unit<Speed> milePerHour;
+  late final Unit<Speed> footPerMinute;
+  late final Unit<Speed> footPerSecond;
 
   // Nautical
-  late Unit<Speed> knot;
+  late final Unit<Speed> knot;
 
   // SI
   static Quantity<Speed> metersPerSecond(double amount) =>

@@ -12,7 +12,7 @@ class Dimensionless extends PhysicalProperty<Dimensionless> {
 
   static Dimensionless? _instance;
 
-  late Unit<Dimensionless> un;
+  late final Unit<Dimensionless> un;
 
   static Quantity<Dimensionless> units(amount) =>
       Quantity(unit: Dimensionless().un, amount: amount);
