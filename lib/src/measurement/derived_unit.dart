@@ -9,13 +9,15 @@ abstract class DerivedUnit<K extends DerivedPhysicalProperty<K, A, B>,
   DerivedUnit(
     K kind,
     this.a,
-    this.b, {
+    this.b,
+    this.factor, {
     required String name,
     required String symbol,
   }) : super(DerivedSystemOfUnits<K, A, B>(kind), name: name, symbol: symbol);
 
   final Unit<A> a;
   final Unit<B> b;
+  final double factor;
 
   @override
   QuantityConverter quantityConverterTo(covariant DerivedUnit<K, A, B> newUnit) {
@@ -39,20 +41,22 @@ class MultipliedUnits<K extends DerivedPhysicalProperty<K, A, B>, A extends Phys
   MultipliedUnits(
     K kind,
     Unit<A> a,
-    Unit<B> b, {
+    Unit<B> b,
+    double factor, {
     String? name,
     String? symbol,
   }) : super(
           kind,
           a,
           b,
+          factor,
           name: name ?? '${a.name} ${b.name}',
           symbol: symbol ?? '${a.symbol}.${b.symbol}',
         );
 
   @override
   QuantityConverter derivedQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
-      (double value) => qcA(value) * qcB(value);
+      (double value) => factor * value * qcA(1) * qcB(1);
 }
 
 class DividedUnits<K extends DerivedPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
@@ -60,17 +64,19 @@ class DividedUnits<K extends DerivedPhysicalProperty<K, A, B>, A extends Physica
   DividedUnits(
     K kind,
     Unit<A> a,
-    Unit<B> b, {
+    Unit<B> b,
+    double factor, {
     String? name,
     String? symbol,
   }) : super(
           kind,
           a,
           b,
+          factor,
           name: name ?? '${a.name}s per ${b.name}',
           symbol: symbol ?? '${a.symbol}/${b.symbol}',
         );
   @override
   QuantityConverter derivedQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
-      (double value) => value * qcA(1) / qcB(1);
+      (double value) => factor * value * qcA(1) / qcB(1);
 }
