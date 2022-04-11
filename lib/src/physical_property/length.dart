@@ -50,6 +50,10 @@ class Length extends PhysicalProperty<Length> {
   late final Unit<Length> hand;
   late final Unit<Length> inch;
   late final Unit<Length> mil;
+
+  late final Unit<Length> link;
+  late final Unit<Length> chain;
+  late final Unit<Length> furlong;
   late final Unit<Length> mile;
 
   // Nautical
@@ -113,6 +117,10 @@ class Length extends PhysicalProperty<Length> {
   static Quantity<Length> hands(double amount) => Quantity(unit: Length().hand, amount: amount);
   static Quantity<Length> inches(double amount) => Quantity(unit: Length().inch, amount: amount);
   static Quantity<Length> mils(double amount) => Quantity(unit: Length().mil, amount: amount);
+
+  static Quantity<Length> chains(double amount) => Quantity(unit: Length().chain, amount: amount);
+  static Quantity<Length> furlongs(double amount) =>
+      Quantity(unit: Length().furlong, amount: amount);
   static Quantity<Length> miles(double amount) => Quantity(unit: Length().mile, amount: amount);
 
   // Nautical International
@@ -160,6 +168,9 @@ class Length extends PhysicalProperty<Length> {
     hand = imperial.defineUnit(symbol: 'h', name: 'hand', factor: 1.0 / 9.0);
     inch = imperial.defineUnit(symbol: 'in', name: 'inch', factor: 1.0 / 36.0);
     mil = imperial.defineUnit(symbol: 'mil', name: 'mil', factor: 1.0 / 36e3);
+    link = imperial.defineUnit(symbol: 'lnk', name: 'link', factor: 0.22);
+    chain = imperial.defineUnit(symbol: 'chain', name: 'chain', factor: 22.0);
+    furlong = imperial.defineUnit(symbol: 'furlong', name: 'furlong', factor: 220.0);
     mile = imperial.defineUnit(symbol: 'mi', name: 'mile', factor: 1760.0);
 
     final nautical = SystemOfUnits<Length>(kind: this, name: 'Nautical System of Units');
