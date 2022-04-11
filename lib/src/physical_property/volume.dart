@@ -122,18 +122,18 @@ class Volume extends PhysicalProperty<Volume> {
     centiliter = si.defineUnit(symbol: 'cl', name: 'centiliter', factor: 1e-2);
     milliliter = si.defineUnit(symbol: 'ml', name: 'milliliter', factor: 1e-3);
 
-    cubicMillimeter = si.defineUnit(symbol: 'mm3', name: 'cubic millimeter', factor: 1e-6);
-    cubicCentimeter = si.defineUnit(symbol: 'cm3', name: 'cubic centimeter', factor: 1e-3);
-    cubicDecimeter = si.defineUnit(symbol: 'dm3', name: 'cubic decimeter', factor: 1.0);
-    cubicMeter = si.defineUnit(symbol: 'm3', name: 'cubic meter', factor: 1e3);
+    cubicMillimeter = si.defineUnit(symbol: 'mm³', name: 'cubic millimeter', factor: 1e-6);
+    cubicCentimeter = si.defineUnit(symbol: 'cm³', name: 'cubic centimeter', factor: 1e-3);
+    cubicDecimeter = si.defineUnit(symbol: 'dm³', name: 'cubic decimeter', factor: 1.0);
+    cubicMeter = si.defineUnit(symbol: 'm³', name: 'cubic meter', factor: 1e3);
 
     // Imperial/US
     final imperialUs = SystemOfUnits(name: 'Imperial/US System of Units', kind: this);
-    cubicFoot = imperialUs.defineBaseUnit(symbol: 'ft3', name: 'cubic foot', factor: 28.31685);
+    cubicFoot = imperialUs.defineBaseUnit(symbol: 'ft³', name: 'cubic foot', factor: 28.31685);
 
-    cubicInch = imperialUs.defineUnit(symbol: 'in3', name: 'cubic inch', factor: 1.0 / 1728.0);
-    cubicYard = imperialUs.defineUnit(symbol: 'yd3', name: 'cubic yard', factor: 27.0);
-    cubicMile = imperialUs.defineUnit(symbol: 'mi3', name: 'cubic mile', factor: 147197952000.0);
+    cubicInch = imperialUs.defineUnit(symbol: 'in³', name: 'cubic inch', factor: 1.0 / 1728.0);
+    cubicYard = imperialUs.defineUnit(symbol: 'yd³', name: 'cubic yard', factor: 27.0);
+    cubicMile = imperialUs.defineUnit(symbol: 'mi³', name: 'cubic mile', factor: 147197952000.0);
 
     // US
     final us = SystemOfUnits<Volume>(name: 'US System of Units', kind: this);

@@ -13,19 +13,19 @@ void main() {
   test('Volume units', () {
     final volume = Volume();
     final none = volume.unitWith(symbol: 'unknown');
-    final mm3 = volume.unitWith(symbol: 'mm3')!;
-    final cm3 = volume.unitWith(symbol: 'cm3')!;
-    final dm3 = volume.unitWith(symbol: 'dm3')!;
-    final m3 = volume.unitWith(symbol: 'm3')!;
+    final mm3 = volume.unitWith(symbol: 'mm³')!;
+    final cm3 = volume.unitWith(symbol: 'cm³')!;
+    final dm3 = volume.unitWith(symbol: 'dm³')!;
+    final m3 = volume.unitWith(symbol: 'm³')!;
     final l = volume.unitWith(symbol: 'l')!;
     expect(none, isNull);
-    expect(mm3.symbol, 'mm3');
+    expect(mm3.symbol, 'mm³');
     expect(mm3.name, 'cubic millimeter');
-    expect(cm3.symbol, 'cm3');
+    expect(cm3.symbol, 'cm³');
     expect(cm3.name, 'cubic centimeter');
-    expect(dm3.symbol, 'dm3');
+    expect(dm3.symbol, 'dm³');
     expect(dm3.name, 'cubic decimeter');
-    expect(m3.symbol, 'm3');
+    expect(m3.symbol, 'm³');
     expect(m3.name, 'cubic meter');
     expect(l.symbol, 'l');
     expect(l.name, 'liter');
