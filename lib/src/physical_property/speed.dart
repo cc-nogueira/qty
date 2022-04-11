@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import '../measurement/derived_physical_property.dart';
 import '../measurement/derived_system_of_units.dart';
-import '../measurement/derived_unit.dart';
 import '../measurement/unit.dart';
 import '../quantity/quantity.dart';
 import 'length.dart';
@@ -48,20 +47,15 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
 
   @override
   void defineUnits() {
-    final si = DerivedSystemOfUnits<Speed, Length, Time>(this);
-    meterPerSecond = si.defineNamedUnit(symbol: 'm/s', name: 'meters per second');
-    centimeterPerSecond = si.defineNamedUnit(symbol: 'cm/s', name: 'cintimeters per second');
-    kilometerPerHour = si.defineNamedUnit(symbol: 'km/h', name: 'kilometers per hour');
-    milePerHour = si.defineNamedUnit(symbol: 'mi/h', name: 'miles per hour');
-    footPerMinute = si.defineNamedUnit(symbol: 'ft/min', name: 'feet per minute');
-    footPerSecond = si.defineNamedUnit(symbol: 'ft/s', name: 'feet per second');
-    knot = si.defineNamedUnit(symbol: 'kt', name: 'knots', units: 'NM/h');
+    final derived = DerivedSystemOfUnits<Speed, Length, Time>(this);
+    meterPerSecond = derived.defineNamedUnit(symbol: 'm/s', name: 'meters per second');
+    centimeterPerSecond = derived.defineNamedUnit(symbol: 'cm/s', name: 'cintimeters per second');
+    kilometerPerHour = derived.defineNamedUnit(symbol: 'km/h', name: 'kilometers per hour');
+    milePerHour = derived.defineNamedUnit(symbol: 'mi/h', name: 'miles per hour');
+    footPerMinute = derived.defineNamedUnit(symbol: 'ft/min', name: 'feet per minute');
+    footPerSecond = derived.defineNamedUnit(symbol: 'ft/s', name: 'feet per second');
+    knot = derived.defineNamedUnit(symbol: 'kt', name: 'knots', units: 'NM/h');
 
-    systemsOfUnits.add(si);
+    systemsOfUnits.add(derived);
   }
-
-  @override
-  DividedUnits<Speed, Length, Time> deriveUnit(Unit<Length> a, Unit<Time> b,
-          {String? symbol, String? name}) =>
-      DividedUnits<Speed, Length, Time>(this, a, b, name: name, symbol: symbol);
 }
