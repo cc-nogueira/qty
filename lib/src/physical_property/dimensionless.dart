@@ -18,10 +18,13 @@ class Dimensionless extends PhysicalProperty<Dimensionless> {
       Quantity(unit: Dimensionless().un, amount: amount);
 
   @override
-  void defineUnits() {
+  void defineSystemsOfUnits() {
     final fixedSystem = FixedSystemOfUnits<Dimensionless>(kind: this);
     un = fixedSystem.defineBaseUnit(symbol: 'un', name: 'unit', factor: 1.0);
 
     systemsOfUnits.addAll([fixedSystem]);
   }
+
+  @override
+  void loadAllUnits() {}
 }

@@ -41,6 +41,11 @@ class PowerOfTenUnitConverter<K extends PhysicalProperty<K>> extends UnitConvert
   double convertionFactor({required Unit<K> fromUnit, required Unit<K> toUnit}) {
     return pow(10, _powers[fromUnit]! - _powers[toUnit]!).toDouble();
   }
+
+  double poweredConvertionFactor(
+      {required Unit<K> fromUnit, required Unit<K> toUnit, required int power}) {
+    return pow(10, (_powers[fromUnit]! - _powers[toUnit]!) * power).toDouble();
+  }
 }
 
 class FixedAmountUnitConverter<K extends PhysicalProperty<K>> extends UnitConverter<K> {

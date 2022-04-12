@@ -66,7 +66,10 @@ class SystemOfUnits<K extends PhysicalProperty<K>> {
   /// Register (store) a unit in this System of Units.
   ///
   /// This method is called by the internal API (this class and subclasses)
-  void registerUnit(Unit<K> unit) => _units[unit.symbol] = unit;
+  void registerUnit(Unit<K> unit) {
+    print('registering $unit');
+    _units[unit.symbol] = unit;
+  }
 
   /// List all units in this SystemOUnits
   List<Unit<K>> get units => _units.values.toList();

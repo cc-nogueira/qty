@@ -15,44 +15,48 @@ class Mass extends PhysicalProperty<Mass> {
 
   static Mass? _instance;
 
+  late final InternationalSystemOfUnits<Mass> _siUnits;
+  late final SystemOfUnits<Mass> _imperialUsUnits;
+
   // SI
-  late final Unit<Mass> gram;
+  late final gram = _siUnits.defineBaseUnit(symbol: 'g', name: 'gram', factor: 1.0);
 
-  late final Unit<Mass> decigram;
-  late final Unit<Mass> centigram;
-  late final Unit<Mass> milligram;
-  late final Unit<Mass> microgram;
-  late final Unit<Mass> nanogram;
-  late final Unit<Mass> picogram;
-  late final Unit<Mass> femtogram;
-  late final Unit<Mass> attogram;
-  late final Unit<Mass> zeptogram;
-  late final Unit<Mass> yoctogram;
+  late final decigram = _siUnits.defineUnit(symbol: 'dg', name: 'decigram', factor: 1e-1);
+  late final centigram = _siUnits.defineUnit(symbol: 'cg', name: 'centigram', factor: 1e-2);
+  late final milligram = _siUnits.defineUnit(symbol: 'mg', name: 'milligram', factor: 1e-3);
+  late final microgram = _siUnits.defineUnit(symbol: 'μg', name: 'microgram', factor: 1e-6);
+  late final nanogram = _siUnits.defineUnit(symbol: 'ng', name: 'nanogram', factor: 1e-9);
+  late final picogram = _siUnits.defineUnit(symbol: 'pg', name: 'picogram', factor: 1e-12);
+  late final femtogram = _siUnits.defineUnit(symbol: 'fg', name: 'femtogram', factor: 1e-15);
+  late final attogram = _siUnits.defineUnit(symbol: 'ag', name: 'attogram', factor: 1e-18);
+  late final zeptogram = _siUnits.defineUnit(symbol: 'zg', name: 'zeptogram', factor: 1e-21);
+  late final yoctogram = _siUnits.defineUnit(symbol: 'yg', name: 'yoctogram', factor: 1e-24);
 
-  late final Unit<Mass> decagram;
-  late final Unit<Mass> hectogram;
-  late final Unit<Mass> kilogram;
-  late final Unit<Mass> megagram;
-  late final Unit<Mass> gigagram;
-  late final Unit<Mass> teragram;
-  late final Unit<Mass> petagram;
-  late final Unit<Mass> exagram;
-  late final Unit<Mass> zettagram;
-  late final Unit<Mass> yottagram;
+  late final decagram = _siUnits.defineUnit(symbol: 'dag', name: 'decagram', factor: 1e1);
+  late final hectogram = _siUnits.defineUnit(symbol: 'hg', name: 'hectogram', factor: 1e2);
+  late final kilogram = _siUnits.defineUnit(symbol: 'kg', name: 'kilogram', factor: 1e3);
+  late final megagram = _siUnits.defineUnit(symbol: 'Mg', name: 'megagram', factor: 1e6);
+  late final gigagram = _siUnits.defineUnit(symbol: 'Gg', name: 'gigagram', factor: 1e9);
+  late final teragram = _siUnits.defineUnit(symbol: 'Tg', name: 'teragram', factor: 1e12);
+  late final petagram = _siUnits.defineUnit(symbol: 'Pg', name: 'petagram', factor: 1e15);
+  late final exagram = _siUnits.defineUnit(symbol: 'Eg', name: 'exagram', factor: 1e18);
+  late final zettagram = _siUnits.defineUnit(symbol: 'Zg', name: 'zettagram', factor: 1e21);
+  late final yottagram = _siUnits.defineUnit(symbol: 'Yg', name: 'yottagram', factor: 1e24);
 
   // Non-SI
-  late final Unit<Mass> ton;
+  late final ton = _siUnits.defineUnit(symbol: 't', name: 'tonne', factor: 1e6);
 
   // Imperial/US
-  late final Unit<Mass> pound;
+  late final pound =
+      _imperialUsUnits.defineBaseUnit(symbol: 'lb', name: 'pound', factor: 453.59237);
 
-  late final Unit<Mass> ounce;
-  late final Unit<Mass> drachm;
-  late final Unit<Mass> grain;
+  late final ounce = _imperialUsUnits.defineUnit(symbol: 'oz', name: 'ounce', factor: 1.0 / 16.0);
+  late final drachm = _imperialUsUnits.defineUnit(symbol: 'dr', name: 'dr', factor: 1.0 / 256.0);
+  late final grain = _imperialUsUnits.defineUnit(symbol: 'gr', name: 'grain', factor: 1.0 / 7000.0);
 
-  late final Unit<Mass> stone;
-  late final Unit<Mass> quarter;
-  late final Unit<Mass> kip;
+  late final stone = _imperialUsUnits.defineUnit(symbol: 'st', name: 'stone', factor: 14.0);
+  late final quarter = _imperialUsUnits.defineUnit(symbol: 'qr', name: 'quarter', factor: 28.0);
+  late final kip = _imperialUsUnits.defineUnit(symbol: 'kip', name: 'kilopound', factor: 1e3);
 
   // SI
   static Quantity<Mass> grams(double amount) => Quantity(unit: Mass().gram, amount: amount);
@@ -101,47 +105,50 @@ class Mass extends PhysicalProperty<Mass> {
   static Quantity<Mass> kips(double amount) => Quantity(unit: Mass().kip, amount: amount);
 
   @override
-  void defineUnits() {
-    // SI based:
-    final si = InternationalSystemOfUnits<Mass>(kind: this);
-    gram = si.defineBaseUnit(symbol: 'g', name: 'gram', factor: 1.0);
+  void defineSystemsOfUnits() {
+    _siUnits = InternationalSystemOfUnits<Mass>(kind: this);
+    gram;
 
-    decigram = si.defineUnit(symbol: 'dg', name: 'decigram', factor: 1e-1);
-    centigram = si.defineUnit(symbol: 'cg', name: 'centigram', factor: 1e-2);
-    milligram = si.defineUnit(symbol: 'mg', name: 'milligram', factor: 1e-3);
-    microgram = si.defineUnit(symbol: 'μg', name: 'microgram', factor: 1e-6);
-    nanogram = si.defineUnit(symbol: 'ng', name: 'nanogram', factor: 1e-9);
-    picogram = si.defineUnit(symbol: 'pg', name: 'picogram', factor: 1e-12);
-    femtogram = si.defineUnit(symbol: 'fg', name: 'femtogram', factor: 1e-15);
-    attogram = si.defineUnit(symbol: 'ag', name: 'attogram', factor: 1e-18);
-    zeptogram = si.defineUnit(symbol: 'zg', name: 'zeptogram', factor: 1e-21);
-    yoctogram = si.defineUnit(symbol: 'yg', name: 'yoctogram', factor: 1e-24);
+    _imperialUsUnits = SystemOfUnits<Mass>(kind: this, name: 'Imperial/US System of Units');
+    pound;
 
-    decagram = si.defineUnit(symbol: 'dag', name: 'decagram', factor: 1e1);
-    hectogram = si.defineUnit(symbol: 'hg', name: 'hectogram', factor: 1e2);
-    kilogram = si.defineUnit(symbol: 'kg', name: 'kilogram', factor: 1e3);
-    megagram = si.defineUnit(symbol: 'Mg', name: 'megagram', factor: 1e6);
-    gigagram = si.defineUnit(symbol: 'Gg', name: 'gigagram', factor: 1e9);
-    teragram = si.defineUnit(symbol: 'Tg', name: 'teragram', factor: 1e12);
-    petagram = si.defineUnit(symbol: 'Pg', name: 'petagram', factor: 1e15);
-    exagram = si.defineUnit(symbol: 'Eg', name: 'exagram', factor: 1e18);
-    zettagram = si.defineUnit(symbol: 'Zg', name: 'zettagram', factor: 1e21);
-    yottagram = si.defineUnit(symbol: 'Yg', name: 'yottagram', factor: 1e24);
+    systemsOfUnits.addAll([_siUnits, _imperialUsUnits]);
+  }
+
+  @override
+  void loadAllUnits() {
+    // SI:
+    decigram;
+    centigram;
+    milligram;
+    microgram;
+    nanogram;
+    picogram;
+    femtogram;
+    attogram;
+    zeptogram;
+    yoctogram;
+
+    decagram;
+    hectogram;
+    kilogram;
+    megagram;
+    gigagram;
+    teragram;
+    petagram;
+    exagram;
+    zettagram;
+    yottagram;
 
     // SI correlated:
-    ton = si.defineUnit(symbol: 't', name: 'tonne', factor: 1e6);
+    ton;
 
     // Imperial/US
-    final imperial = SystemOfUnits<Mass>(kind: this, name: 'Imperial/US System of Units');
-    pound = imperial.defineBaseUnit(symbol: 'lb', name: 'pound', factor: 453.59237);
-
-    ounce = imperial.defineUnit(symbol: 'oz', name: 'ounce', factor: 1.0 / 16.0);
-    drachm = imperial.defineUnit(symbol: 'dr', name: 'dr', factor: 1.0 / 256.0);
-    grain = imperial.defineUnit(symbol: 'gr', name: 'grain', factor: 1.0 / 7000.0);
-    stone = imperial.defineUnit(symbol: 'st', name: 'stone', factor: 14.0);
-    quarter = imperial.defineUnit(symbol: 'qr', name: 'quarter', factor: 28.0);
-    kip = imperial.defineUnit(symbol: 'kip', name: 'kilopound', factor: 1e3);
-
-    systemsOfUnits.addAll([si, imperial]);
+    ounce;
+    drachm;
+    grain;
+    stone;
+    quarter;
+    kip;
   }
 }

@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import '../measurement/derived_physical_property.dart';
 import '../measurement/derived_system_of_units.dart';
-import '../measurement/unit.dart';
 import '../quantity/quantity.dart';
 import 'length.dart';
 
@@ -12,53 +11,88 @@ class Area extends MultipliedPhysicalProperties<Area, Length, Length> {
 
   static Area? _instance;
 
+  late final CompoundSystemOfUnits<Area, Length, Length> _systemOfUnits;
+
   // SI
-  late final Unit<Area> squareMeter;
-  late final Unit<Area> squareDecimeter;
-  late final Unit<Area> squareCentimeter;
-  late final Unit<Area> squareMillimeter;
-  late final Unit<Area> squareMicrometer;
-  late final Unit<Area> squareNanometer;
-  late final Unit<Area> squarePicometer;
-  late final Unit<Area> squareFemtometer;
-  late final Unit<Area> squareAttometer;
-  late final Unit<Area> squareZeptometer;
-  late final Unit<Area> squareYoctometer;
+  late final squareMeter = _systemOfUnits.defineCompoundUnit(symbol: 'm²', name: 'square meter');
+  late final squareDecimeter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'dm²', name: 'square decimeter');
+  late final squareCentimeter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'cm²', name: 'square cintimeter');
+  late final squareMillimeter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'mm²', name: 'square millimeter');
+  late final squareMicrometer =
+      _systemOfUnits.defineCompoundUnit(symbol: 'μm²', name: 'square micrometer');
+  late final squareNanometer =
+      _systemOfUnits.defineCompoundUnit(symbol: 'nm²', name: 'square nanometer');
+  late final squarePicometer =
+      _systemOfUnits.defineCompoundUnit(symbol: 'pm²', name: 'square picometer');
+  late final squareFemtometer =
+      _systemOfUnits.defineCompoundUnit(symbol: 'fm²', name: 'square femtometer');
+  late final squareAttometer =
+      _systemOfUnits.defineCompoundUnit(symbol: 'am²', name: 'square attometer');
+  late final squareZeptometer =
+      _systemOfUnits.defineCompoundUnit(symbol: 'zm²', name: 'square zeptometer');
+  late final squareYoctometer =
+      _systemOfUnits.defineCompoundUnit(symbol: 'ym²', name: 'square yoctometer');
 
-  late final Unit<Area> squareDecameter;
-  late final Unit<Area> squareHectometer;
-  late final Unit<Area> squareKilometer;
-  late final Unit<Area> squareMegameter;
-  late final Unit<Area> squareGigameter;
-  late final Unit<Area> squareTerameter;
-  late final Unit<Area> squarePetameter;
-  late final Unit<Area> squareExameter;
-  late final Unit<Area> squareZettameter;
-  late final Unit<Area> squareYottameter;
+  late final squareDecameter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'dam²', name: 'square decameter');
+  late final squareHectometer =
+      _systemOfUnits.defineCompoundUnit(symbol: 'hm²', name: 'square hectometer');
+  late final squareKilometer =
+      _systemOfUnits.defineCompoundUnit(symbol: 'km²', name: 'square kilometer');
+  late final squareMegameter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'Mm²', name: 'square megameter');
+  late final squareGigameter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'Gm²', name: 'square gigameter');
+  late final squareTerameter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'Tm²', name: 'square terameter');
+  late final squarePetameter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'Pm²', name: 'square petameter');
+  late final squareExameter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'Em²', name: 'square exameter');
+  late final squareZettameter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'Zm²', name: 'square zetameter');
+  late final squareYottameter =
+      _systemOfUnits.defineCompoundUnit(symbol: 'Ym²', name: 'square yottameter');
 
-  late final Unit<Area> hectare;
+  late final hectare =
+      _systemOfUnits.defineCompoundUnit(symbol: 'ha', name: 'hectare', units: 'hm²');
 
-  late final Unit<Area> megabarn;
-  late final Unit<Area> kilobarn;
-  late final Unit<Area> barn;
-  late final Unit<Area> millibarn;
-  late final Unit<Area> microbarn;
-  late final Unit<Area> nanobarn;
-  late final Unit<Area> picobarn;
-  late final Unit<Area> femtobarn;
-  late final Unit<Area> attobarn;
-  late final Unit<Area> zeptobarn;
+  late final megabarn = _systemOfUnits.defineCompoundUnit(
+      symbol: 'Mb', name: 'megabarn', units: 'pm²', factor: 100.0);
+  late final kilobarn =
+      _systemOfUnits.defineCompoundUnit(symbol: 'kb', name: 'kilobarn', units: 'pm²', factor: 0.1);
+  late final barn =
+      _systemOfUnits.defineCompoundUnit(symbol: 'b', name: 'barn', units: 'fm²', factor: 100.0);
+  late final millibarn =
+      _systemOfUnits.defineCompoundUnit(symbol: 'mb', name: 'millibarn', units: 'fm²', factor: 0.1);
+  late final microbarn =
+      _systemOfUnits.defineCompoundUnit(symbol: 'μb', name: 'microbarn', units: 'am²', factor: 100);
+  late final nanobarn =
+      _systemOfUnits.defineCompoundUnit(symbol: 'nb', name: 'nanobarn', units: 'am²', factor: 0.1);
+  late final picobarn = _systemOfUnits.defineCompoundUnit(
+      symbol: 'pb', name: 'picobarn', units: 'zm²', factor: 100.0);
+  late final femtobarn =
+      _systemOfUnits.defineCompoundUnit(symbol: 'fb', name: 'femtobarn', units: 'zm²', factor: 0.1);
+  late final attobarn = _systemOfUnits.defineCompoundUnit(
+      symbol: 'ab', name: 'attobarn', units: 'ym²', factor: 100.0);
+  late final zeptobarn =
+      _systemOfUnits.defineCompoundUnit(symbol: 'zb', name: 'zeptobarn', units: 'ym²', factor: 0.1);
 
   // Imperial/US
-  late final Unit<Area> squareYard;
-  late final Unit<Area> squareFoot;
-  late final Unit<Area> squareInch;
-  late final Unit<Area> squareMile;
+  late final squareYard = _systemOfUnits.defineCompoundUnit(symbol: 'yd²', name: 'square yard');
+  late final squareFoot = _systemOfUnits.defineCompoundUnit(symbol: 'ft²', name: 'square foot');
+  late final squareInch = _systemOfUnits.defineCompoundUnit(symbol: 'in²', name: 'square inch');
+  late final squareMile = _systemOfUnits.defineCompoundUnit(symbol: 'mi²', name: 'square mile');
 
-  late final Unit<Area> acre;
+  late final acre =
+      _systemOfUnits.defineCompoundUnit(symbol: 'ac', name: 'acre', factor: 10.0, units: 'chain²');
 
   // Nautical
-  late final Unit<Area> squareNauticalMile;
+  late final squareNauticalMile =
+      _systemOfUnits.defineCompoundUnit(symbol: 'NM²', name: 'square nautical mile');
 
   // SI
   static Quantity<Area> squareMeters(double amount) =>
@@ -141,52 +175,55 @@ class Area extends MultipliedPhysicalProperties<Area, Length, Length> {
       Quantity(unit: Area().squareNauticalMile, amount: amount);
 
   @override
-  void defineUnits() {
-    final derived = DerivedSystemOfUnits<Area, Length, Length>(this);
-    squareMeter = derived.defineNamedUnit(symbol: 'm²', name: 'square meter');
-    squareDecimeter = derived.defineNamedUnit(symbol: 'dm²', name: 'square decimeter');
-    squareCentimeter = derived.defineNamedUnit(symbol: 'cm²', name: 'square cintimeter');
-    squareMillimeter = derived.defineNamedUnit(symbol: 'mm²', name: 'square millimeter');
-    squareMicrometer = derived.defineNamedUnit(symbol: 'μm²', name: 'square micrometer');
-    squareNanometer = derived.defineNamedUnit(symbol: 'nm²', name: 'square nanometer');
-    squarePicometer = derived.defineNamedUnit(symbol: 'pm²', name: 'square picometer');
-    squareFemtometer = derived.defineNamedUnit(symbol: 'fm²', name: 'square femtometer');
-    squareAttometer = derived.defineNamedUnit(symbol: 'am²', name: 'square attometer');
-    squareZeptometer = derived.defineNamedUnit(symbol: 'zm²', name: 'square zeptometer');
-    squareYoctometer = derived.defineNamedUnit(symbol: 'ym²', name: 'square yoctometer');
+  void defineSystemsOfUnits() {
+    _systemOfUnits = CompoundSystemOfUnits<Area, Length, Length>(this);
+    systemsOfUnits.add(_systemOfUnits);
+  }
 
-    squareDecameter = derived.defineNamedUnit(symbol: 'dam²', name: 'square decameter');
-    squareHectometer = derived.defineNamedUnit(symbol: 'hm²', name: 'square hectometer');
-    squareKilometer = derived.defineNamedUnit(symbol: 'km²', name: 'square kilometer');
-    squareMegameter = derived.defineNamedUnit(symbol: 'Mm²', name: 'square megameter');
-    squareGigameter = derived.defineNamedUnit(symbol: 'Gm²', name: 'square gigameter');
-    squareTerameter = derived.defineNamedUnit(symbol: 'Tm²', name: 'square terameter');
-    squarePetameter = derived.defineNamedUnit(symbol: 'Pm²', name: 'square petameter');
-    squareExameter = derived.defineNamedUnit(symbol: 'Em²', name: 'square exameter');
-    squareZettameter = derived.defineNamedUnit(symbol: 'Zm²', name: 'square zetameter');
-    squareYottameter = derived.defineNamedUnit(symbol: 'Ym²', name: 'square yottameter');
+  @override
+  void loadAllUnits() {
+    squareMeter;
+    squareDecimeter;
+    squareCentimeter;
+    squareMillimeter;
+    squareMicrometer;
+    squareNanometer;
+    squarePicometer;
+    squareFemtometer;
+    squareAttometer;
+    squareZeptometer;
+    squareYoctometer;
 
-    hectare = derived.defineNamedUnit(symbol: 'ha', name: 'hectare', units: 'hm²');
+    squareDecameter;
+    squareHectometer;
+    squareKilometer;
+    squareMegameter;
+    squareGigameter;
+    squareTerameter;
+    squarePetameter;
+    squareExameter;
+    squareZettameter;
+    squareYottameter;
 
-    megabarn = derived.defineNamedUnit(symbol: 'Mb', name: 'megabarn', units: 'pm²', factor: 100.0);
-    kilobarn = derived.defineNamedUnit(symbol: 'kb', name: 'kilobarn', units: 'pm²', factor: 0.1);
-    barn = derived.defineNamedUnit(symbol: 'b', name: 'barn', units: 'fm²', factor: 100.0);
-    millibarn = derived.defineNamedUnit(symbol: 'mb', name: 'millibarn', units: 'fm²', factor: 0.1);
-    microbarn = derived.defineNamedUnit(symbol: 'μb', name: 'microbarn', units: 'am²', factor: 100);
-    nanobarn = derived.defineNamedUnit(symbol: 'nb', name: 'nanobarn', units: 'am²', factor: 0.1);
-    picobarn = derived.defineNamedUnit(symbol: 'pb', name: 'picobarn', units: 'zm²', factor: 100.0);
-    femtobarn = derived.defineNamedUnit(symbol: 'fb', name: 'femtobarn', units: 'zm²', factor: 0.1);
-    attobarn = derived.defineNamedUnit(symbol: 'ab', name: 'attobarn', units: 'ym²', factor: 100.0);
-    zeptobarn = derived.defineNamedUnit(symbol: 'zb', name: 'zeptobarn', units: 'ym²', factor: 0.1);
+    hectare;
 
-    squareYard = derived.defineNamedUnit(symbol: 'yd²', name: 'square yard');
-    squareFoot = derived.defineNamedUnit(symbol: 'ft²', name: 'square foot');
-    squareInch = derived.defineNamedUnit(symbol: 'in²', name: 'square inch');
-    squareMile = derived.defineNamedUnit(symbol: 'mi²', name: 'square mile');
-    acre = derived.defineNamedUnit(symbol: 'ac', name: 'acre', factor: 10.0, units: 'chain²');
+    megabarn;
+    kilobarn;
+    barn;
+    millibarn;
+    microbarn;
+    nanobarn;
+    picobarn;
+    femtobarn;
+    attobarn;
+    zeptobarn;
 
-    squareNauticalMile = derived.defineNamedUnit(symbol: 'NM²', name: 'square nautical mile');
+    squareYard;
+    squareFoot;
+    squareInch;
+    squareMile;
+    acre;
 
-    systemsOfUnits.add(derived);
+    squareNauticalMile;
   }
 }

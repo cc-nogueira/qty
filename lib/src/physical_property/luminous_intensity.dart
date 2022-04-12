@@ -1,7 +1,6 @@
 import '../measurement/physical_property.dart';
 import '../measurement/systems_of_units.dart';
 import '../measurement/unit.dart';
-import '../measurement/unit_converter.dart';
 import '../quantity/quantity.dart';
 
 /// Electrical Current physical property singleton.
@@ -16,32 +15,36 @@ class LuminousIntensity extends PhysicalProperty<LuminousIntensity> {
 
   static LuminousIntensity? _instance;
 
+  late final InternationalSystemOfUnits<LuminousIntensity> _siUnits;
+  late final SystemOfUnits<LuminousIntensity> _hefnerUnits;
+
   // SI
-  late final Unit<LuminousIntensity> candela;
+  late final candela = _siUnits.defineBaseUnit(symbol: 'cd', name: 'candela', factor: 1.0);
 
-  late final Unit<LuminousIntensity> decicandela;
-  late final Unit<LuminousIntensity> centicandela;
-  late final Unit<LuminousIntensity> millicandela;
-  late final Unit<LuminousIntensity> microcandela;
-  late final Unit<LuminousIntensity> nanocandela;
-  late final Unit<LuminousIntensity> picocandela;
-  late final Unit<LuminousIntensity> femtocandela;
-  late final Unit<LuminousIntensity> attocandela;
-  late final Unit<LuminousIntensity> zeptocandela;
-  late final Unit<LuminousIntensity> yoctocandela;
+  late final decicandela = _siUnits.defineUnit(symbol: 'dcd', name: 'decicandela', factor: 1e-1);
+  late final centicandela = _siUnits.defineUnit(symbol: 'ccd', name: 'centicandela', factor: 1e-2);
+  late final millicandela = _siUnits.defineUnit(symbol: 'mcd', name: 'millicandela', factor: 1e-3);
+  late final microcandela = _siUnits.defineUnit(symbol: 'μcd', name: 'microcandela', factor: 1e-6);
+  late final nanocandela = _siUnits.defineUnit(symbol: 'ncd', name: 'nanocandela', factor: 1e-9);
+  late final picocandela = _siUnits.defineUnit(symbol: 'pcd', name: 'picocandela', factor: 1e-12);
+  late final femtocandela = _siUnits.defineUnit(symbol: 'fcd', name: 'femtocandela', factor: 1e-15);
+  late final attocandela = _siUnits.defineUnit(symbol: 'acd', name: 'attocandela', factor: 1e-18);
+  late final zeptocandela = _siUnits.defineUnit(symbol: 'zcd', name: 'zeptocandela', factor: 1e-21);
+  late final yoctocandela = _siUnits.defineUnit(symbol: 'ycd', name: 'yoctocandela', factor: 1e-24);
 
-  late final Unit<LuminousIntensity> decacandela;
-  late final Unit<LuminousIntensity> hectocandela;
-  late final Unit<LuminousIntensity> kilocandela;
-  late final Unit<LuminousIntensity> megacandela;
-  late final Unit<LuminousIntensity> gigacandela;
-  late final Unit<LuminousIntensity> teracandela;
-  late final Unit<LuminousIntensity> petacandela;
-  late final Unit<LuminousIntensity> exacandela;
-  late final Unit<LuminousIntensity> zettacandela;
-  late final Unit<LuminousIntensity> yottacandela;
+  late final decacandela = _siUnits.defineUnit(symbol: 'dacd', name: 'decacandela', factor: 1e1);
+  late final hectocandela = _siUnits.defineUnit(symbol: 'hcd', name: 'hectocandela', factor: 1e2);
+  late final kilocandela = _siUnits.defineUnit(symbol: 'kcd', name: 'kilocandela', factor: 1e3);
+  late final megacandela = _siUnits.defineUnit(symbol: 'Mcd', name: 'megacandela', factor: 1e6);
+  late final gigacandela = _siUnits.defineUnit(symbol: 'Gcd', name: 'gigacandela', factor: 1e9);
+  late final teracandela = _siUnits.defineUnit(symbol: 'Tcd', name: 'teracandela', factor: 1e12);
+  late final petacandela = _siUnits.defineUnit(symbol: 'Pcd', name: 'petacandela', factor: 1e15);
+  late final exacandela = _siUnits.defineUnit(symbol: 'Ecd', name: 'exacandela', factor: 1e18);
+  late final zettacandela = _siUnits.defineUnit(symbol: 'Zcd', name: 'zettacandela', factor: 1e21);
+  late final yottacandela = _siUnits.defineUnit(symbol: 'Ycd', name: 'yottacandela', factor: 1e24);
 
-  late final Unit<LuminousIntensity> hefnerKerze;
+  late final hefnerKerze =
+      _hefnerUnits.defineBaseUnit(symbol: 'HK', name: 'hefnerkerze', factor: 0.903);
 
   // SI
   static Quantity<LuminousIntensity> candelas(double amount) =>
@@ -93,40 +96,39 @@ class LuminousIntensity extends PhysicalProperty<LuminousIntensity> {
       Quantity(unit: LuminousIntensity().hefnerKerze, amount: amount);
 
   @override
-  void defineUnits() {
+  void defineSystemsOfUnits() {
+    _siUnits = InternationalSystemOfUnits<LuminousIntensity>(kind: this);
+    candela;
+
+    _hefnerUnits = SystemOfUnits<LuminousIntensity>(kind: this, name: 'Hefner Kerze');
+    hefnerKerze;
+
+    systemsOfUnits.addAll([_siUnits, _hefnerUnits]);
+  }
+
+  @override
+  void loadAllUnits() {
     // SI based:
-    final si = InternationalSystemOfUnits<LuminousIntensity>(kind: this);
-    candela = si.defineBaseUnit(symbol: 'cd', name: 'candela', factor: 1.0);
+    decicandela;
+    centicandela;
+    millicandela;
+    microcandela;
+    nanocandela;
+    picocandela;
+    femtocandela;
+    attocandela;
+    zeptocandela;
+    yoctocandela;
 
-    decicandela = si.defineUnit(symbol: 'dcd', name: 'decicandela', factor: 1e-1);
-    centicandela = si.defineUnit(symbol: 'ccd', name: 'centicandela', factor: 1e-2);
-    millicandela = si.defineUnit(symbol: 'mcd', name: 'millicandela', factor: 1e-3);
-    microcandela = si.defineUnit(symbol: 'μcd', name: 'microcandela', factor: 1e-6);
-    nanocandela = si.defineUnit(symbol: 'ncd', name: 'nanocandela', factor: 1e-9);
-    picocandela = si.defineUnit(symbol: 'pcd', name: 'picocandela', factor: 1e-12);
-    femtocandela = si.defineUnit(symbol: 'fcd', name: 'femtocandela', factor: 1e-15);
-    attocandela = si.defineUnit(symbol: 'acd', name: 'attocandela', factor: 1e-18);
-    zeptocandela = si.defineUnit(symbol: 'zcd', name: 'zeptocandela', factor: 1e-21);
-    yoctocandela = si.defineUnit(symbol: 'ycd', name: 'yoctocandela', factor: 1e-24);
-
-    decacandela = si.defineUnit(symbol: 'dacd', name: 'decacandela', factor: 1e1);
-    hectocandela = si.defineUnit(symbol: 'hcd', name: 'hectocandela', factor: 1e2);
-    kilocandela = si.defineUnit(symbol: 'kcd', name: 'kilocandela', factor: 1e3);
-    megacandela = si.defineUnit(symbol: 'Mcd', name: 'megacandela', factor: 1e6);
-    gigacandela = si.defineUnit(symbol: 'Gcd', name: 'gigacandela', factor: 1e9);
-    teracandela = si.defineUnit(symbol: 'Tcd', name: 'teracandela', factor: 1e12);
-    petacandela = si.defineUnit(symbol: 'Pcd', name: 'petacandela', factor: 1e15);
-    exacandela = si.defineUnit(symbol: 'Ecd', name: 'exacandela', factor: 1e18);
-    zettacandela = si.defineUnit(symbol: 'Zcd', name: 'zettacandela', factor: 1e21);
-    yottacandela = si.defineUnit(symbol: 'Ycd', name: 'yottacandela', factor: 1e24);
-
-    final hefner = SystemOfUnits(
-        kind: this,
-        name: 'Hefner Kerze',
-        unitConverter: PowerOfTenUnitConverter<LuminousIntensity>());
-
-    hefnerKerze = hefner.defineBaseUnit(symbol: 'HK', name: 'hefnerkerze', factor: 0.903);
-
-    systemsOfUnits.addAll([si, hefner]);
+    decacandela;
+    hectocandela;
+    kilocandela;
+    megacandela;
+    gigacandela;
+    teracandela;
+    petacandela;
+    exacandela;
+    zettacandela;
+    yottacandela;
   }
 }

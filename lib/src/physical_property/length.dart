@@ -14,51 +14,58 @@ class Length extends PhysicalProperty<Length> {
 
   static Length? _instance;
 
+  late final InternationalSystemOfUnits<Length> _siUnits;
+  late final SystemOfUnits<Length> _imperialUsUnits;
+  late final SystemOfUnits<Length> _nauticalUnits;
+
   // SI
-  late final Unit<Length> meter;
+  late final meter = _siUnits.defineBaseUnit(symbol: 'm', name: 'meter', factor: 1.0);
 
-  late final Unit<Length> decimeter;
-  late final Unit<Length> centimeter;
-  late final Unit<Length> millimeter;
-  late final Unit<Length> micrometer;
-  late final Unit<Length> nanometer;
-  late final Unit<Length> picometer;
-  late final Unit<Length> femtometer;
-  late final Unit<Length> attometer;
-  late final Unit<Length> zeptometer;
-  late final Unit<Length> yoctometer;
+  late final decimeter = _siUnits.defineUnit(symbol: 'dm', name: 'decimeter', factor: 1e-1);
+  late final centimeter = _siUnits.defineUnit(symbol: 'cm', name: 'centimeter', factor: 1e-2);
+  late final millimeter = _siUnits.defineUnit(symbol: 'mm', name: 'millimeter', factor: 1e-3);
+  late final micrometer = _siUnits.defineUnit(symbol: 'μm', name: 'micrometer', factor: 1e-6);
+  late final nanometer = _siUnits.defineUnit(symbol: 'nm', name: 'nanometer', factor: 1e-9);
+  late final picometer = _siUnits.defineUnit(symbol: 'pm', name: 'picometer', factor: 1e-12);
+  late final femtometer = _siUnits.defineUnit(symbol: 'fm', name: 'femtometer', factor: 1e-15);
+  late final attometer = _siUnits.defineUnit(symbol: 'am', name: 'attometer', factor: 1e-18);
+  late final zeptometer = _siUnits.defineUnit(symbol: 'zm', name: 'zeptometer', factor: 1e-21);
+  late final yoctometer = _siUnits.defineUnit(symbol: 'ym', name: 'yoctometer', factor: 1e-24);
 
-  late final Unit<Length> decameter;
-  late final Unit<Length> hectometer;
-  late final Unit<Length> kilometer;
-  late final Unit<Length> megameter;
-  late final Unit<Length> gigameter;
-  late final Unit<Length> terameter;
-  late final Unit<Length> petameter;
-  late final Unit<Length> exameter;
-  late final Unit<Length> zettameter;
-  late final Unit<Length> yottameter;
+  late final decameter = _siUnits.defineUnit(symbol: 'dam', name: 'decameter', factor: 1e1);
+  late final hectometer = _siUnits.defineUnit(symbol: 'hm', name: 'hectometer', factor: 1e2);
+  late final kilometer = _siUnits.defineUnit(symbol: 'km', name: 'kilometer', factor: 1e3);
+  late final megameter = _siUnits.defineUnit(symbol: 'Mm', name: 'megameter', factor: 1e6);
+  late final gigameter = _siUnits.defineUnit(symbol: 'Gm', name: 'gigameter', factor: 1e9);
+  late final terameter = _siUnits.defineUnit(symbol: 'Tm', name: 'terameter', factor: 1e12);
+  late final petameter = _siUnits.defineUnit(symbol: 'Pm', name: 'petameter', factor: 1e15);
+  late final exameter = _siUnits.defineUnit(symbol: 'Em', name: 'exameter', factor: 1e18);
+  late final zettameter = _siUnits.defineUnit(symbol: 'Zm', name: 'zettameter', factor: 1e21);
+  late final yottameter = _siUnits.defineUnit(symbol: 'Ym', name: 'yottameter', factor: 1e24);
 
   // Non-SI
-  late final Unit<Length> fermi;
-  late final Unit<Length> angstrom;
-  late final Unit<Length> micron;
+  late final fermi = _siUnits.defineUnit(symbol: 'fermi', name: 'fermi', factor: 1e-15);
+  late final angstrom = _siUnits.defineUnit(symbol: 'Å', name: 'angstrom', factor: 1e-10);
+  late final micron = _siUnits.defineUnit(symbol: 'micron', name: 'micron', factor: 1e-6);
 
   // Imperial/US
-  late final Unit<Length> yard;
-  late final Unit<Length> foot;
-  late final Unit<Length> hand;
-  late final Unit<Length> inch;
-  late final Unit<Length> mil;
+  late final yard = _imperialUsUnits.defineBaseUnit(symbol: 'yd', name: 'yard', factor: 0.9144);
 
-  late final Unit<Length> link;
-  late final Unit<Length> chain;
-  late final Unit<Length> furlong;
-  late final Unit<Length> mile;
+  late final foot = _imperialUsUnits.defineUnit(symbol: 'ft', name: 'foot', factor: 1.0 / 3.0);
+  late final hand = _imperialUsUnits.defineUnit(symbol: 'h', name: 'hand', factor: 1.0 / 9.0);
+  late final inch = _imperialUsUnits.defineUnit(symbol: 'in', name: 'inch', factor: 1.0 / 36.0);
+  late final mil = _imperialUsUnits.defineUnit(symbol: 'mil', name: 'mil', factor: 1.0 / 36e3);
+
+  late final link = _imperialUsUnits.defineUnit(symbol: 'lnk', name: 'link', factor: 0.22);
+  late final chain = _imperialUsUnits.defineUnit(symbol: 'chain', name: 'chain', factor: 22.0);
+  late final furlong =
+      _imperialUsUnits.defineUnit(symbol: 'furlong', name: 'furlong', factor: 220.0);
+  late final mile = _imperialUsUnits.defineUnit(symbol: 'mi', name: 'mile', factor: 1760.0);
 
   // Nautical
-  late final Unit<Length> nauticalMile;
-  late final Unit<Length> cable;
+  late final nauticalMile =
+      _nauticalUnits.defineBaseUnit(symbol: 'NM', name: 'nautical mile', factor: 1852.0);
+  late final cable = _nauticalUnits.defineUnit(symbol: 'cb', name: 'cable', factor: 1e-1);
 
   // SI
   static Quantity<Length> meters(double amount) => Quantity(unit: Length().meter, amount: amount);
@@ -129,54 +136,59 @@ class Length extends PhysicalProperty<Length> {
   static Quantity<Length> cables(double amount) => Quantity(unit: Length().cable, amount: amount);
 
   @override
-  void defineUnits() {
+  void defineSystemsOfUnits() {
     // SI based:
-    final si = InternationalSystemOfUnits<Length>(kind: this);
-    meter = si.defineBaseUnit(symbol: 'm', name: 'meter', factor: 1.0);
+    _siUnits = InternationalSystemOfUnits<Length>(kind: this);
+    meter;
 
-    decimeter = si.defineUnit(symbol: 'dm', name: 'decimeter', factor: 1e-1);
-    centimeter = si.defineUnit(symbol: 'cm', name: 'centimeter', factor: 1e-2);
-    millimeter = si.defineUnit(symbol: 'mm', name: 'millimeter', factor: 1e-3);
-    micrometer = si.defineUnit(symbol: 'μm', name: 'micrometer', factor: 1e-6);
-    nanometer = si.defineUnit(symbol: 'nm', name: 'nanometer', factor: 1e-9);
-    picometer = si.defineUnit(symbol: 'pm', name: 'picometer', factor: 1e-12);
-    femtometer = si.defineUnit(symbol: 'fm', name: 'femtometer', factor: 1e-15);
-    attometer = si.defineUnit(symbol: 'am', name: 'attometer', factor: 1e-18);
-    zeptometer = si.defineUnit(symbol: 'zm', name: 'zeptometer', factor: 1e-21);
-    yoctometer = si.defineUnit(symbol: 'ym', name: 'yoctometer', factor: 1e-24);
+    _imperialUsUnits = SystemOfUnits<Length>(kind: this, name: 'Imperial/US System of Units');
+    yard;
 
-    decameter = si.defineUnit(symbol: 'dam', name: 'decameter', factor: 1e1);
-    hectometer = si.defineUnit(symbol: 'hm', name: 'hectometer', factor: 1e2);
-    kilometer = si.defineUnit(symbol: 'km', name: 'kilometer', factor: 1e3);
-    megameter = si.defineUnit(symbol: 'Mm', name: 'megameter', factor: 1e6);
-    gigameter = si.defineUnit(symbol: 'Gm', name: 'gigameter', factor: 1e9);
-    terameter = si.defineUnit(symbol: 'Tm', name: 'terameter', factor: 1e12);
-    petameter = si.defineUnit(symbol: 'Pm', name: 'petameter', factor: 1e15);
-    exameter = si.defineUnit(symbol: 'Em', name: 'exameter', factor: 1e18);
-    zettameter = si.defineUnit(symbol: 'Zm', name: 'zettameter', factor: 1e21);
-    yottameter = si.defineUnit(symbol: 'Ym', name: 'yottameter', factor: 1e24);
+    _nauticalUnits = SystemOfUnits<Length>(kind: this, name: 'Nautical System of Units');
+    nauticalMile;
+
+    systemsOfUnits.addAll([_siUnits, _imperialUsUnits, _nauticalUnits]);
+  }
+
+  @override
+  void loadAllUnits() {
+    decimeter;
+    centimeter;
+    millimeter;
+    micrometer;
+    nanometer;
+    picometer;
+    femtometer;
+    attometer;
+    zeptometer;
+    yoctometer;
+
+    decameter;
+    hectometer;
+    kilometer;
+    megameter;
+    gigameter;
+    terameter;
+    petameter;
+    exameter;
+    zettameter;
+    yottameter;
 
     // SI correlated:
-    fermi = si.defineUnit(symbol: 'fermi', name: 'fermi', factor: 1e-15);
-    angstrom = si.defineUnit(symbol: 'Å', name: 'angstrom', factor: 1e-10);
-    micron = si.defineUnit(symbol: 'micron', name: 'micron', factor: 1e-6);
+    fermi;
+    angstrom;
+    micron;
 
     // Imperial/US
-    final imperial = SystemOfUnits<Length>(kind: this, name: 'Imperial/US System of Units');
-    yard = imperial.defineBaseUnit(symbol: 'yd', name: 'yard', factor: 0.9144);
-    foot = imperial.defineUnit(symbol: 'ft', name: 'foot', factor: 1.0 / 3.0);
-    hand = imperial.defineUnit(symbol: 'h', name: 'hand', factor: 1.0 / 9.0);
-    inch = imperial.defineUnit(symbol: 'in', name: 'inch', factor: 1.0 / 36.0);
-    mil = imperial.defineUnit(symbol: 'mil', name: 'mil', factor: 1.0 / 36e3);
-    link = imperial.defineUnit(symbol: 'lnk', name: 'link', factor: 0.22);
-    chain = imperial.defineUnit(symbol: 'chain', name: 'chain', factor: 22.0);
-    furlong = imperial.defineUnit(symbol: 'furlong', name: 'furlong', factor: 220.0);
-    mile = imperial.defineUnit(symbol: 'mi', name: 'mile', factor: 1760.0);
+    foot;
+    hand;
+    inch;
+    mil;
+    link;
+    chain;
+    furlong;
+    mile;
 
-    final nautical = SystemOfUnits<Length>(kind: this, name: 'Nautical System of Units');
-    nauticalMile = nautical.defineBaseUnit(symbol: 'NM', name: 'nautical mile', factor: 1852.0);
-    cable = nautical.defineUnit(symbol: 'cb', name: 'cable', factor: 1e-1);
-
-    systemsOfUnits.addAll([si, imperial, nautical]);
+    cable;
   }
 }

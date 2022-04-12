@@ -17,10 +17,13 @@ class NamedProperty extends PhysicalProperty<NamedProperty> {
   late final Unit<NamedProperty> unit;
 
   @override
-  void defineUnits() {
+  void defineSystemsOfUnits() {
     final fixedSystem = FixedSystemOfUnits<NamedProperty>(kind: this);
     unit = fixedSystem.defineBaseUnit(symbol: kind, name: kind, factor: 1.0);
 
     systemsOfUnits.addAll([fixedSystem]);
   }
+
+  @override
+  void loadAllUnits() {}
 }

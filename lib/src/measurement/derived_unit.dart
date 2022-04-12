@@ -1,26 +1,80 @@
+import 'dart:math';
+
 import 'derived_physical_property.dart';
 import 'derived_system_of_units.dart';
 import 'physical_property.dart';
 import 'unit.dart';
 import 'unit_converter.dart';
 
-abstract class DerivedUnit<K extends DerivedPhysicalProperty<K, A, B>,
-    A extends PhysicalProperty<A>, B extends PhysicalProperty<B>> extends Unit<K> {
+abstract class DerivedUnit<K extends DerivedPhysicalProperty<K>> extends Unit<K> {
   DerivedUnit(
-    K kind,
-    this.a,
-    this.b,
+    DerivedSystemOfUnits<K> systemOfUnits,
     this.factor, {
     required String name,
     required String symbol,
-  }) : super(DerivedSystemOfUnits<K, A, B>(kind), name: name, symbol: symbol);
+  }) : super(systemOfUnits, name: name, symbol: symbol);
+
+  final double factor;
+}
+
+class PowersUnit<K extends PowersPhysicalProperty<K, A>, A extends PhysicalProperty<A>>
+    extends DerivedUnit<K> {
+  PowersUnit(
+    PowersSystemOfUnits<K, A> systemOfUnits,
+    this.a,
+    double factor, {
+    String? name,
+    String? symbol,
+  }) : super(systemOfUnits, factor,
+            name: name ?? a.name + '^' + systemOfUnits.power.toString(),
+            symbol: symbol ?? a.symbol + '^' + systemOfUnits.power.toString());
+
+  final Unit<A> a;
+
+  @override
+  PowersSystemOfUnits<K, A> get systemOfUnits => super.systemOfUnits as PowersSystemOfUnits<K, A>;
+
+  @override
+  QuantityConverter quantityConverterTo(covariant PowersUnit<K, A> newUnit) {
+    final cached = cachedConverter(newUnit);
+    if (cached != null) {
+      return cached;
+    }
+
+    final aUnitConverter = a.systemOfUnits.unitConverter;
+    final newUnitConverter = newUnit.a.systemOfUnits.unitConverter;
+    if (aUnitConverter == newUnitConverter && aUnitConverter is PowerOfTenUnitConverter) {
+      final convertionFactor = (aUnitConverter as PowerOfTenUnitConverter<A>)
+          .poweredConvertionFactor(fromUnit: a, toUnit: newUnit.a, power: systemOfUnits.power);
+      return (double value) => factor / newUnit.factor * value * convertionFactor;
+    }
+
+    final qcA = a.quantityConverterTo(newUnit.a);
+    final converter = powersQuantityConverter(qcA, newUnit.factor);
+    return cacheConverter(newUnit, converter);
+  }
+
+  QuantityConverter powersQuantityConverter(QuantityConverter qcA, double newUnitFactor) {
+    return (double value) => factor / newUnitFactor * value * pow(qcA(1), systemOfUnits.power);
+  }
+}
+
+abstract class CompoundUnit<K extends CompoundPhysicalProperty<K, A, B>,
+    A extends PhysicalProperty<A>, B extends PhysicalProperty<B>> extends DerivedUnit<K> {
+  CompoundUnit(
+    K kind,
+    this.a,
+    this.b,
+    double factor, {
+    required String name,
+    required String symbol,
+  }) : super(CompoundSystemOfUnits<K, A, B>(kind), factor, name: name, symbol: symbol);
 
   final Unit<A> a;
   final Unit<B> b;
-  final double factor;
 
   @override
-  QuantityConverter quantityConverterTo(covariant DerivedUnit<K, A, B> newUnit) {
+  QuantityConverter quantityConverterTo(covariant CompoundUnit<K, A, B> newUnit) {
     final cached = cachedConverter(newUnit);
     if (cached != null) {
       return cached;
@@ -29,15 +83,15 @@ abstract class DerivedUnit<K extends DerivedPhysicalProperty<K, A, B>,
     final qcA = a.quantityConverterTo(newUnit.a);
     final qcB = b.quantityConverterTo(newUnit.b);
 
-    final converter = derivedQuantityConverter(qcA, qcB);
+    final converter = compoundQuantityConverter(qcA, qcB);
     return cacheConverter(newUnit, converter);
   }
 
-  QuantityConverter derivedQuantityConverter(QuantityConverter qcA, QuantityConverter qcB);
+  QuantityConverter compoundQuantityConverter(QuantityConverter qcA, QuantityConverter qcB);
 }
 
-class MultipliedUnits<K extends DerivedPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
-    B extends PhysicalProperty<B>> extends DerivedUnit<K, A, B> {
+class MultipliedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
+    B extends PhysicalProperty<B>> extends CompoundUnit<K, A, B> {
   MultipliedUnits(
     K kind,
     Unit<A> a,
@@ -55,12 +109,12 @@ class MultipliedUnits<K extends DerivedPhysicalProperty<K, A, B>, A extends Phys
         );
 
   @override
-  QuantityConverter derivedQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
+  QuantityConverter compoundQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
       (double value) => factor * value * qcA(1) * qcB(1);
 }
 
-class DividedUnits<K extends DerivedPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
-    B extends PhysicalProperty<B>> extends DerivedUnit<K, A, B> {
+class DividedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
+    B extends PhysicalProperty<B>> extends CompoundUnit<K, A, B> {
   DividedUnits(
     K kind,
     Unit<A> a,
@@ -77,6 +131,6 @@ class DividedUnits<K extends DerivedPhysicalProperty<K, A, B>, A extends Physica
           symbol: symbol ?? '${a.symbol}/${b.symbol}',
         );
   @override
-  QuantityConverter derivedQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
+  QuantityConverter compoundQuantityConverter(QuantityConverter qcA, QuantityConverter qcB) =>
       (double value) => factor * value * qcA(1) / qcB(1);
 }

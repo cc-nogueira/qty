@@ -15,30 +15,32 @@ class ElectricalCurrent extends PhysicalProperty<ElectricalCurrent> {
 
   static ElectricalCurrent? _instance;
 
+  late final InternationalSystemOfUnits<ElectricalCurrent> _siUnits;
+
   // SI
-  late final Unit<ElectricalCurrent> ampere;
+  late final ampere = _siUnits.defineBaseUnit(symbol: 'A', name: 'ampere', factor: 1.0);
 
-  late final Unit<ElectricalCurrent> deciampere;
-  late final Unit<ElectricalCurrent> centiampere;
-  late final Unit<ElectricalCurrent> milliampere;
-  late final Unit<ElectricalCurrent> microampere;
-  late final Unit<ElectricalCurrent> nanoampere;
-  late final Unit<ElectricalCurrent> picoampere;
-  late final Unit<ElectricalCurrent> femtoampere;
-  late final Unit<ElectricalCurrent> attoampere;
-  late final Unit<ElectricalCurrent> zeptoampere;
-  late final Unit<ElectricalCurrent> yoctoampere;
+  late final deciampere = _siUnits.defineUnit(symbol: 'dA', name: 'deciampere', factor: 1e-1);
+  late final centiampere = _siUnits.defineUnit(symbol: 'cA', name: 'centiampere', factor: 1e-2);
+  late final milliampere = _siUnits.defineUnit(symbol: 'mA', name: 'milliampere', factor: 1e-3);
+  late final microampere = _siUnits.defineUnit(symbol: 'μA', name: 'microampere', factor: 1e-6);
+  late final nanoampere = _siUnits.defineUnit(symbol: 'nA', name: 'nanoampere', factor: 1e-9);
+  late final picoampere = _siUnits.defineUnit(symbol: 'pA', name: 'picoampere', factor: 1e-12);
+  late final femtoampere = _siUnits.defineUnit(symbol: 'fA', name: 'femtoampere', factor: 1e-15);
+  late final attoampere = _siUnits.defineUnit(symbol: 'aA', name: 'attoampere', factor: 1e-18);
+  late final zeptoampere = _siUnits.defineUnit(symbol: 'zA', name: 'zeptoampere', factor: 1e-21);
+  late final yoctoampere = _siUnits.defineUnit(symbol: 'yA', name: 'yoctoampere', factor: 1e-24);
 
-  late final Unit<ElectricalCurrent> decaampere;
-  late final Unit<ElectricalCurrent> hectoampere;
-  late final Unit<ElectricalCurrent> kiloampere;
-  late final Unit<ElectricalCurrent> megaampere;
-  late final Unit<ElectricalCurrent> gigaampere;
-  late final Unit<ElectricalCurrent> teraampere;
-  late final Unit<ElectricalCurrent> petaampere;
-  late final Unit<ElectricalCurrent> exaampere;
-  late final Unit<ElectricalCurrent> zettaampere;
-  late final Unit<ElectricalCurrent> yottaampere;
+  late final decaampere = _siUnits.defineUnit(symbol: 'daA', name: 'decaampere', factor: 1e1);
+  late final hectoampere = _siUnits.defineUnit(symbol: 'hA', name: 'hectoampere', factor: 1e2);
+  late final kiloampere = _siUnits.defineUnit(symbol: 'kA', name: 'kiloampere', factor: 1e3);
+  late final megaampere = _siUnits.defineUnit(symbol: 'MA', name: 'megaampere', factor: 1e6);
+  late final gigaampere = _siUnits.defineUnit(symbol: 'GA', name: 'gigaampere', factor: 1e9);
+  late final teraampere = _siUnits.defineUnit(symbol: 'TA', name: 'teraampere', factor: 1e12);
+  late final petaampere = _siUnits.defineUnit(symbol: 'PA', name: 'petaampere', factor: 1e15);
+  late final exaampere = _siUnits.defineUnit(symbol: 'EA', name: 'exaampere', factor: 1e18);
+  late final zettaampere = _siUnits.defineUnit(symbol: 'ZA', name: 'zettaampere', factor: 1e21);
+  late final yottaampere = _siUnits.defineUnit(symbol: 'YA', name: 'yottaampere', factor: 1e24);
 
   // SI
   static Quantity<ElectricalCurrent> amperes(double amount) =>
@@ -87,33 +89,35 @@ class ElectricalCurrent extends PhysicalProperty<ElectricalCurrent> {
       Quantity(unit: ElectricalCurrent().yottaampere, amount: amount);
 
   @override
-  void defineUnits() {
-    // SI based:
-    final si = InternationalSystemOfUnits<ElectricalCurrent>(kind: this);
-    ampere = si.defineBaseUnit(symbol: 'A', name: 'ampere', factor: 1.0);
+  void defineSystemsOfUnits() {
+    _siUnits = InternationalSystemOfUnits<ElectricalCurrent>(kind: this);
+    ampere;
 
-    deciampere = si.defineUnit(symbol: 'dA', name: 'deciampere', factor: 1e-1);
-    centiampere = si.defineUnit(symbol: 'cA', name: 'centiampere', factor: 1e-2);
-    milliampere = si.defineUnit(symbol: 'mA', name: 'milliampere', factor: 1e-3);
-    microampere = si.defineUnit(symbol: 'μA', name: 'microampere', factor: 1e-6);
-    nanoampere = si.defineUnit(symbol: 'nA', name: 'nanoampere', factor: 1e-9);
-    picoampere = si.defineUnit(symbol: 'pA', name: 'picoampere', factor: 1e-12);
-    femtoampere = si.defineUnit(symbol: 'fA', name: 'femtoampere', factor: 1e-15);
-    attoampere = si.defineUnit(symbol: 'aA', name: 'attoampere', factor: 1e-18);
-    zeptoampere = si.defineUnit(symbol: 'zA', name: 'zeptoampere', factor: 1e-21);
-    yoctoampere = si.defineUnit(symbol: 'yA', name: 'yoctoampere', factor: 1e-24);
+    systemsOfUnits.addAll([_siUnits]);
+  }
 
-    decaampere = si.defineUnit(symbol: 'daA', name: 'decaampere', factor: 1e1);
-    hectoampere = si.defineUnit(symbol: 'hA', name: 'hectoampere', factor: 1e2);
-    kiloampere = si.defineUnit(symbol: 'kA', name: 'kiloampere', factor: 1e3);
-    megaampere = si.defineUnit(symbol: 'MA', name: 'megaampere', factor: 1e6);
-    gigaampere = si.defineUnit(symbol: 'GA', name: 'gigaampere', factor: 1e9);
-    teraampere = si.defineUnit(symbol: 'TA', name: 'teraampere', factor: 1e12);
-    petaampere = si.defineUnit(symbol: 'PA', name: 'petaampere', factor: 1e15);
-    exaampere = si.defineUnit(symbol: 'EA', name: 'exaampere', factor: 1e18);
-    zettaampere = si.defineUnit(symbol: 'ZA', name: 'zettaampere', factor: 1e21);
-    yottaampere = si.defineUnit(symbol: 'YA', name: 'yottaampere', factor: 1e24);
+  @override
+  void loadAllUnits() {
+    deciampere;
+    centiampere;
+    milliampere;
+    microampere;
+    nanoampere;
+    picoampere;
+    femtoampere;
+    attoampere;
+    zeptoampere;
+    yoctoampere;
 
-    systemsOfUnits.addAll([si]);
+    decaampere;
+    hectoampere;
+    kiloampere;
+    megaampere;
+    gigaampere;
+    teraampere;
+    petaampere;
+    exaampere;
+    zettaampere;
+    yottaampere;
   }
 }

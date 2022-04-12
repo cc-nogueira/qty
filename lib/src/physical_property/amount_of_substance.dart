@@ -17,30 +17,32 @@ class AmountOfSubstance extends PhysicalProperty<AmountOfSubstance> {
 
   static const avogadroNumber = 6.02214076e23;
 
+  late InternationalSystemOfUnits<AmountOfSubstance> _siUnits;
+
   // SI
-  late final Unit<AmountOfSubstance> mole;
+  late final mole = _siUnits.defineBaseUnit(symbol: 'mol', name: 'mole', factor: 1.0);
 
-  late final Unit<AmountOfSubstance> decimole;
-  late final Unit<AmountOfSubstance> centimole;
-  late final Unit<AmountOfSubstance> millimole;
-  late final Unit<AmountOfSubstance> micromole;
-  late final Unit<AmountOfSubstance> nanomole;
-  late final Unit<AmountOfSubstance> picomole;
-  late final Unit<AmountOfSubstance> femtomole;
-  late final Unit<AmountOfSubstance> attomole;
-  late final Unit<AmountOfSubstance> zeptomole;
-  late final Unit<AmountOfSubstance> yoctomole;
+  late final decimole = _siUnits.defineUnit(symbol: 'dmol', name: 'decimole', factor: 1e-1);
+  late final centimole = _siUnits.defineUnit(symbol: 'cmol', name: 'centimole', factor: 1e-2);
+  late final millimole = _siUnits.defineUnit(symbol: 'mmol', name: 'millimole', factor: 1e-3);
+  late final micromole = _siUnits.defineUnit(symbol: 'μmol', name: 'micromole', factor: 1e-6);
+  late final nanomole = _siUnits.defineUnit(symbol: 'nmol', name: 'nanomole', factor: 1e-9);
+  late final picomole = _siUnits.defineUnit(symbol: 'pmol', name: 'picomole', factor: 1e-12);
+  late final femtomole = _siUnits.defineUnit(symbol: 'fmol', name: 'femtomole', factor: 1e-15);
+  late final attomole = _siUnits.defineUnit(symbol: 'amol', name: 'attomole', factor: 1e-18);
+  late final zeptomole = _siUnits.defineUnit(symbol: 'zmol', name: 'zeptomole', factor: 1e-21);
+  late final yoctomole = _siUnits.defineUnit(symbol: 'ymol', name: 'yoctomole', factor: 1e-24);
 
-  late final Unit<AmountOfSubstance> decamole;
-  late final Unit<AmountOfSubstance> hectomole;
-  late final Unit<AmountOfSubstance> kilomole;
-  late final Unit<AmountOfSubstance> megamole;
-  late final Unit<AmountOfSubstance> gigamole;
-  late final Unit<AmountOfSubstance> teramole;
-  late final Unit<AmountOfSubstance> petamole;
-  late final Unit<AmountOfSubstance> examole;
-  late final Unit<AmountOfSubstance> zettamole;
-  late final Unit<AmountOfSubstance> yottamole;
+  late final decamole = _siUnits.defineUnit(symbol: 'damol', name: 'decamole', factor: 1e1);
+  late final hectomole = _siUnits.defineUnit(symbol: 'hmol', name: 'hectomole', factor: 1e2);
+  late final kilomole = _siUnits.defineUnit(symbol: 'kmol', name: 'kilomole', factor: 1e3);
+  late final megamole = _siUnits.defineUnit(symbol: 'Mmol', name: 'megamole', factor: 1e6);
+  late final gigamole = _siUnits.defineUnit(symbol: 'Gmol', name: 'gigamole', factor: 1e9);
+  late final teramole = _siUnits.defineUnit(symbol: 'Tmol', name: 'teramole', factor: 1e12);
+  late final petamole = _siUnits.defineUnit(symbol: 'Pmol', name: 'petamole', factor: 1e15);
+  late final examole = _siUnits.defineUnit(symbol: 'Emol', name: 'examole', factor: 1e18);
+  late final zettamole = _siUnits.defineUnit(symbol: 'Zmol', name: 'zettamole', factor: 1e21);
+  late final yottamole = _siUnits.defineUnit(symbol: 'Ymol', name: 'yottamole', factor: 1e24);
 
   // SI
   static Quantity<AmountOfSubstance> moles(double amount) =>
@@ -89,33 +91,36 @@ class AmountOfSubstance extends PhysicalProperty<AmountOfSubstance> {
       Quantity(unit: AmountOfSubstance().yottamole, amount: amount);
 
   @override
-  void defineUnits() {
+  void defineSystemsOfUnits() {
     // SI based:
-    final si = InternationalSystemOfUnits<AmountOfSubstance>(kind: this);
-    mole = si.defineBaseUnit(symbol: 'mol', name: 'mole', factor: 1.0);
+    _siUnits = InternationalSystemOfUnits<AmountOfSubstance>(kind: this);
+    mole;
 
-    decimole = si.defineUnit(symbol: 'dmol', name: 'decimole', factor: 1e-1);
-    centimole = si.defineUnit(symbol: 'cmol', name: 'centimole', factor: 1e-2);
-    millimole = si.defineUnit(symbol: 'mmol', name: 'millimole', factor: 1e-3);
-    micromole = si.defineUnit(symbol: 'μmol', name: 'micromole', factor: 1e-6);
-    nanomole = si.defineUnit(symbol: 'nmol', name: 'nanomole', factor: 1e-9);
-    picomole = si.defineUnit(symbol: 'pmol', name: 'picomole', factor: 1e-12);
-    femtomole = si.defineUnit(symbol: 'fmol', name: 'femtomole', factor: 1e-15);
-    attomole = si.defineUnit(symbol: 'amol', name: 'attomole', factor: 1e-18);
-    zeptomole = si.defineUnit(symbol: 'zmol', name: 'zeptomole', factor: 1e-21);
-    yoctomole = si.defineUnit(symbol: 'ymol', name: 'yoctomole', factor: 1e-24);
+    systemsOfUnits.addAll([_siUnits]);
+  }
 
-    decamole = si.defineUnit(symbol: 'damol', name: 'decamole', factor: 1e1);
-    hectomole = si.defineUnit(symbol: 'hmol', name: 'hectomole', factor: 1e2);
-    kilomole = si.defineUnit(symbol: 'kmol', name: 'kilomole', factor: 1e3);
-    megamole = si.defineUnit(symbol: 'Mmol', name: 'megamole', factor: 1e6);
-    gigamole = si.defineUnit(symbol: 'Gmol', name: 'gigamole', factor: 1e9);
-    teramole = si.defineUnit(symbol: 'Tmol', name: 'teramole', factor: 1e12);
-    petamole = si.defineUnit(symbol: 'Pmol', name: 'petamole', factor: 1e15);
-    examole = si.defineUnit(symbol: 'Emol', name: 'examole', factor: 1e18);
-    zettamole = si.defineUnit(symbol: 'Zmol', name: 'zettamole', factor: 1e21);
-    yottamole = si.defineUnit(symbol: 'Ymol', name: 'yottamole', factor: 1e24);
+  @override
+  void loadAllUnits() {
+    decimole;
+    centimole;
+    millimole;
+    micromole;
+    nanomole;
+    picomole;
+    femtomole;
+    attomole;
+    zeptomole;
+    yoctomole;
 
-    systemsOfUnits.addAll([si]);
+    decamole;
+    hectomole;
+    kilomole;
+    megamole;
+    gigamole;
+    teramole;
+    petamole;
+    examole;
+    zettamole;
+    yottamole;
   }
 }

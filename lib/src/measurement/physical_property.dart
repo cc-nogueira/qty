@@ -11,30 +11,54 @@ import 'unit.dart';
 abstract class PhysicalProperty<T extends PhysicalProperty<T>> {
   PhysicalProperty(
       {required this.kind, required this.dimensionSymbol, required this.quantitySymbol}) {
-    defineUnits();
+    defineSystemsOfUnits();
+    if (shouldPreloadAllUnits) {
+      _loadAllUnits();
+    }
   }
 
-  // Texttual name for this PhysicalProperty
+  /// Texttual name for this PhysicalProperty
   final String kind;
 
-  // Dimension symbol
+  /// Dimension symbol
   final String dimensionSymbol;
 
-  // Qunatity symbol
+  /// Qunatity symbol
   final String quantitySymbol;
 
-  // Collection of SystemOfMeasurement for this PhysicalProperty
+  /// Collection of SystemOfMeasurement for this PhysicalProperty
   final List<SystemOfUnits<T>> systemsOfUnits = [];
 
-  // Method called by the constructor to define subclass units.
-  void defineUnits();
+  bool _allUnitsLoaded = false;
+
+  /// Method called by the constructor to define subclass systems of units along their base units.
+  void defineSystemsOfUnits();
+
+  /// Methos called by the constructor to allow preloading of all units if desired.
+  ///
+  /// Should return whether all units are loaded.
+  bool get shouldPreloadAllUnits => false;
+
+  /// Define (load) all units.
+  ///
+  /// See [shouldPreloadAllUnit] if units should be loaded on instantiation.
+  void loadAllUnits();
+
+  void _loadAllUnits() {
+    loadAllUnits();
+    _allUnitsLoaded = true;
+  }
 
   /// Return the baseUnit of my first SystemOfMeasurement
   Unit<T> get baseUnit => systemsOfUnits[0].baseUnit;
 
   /// Return all units in all of my SystemOfMeasurement list
-  List<Unit<T>> get unitList =>
-      systemsOfUnits.fold([], (list, system) => list..addAll(system.units));
+  List<Unit<T>> get unitList {
+    if (!_allUnitsLoaded) {
+      _loadAllUnits();
+    }
+    return systemsOfUnits.fold([], (list, system) => list..addAll(system.units));
+  }
 
   /// Finds an unit with a symbol in my SystemOfMeasurement list
   Unit<T>? unitWith({required String symbol}) {
@@ -46,6 +70,10 @@ abstract class PhysicalProperty<T extends PhysicalProperty<T>> {
       });
     } on StateError {
       unit = null;
+    }
+    if (unit == null && !_allUnitsLoaded) {
+      _loadAllUnits();
+      return unitWith(symbol: symbol);
     }
     return unit;
   }

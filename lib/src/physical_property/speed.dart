@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import '../measurement/derived_physical_property.dart';
 import '../measurement/derived_system_of_units.dart';
-import '../measurement/unit.dart';
 import '../quantity/quantity.dart';
 import 'length.dart';
 import 'time.dart';
@@ -13,18 +12,26 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
 
   static Speed? _instance;
 
+  late final CompoundSystemOfUnits<Speed, Length, Time> _systemOfUnits;
+
   // SI
-  late final Unit<Speed> meterPerSecond;
-  late final Unit<Speed> centimeterPerSecond;
-  late final Unit<Speed> kilometerPerHour;
+  late final meterPerSecond =
+      _systemOfUnits.defineCompoundUnit(symbol: 'm/s', name: 'meters per second');
+  late final centimeterPerSecond =
+      _systemOfUnits.defineCompoundUnit(symbol: 'cm/s', name: 'cintimeters per second');
+  late final kilometerPerHour =
+      _systemOfUnits.defineCompoundUnit(symbol: 'km/h', name: 'kilometers per hour');
 
   // Imperial/US
-  late final Unit<Speed> milePerHour;
-  late final Unit<Speed> footPerMinute;
-  late final Unit<Speed> footPerSecond;
+  late final milePerHour =
+      _systemOfUnits.defineCompoundUnit(symbol: 'mi/h', name: 'miles per hour');
+  late final footPerMinute =
+      _systemOfUnits.defineCompoundUnit(symbol: 'ft/min', name: 'feet per minute');
+  late final footPerSecond =
+      _systemOfUnits.defineCompoundUnit(symbol: 'ft/s', name: 'feet per second');
 
   // Nautical
-  late final Unit<Speed> knot;
+  late final knot = _systemOfUnits.defineCompoundUnit(symbol: 'kt', name: 'knots', units: 'NM/h');
 
   // SI
   static Quantity<Speed> metersPerSecond(double amount) =>
@@ -46,16 +53,20 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
   static Quantity<Speed> knots(double amount) => Quantity(unit: Speed().knot, amount: amount);
 
   @override
-  void defineUnits() {
-    final derived = DerivedSystemOfUnits<Speed, Length, Time>(this);
-    meterPerSecond = derived.defineNamedUnit(symbol: 'm/s', name: 'meters per second');
-    centimeterPerSecond = derived.defineNamedUnit(symbol: 'cm/s', name: 'cintimeters per second');
-    kilometerPerHour = derived.defineNamedUnit(symbol: 'km/h', name: 'kilometers per hour');
-    milePerHour = derived.defineNamedUnit(symbol: 'mi/h', name: 'miles per hour');
-    footPerMinute = derived.defineNamedUnit(symbol: 'ft/min', name: 'feet per minute');
-    footPerSecond = derived.defineNamedUnit(symbol: 'ft/s', name: 'feet per second');
-    knot = derived.defineNamedUnit(symbol: 'kt', name: 'knots', units: 'NM/h');
+  void defineSystemsOfUnits() {
+    _systemOfUnits = CompoundSystemOfUnits<Speed, Length, Time>(this);
+    meterPerSecond;
 
-    systemsOfUnits.add(derived);
+    systemsOfUnits.add(_systemOfUnits);
+  }
+
+  @override
+  void loadAllUnits() {
+    centimeterPerSecond;
+    kilometerPerHour;
+    milePerHour;
+    footPerMinute;
+    footPerSecond;
+    knot;
   }
 }

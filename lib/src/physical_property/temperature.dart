@@ -45,10 +45,12 @@ class Temperature extends PhysicalProperty<Temperature> {
 
   static Temperature? _instance;
 
-  late final Unit<Temperature> kelvin;
-  late final Unit<Temperature> celcius;
-  late final Unit<Temperature> fahrenheit;
-  late final Unit<Temperature> rankine;
+  late final TemperatureSystemOfUnits _systemOfUnits;
+
+  late final kelvin = _systemOfUnits.defineBaseUnit(symbol: 'K', name: 'Kelvin', factor: 1.0);
+  late final celcius = _systemOfUnits.defineUnit(symbol: '°C', name: 'Celcius');
+  late final fahrenheit = _systemOfUnits.defineUnit(symbol: '°F', name: 'Fahrenheit');
+  late final rankine = _systemOfUnits.defineUnit(symbol: '°R', name: 'Rankine');
 
   static Quantity<Temperature> kelvins(double amount) =>
       Quantity(unit: Temperature().kelvin, amount: amount);
@@ -60,13 +62,17 @@ class Temperature extends PhysicalProperty<Temperature> {
       Quantity(unit: Temperature().rankine, amount: amount);
 
   @override
-  void defineUnits() {
-    final _system = TemperatureSystemOfUnits(kind: this);
-    kelvin = _system.defineBaseUnit(symbol: 'K', name: 'Kelvin', factor: 1.0);
-    celcius = _system.defineUnit(symbol: '°C', name: 'Celcius');
-    fahrenheit = _system.defineUnit(symbol: '°F', name: 'Fahrenheit');
-    rankine = _system.defineUnit(symbol: '°R', name: 'Rankine');
+  void defineSystemsOfUnits() {
+    _systemOfUnits = TemperatureSystemOfUnits(kind: this);
+    kelvin;
 
-    systemsOfUnits.add(_system);
+    systemsOfUnits.add(_systemOfUnits);
+  }
+
+  @override
+  void loadAllUnits() {
+    celcius;
+    fahrenheit;
+    rankine;
   }
 }
