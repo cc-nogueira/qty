@@ -1,5 +1,12 @@
 # Quantities representation and unit conversions
 
+## 0.8.0
+Defined two types of DerivedPhysicalProperty, DerivedSystemOfUnits and DerivedUnit in:
+* CompoundPhysicalProperty, CompoundSystemOfUnits and CompoundUnit
+* PowersPhysicalProperty, PowersSystemOfUnits and PowersUnit
+Defined AreaPhysicalProperty as the first PowersPhysicalProperty (of Length).
+VolumePhysicalProperty refatore to inherit PowersPhysicalProperty of Length.
+
 ## 0.7.0
 Simplified the use of SystemOfUnits removing Imperial and Nautical subclasses.
 Revised all PhysycalProperties adding various new unit definitions.
