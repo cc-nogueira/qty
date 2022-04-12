@@ -57,7 +57,8 @@ void main() {
     expect(Volume().gallonUS.quantityConverterTo(Volume().fluidOunceUS)(1.0), 160.0);
     expect(Volume().quartUS.quantityConverterTo(Volume().gallonUS)(1.0), 1.0 / 4.0);
     expect(Volume().pintUS.quantityConverterTo(Volume().fluidOunceUS)(1.0), 20.0);
-    expect(Volume().gallonUS.quantityConverterTo(Volume().cubicMillimeter)(1.0), 3785411.784);
+    expect(Volume().gallonUS.quantityConverterTo(Volume().cubicMillimeter)(1.0),
+        _closeToValue(3785411.784));
     expect(Volume().gallonUS.quantityConverterTo(Volume().liter)(1.0), 3.785411784);
 
     expect(Volume().gallonUK.quantityConverterTo(Volume().pintUK)(1.0), 8.0);

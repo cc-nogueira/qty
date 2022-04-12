@@ -1,56 +1,82 @@
-import '../measurement/physical_property.dart';
-import '../measurement/systems_of_units.dart';
+import '../measurement/derived_physical_property.dart';
+import '../measurement/derived_system_of_units.dart';
 import '../measurement/unit.dart';
 import '../quantity/quantity.dart';
+import 'length.dart';
 
 /// Volume physical property.
 ///
 /// Configures Internation (SI) and Imperial (British) systems of units defining their [Volume] [Unit] instances.
 /// All units are accessible by singleton method, static methods or by symbol.
 /// Also provides Quantity constructors for common units.
-class Volume extends PhysicalProperty<Volume> {
+class Volume extends PowersPhysicalProperty<Volume, Length> {
   factory Volume() => _instance ??= Volume._();
 
-  Volume._() : super(kind: 'volume', dimensionSymbol: 'V', quantitySymbol: 'v');
+  Volume._() : super(Length(), 3, kind: 'volume', dimensionSymbol: 'L³', quantitySymbol: 'v');
 
   static Volume? _instance;
 
+  late final PowersSystemOfUnits<Volume, Length> systemOfUnits;
+
   // SI
-  late final Unit<Volume> cubicMillimeter;
-  late final Unit<Volume> cubicCentimeter;
-  late final Unit<Volume> cubicDecimeter;
-  late final Unit<Volume> cubicMeter;
-  late final Unit<Volume> milliliter;
-  late final Unit<Volume> centiliter;
-  late final Unit<Volume> deciliter;
-  late final Unit<Volume> liter;
+  late final cubicMillimeter =
+      systemOfUnits.definePowersUnit(symbol: 'mm³', name: 'cubic millimeter');
+  late final cubicCentimeter =
+      systemOfUnits.definePowersUnit(symbol: 'cm³', name: 'cubic centimeter');
+  late final cubicDecimeter =
+      systemOfUnits.definePowersUnit(symbol: 'dm³', name: 'cubic decimeter');
+  late final cubicMeter = systemOfUnits.definePowersUnit(symbol: 'm³', name: 'cubic meter');
+  late final milliliter =
+      systemOfUnits.definePowersUnit(symbol: 'ml', name: 'milliliter', baseUnit: 'cm');
+  late final centiliter = systemOfUnits.definePowersUnit(
+      symbol: 'cl', name: 'centiliter', baseUnit: 'dm', factor: 1e-2);
+  late final deciliter =
+      systemOfUnits.definePowersUnit(symbol: 'dl', name: 'deciliter', baseUnit: 'dm', factor: 1e-1);
+  late final liter = systemOfUnits.definePowersUnit(symbol: 'l', name: 'liter', baseUnit: 'dm');
 
   // Imperial/US
-  late final Unit<Volume> cubicInch;
-  late final Unit<Volume> cubicFoot;
-  late final Unit<Volume> cubicYard;
-  late final Unit<Volume> cubicMile;
+  late final cubicInch = systemOfUnits.definePowersUnit(symbol: 'in³', name: 'cubic inch');
+  late final cubicFoot = systemOfUnits.definePowersUnit(symbol: 'ft³', name: 'cubic foot');
+  late final cubicYard = systemOfUnits.definePowersUnit(symbol: 'yd³', name: 'cubic yard');
+  late final cubicMile = systemOfUnits.definePowersUnit(symbol: 'mi³', name: 'cubic mile');
 
   // US
-  late final Unit<Volume> gallonUS;
-  late final Unit<Volume> fluidOunceUS;
-  late final Unit<Volume> gillUS;
-  late final Unit<Volume> pintUS;
-  late final Unit<Volume> quartUS;
-  late final Unit<Volume> peckUS;
-  late final Unit<Volume> bushelUS;
-  late final Unit<Volume> quarterUS;
-  late final Unit<Volume> oilBarrel;
+  late final gallonUS = systemOfUnits.definePowersUnit(
+      symbol: 'gal US', name: 'gallon US', baseUnit: 'in', factor: 231);
+  late final fluidOunceUS = systemOfUnits.definePowersUnit(
+      symbol: 'fl oz US', name: 'fluid ounce US', baseUnit: 'in', factor: 231.0 / 160.0);
+  late final gillUS = systemOfUnits.definePowersUnit(
+      symbol: 'gi US', name: 'gill US', baseUnit: 'in', factor: 231.0 / 32.0);
+  late final pintUS = systemOfUnits.definePowersUnit(
+      symbol: 'pt US', name: 'pint US', baseUnit: 'in', factor: 231.0 / 8.0);
+  late final quartUS = systemOfUnits.definePowersUnit(
+      symbol: 'qt US', name: 'quart US', baseUnit: 'in', factor: 231.0 / 4.0);
+  late final peckUS = systemOfUnits.definePowersUnit(
+      symbol: 'peck US', name: 'peck US', baseUnit: 'in', factor: 4.0 * 231.0);
+  late final bushelUS = systemOfUnits.definePowersUnit(
+      symbol: 'bu US', name: 'bushel US', baseUnit: 'in', factor: 8.0 * 231.0);
+  late final quarterUS = systemOfUnits.definePowersUnit(
+      symbol: 'qr US', name: 'quarter US', baseUnit: 'in', factor: 64.0 * 231.0);
+  late final oilBarrel = systemOfUnits.definePowersUnit(
+      symbol: 'oil barrel', name: 'oil barrel', baseUnit: 'in', factor: 42.0 * 231.0);
 
   // Imperial
-  late final Unit<Volume> gallonUK;
-  late final Unit<Volume> fluidOunceUK;
-  late final Unit<Volume> gillUK;
-  late final Unit<Volume> pintUK;
-  late final Unit<Volume> quartUK;
-  late final Unit<Volume> peckUK;
-  late final Unit<Volume> bushelUK;
-  late final Unit<Volume> quarterUK;
+  late final gallonUK = systemOfUnits.definePowersUnit(
+      symbol: 'gal UK', name: 'gallon UK', baseUnit: 'dm', factor: 4.54609);
+  late final fluidOunceUK = systemOfUnits.definePowersUnit(
+      symbol: 'fl oz UK', name: 'fluid ounce', baseUnit: 'dm', factor: 4.54609 / 160.0);
+  late final gillUK = systemOfUnits.definePowersUnit(
+      symbol: 'gi UK', name: 'gill UK', baseUnit: 'dm', factor: 4.54609 / 32.0);
+  late final pintUK = systemOfUnits.definePowersUnit(
+      symbol: 'pt UK', name: 'pint UK', baseUnit: 'dm', factor: 4.54609 / 8.0);
+  late final quartUK = systemOfUnits.definePowersUnit(
+      symbol: 'qt UK', name: 'quart UK', baseUnit: 'dm', factor: 4.54609 / 4.0);
+  late final peckUK = systemOfUnits.definePowersUnit(
+      symbol: 'peck UK', name: 'peck UK', baseUnit: 'dm', factor: 2.0 * 4.54609);
+  late final bushelUK = systemOfUnits.definePowersUnit(
+      symbol: 'bu UK', name: 'bushel UK', baseUnit: 'dm', factor: 8.0 * 4.54609);
+  late final quarterUK = systemOfUnits.definePowersUnit(
+      symbol: 'qr UK', name: 'quarter UK', baseUnit: 'dm', factor: 64.0 * 4.54609);
 
   // SI
   static Quantity<Volume> cubicMillimeters(double amount) =>
@@ -113,54 +139,53 @@ class Volume extends PhysicalProperty<Volume> {
       Quantity(unit: Volume().quarterUK, amount: amount);
 
   @override
-  void defineUnits() {
+  void defineSystemsOfUnits() {
+    systemOfUnits = PowersSystemOfUnits<Volume, Length>(this, power: 3);
+    systemsOfUnits.addAll([systemOfUnits]);
+  }
+
+  @override
+  void loadAllUnits() {
     // SI
-    final si = InternationalSystemOfUnits<Volume>(kind: this);
-    liter = si.defineBaseUnit(symbol: 'l', name: 'liter', factor: 1.0);
+    liter;
 
-    deciliter = si.defineUnit(symbol: 'dl', name: 'deciliter', factor: 1e-1);
-    centiliter = si.defineUnit(symbol: 'cl', name: 'centiliter', factor: 1e-2);
-    milliliter = si.defineUnit(symbol: 'ml', name: 'milliliter', factor: 1e-3);
+    deciliter;
+    centiliter;
+    milliliter;
 
-    cubicMillimeter = si.defineUnit(symbol: 'mm³', name: 'cubic millimeter', factor: 1e-6);
-    cubicCentimeter = si.defineUnit(symbol: 'cm³', name: 'cubic centimeter', factor: 1e-3);
-    cubicDecimeter = si.defineUnit(symbol: 'dm³', name: 'cubic decimeter', factor: 1.0);
-    cubicMeter = si.defineUnit(symbol: 'm³', name: 'cubic meter', factor: 1e3);
+    cubicMillimeter;
+    cubicCentimeter;
+    cubicDecimeter;
+    cubicMeter;
 
     // Imperial/US
-    final imperialUs = SystemOfUnits(name: 'Imperial/US System of Units', kind: this);
-    cubicFoot = imperialUs.defineBaseUnit(symbol: 'ft³', name: 'cubic foot', factor: 28.31685);
+    cubicFoot;
 
-    cubicInch = imperialUs.defineUnit(symbol: 'in³', name: 'cubic inch', factor: 1.0 / 1728.0);
-    cubicYard = imperialUs.defineUnit(symbol: 'yd³', name: 'cubic yard', factor: 27.0);
-    cubicMile = imperialUs.defineUnit(symbol: 'mi³', name: 'cubic mile', factor: 147197952000.0);
+    cubicInch;
+    cubicYard;
+    cubicMile;
 
     // US
-    final us = SystemOfUnits<Volume>(name: 'US System of Units', kind: this);
-    gallonUS = us.defineBaseUnit(symbol: 'gal US', name: 'gallon US', factor: 3.785411784);
+    gallonUS;
 
-    fluidOunceUS = us.defineUnit(symbol: 'fl oz US', name: 'fluid ounce US', factor: 1.0 / 160.0);
-    gillUS = us.defineUnit(symbol: 'gi US', name: 'gill US', factor: 1.0 / 32.0);
-    pintUS = us.defineUnit(symbol: 'pt US', name: 'pint US', factor: 1.0 / 8.0);
-    quartUS = us.defineUnit(symbol: 'qt US', name: 'quart US', factor: 1.0 / 4.0);
-    peckUS = us.defineUnit(symbol: 'peck US', name: 'peck US', factor: 2.0);
-    bushelUS = us.defineUnit(symbol: 'bu US', name: 'bushel US', factor: 8.0);
-    quarterUS = us.defineUnit(symbol: 'qr US', name: 'quarter US', factor: 64.0);
-    oilBarrel = us.defineUnit(symbol: 'oil barrel', name: 'oil barrel', factor: 42.0);
+    fluidOunceUS;
+    gillUS;
+    pintUS;
+    quartUS;
+    peckUS;
+    bushelUS;
+    quarterUS;
+    oilBarrel;
 
     // Imperial
-    final imperial = SystemOfUnits<Volume>(name: 'Imperial System of Units', kind: this);
-    gallonUK = imperial.defineBaseUnit(symbol: 'gal UK', name: 'gallon UK', factor: 4.54609);
+    gallonUK;
 
-    fluidOunceUK =
-        imperial.defineUnit(symbol: 'fl oz UK', name: 'fluid ounce', factor: 1.0 / 160.0);
-    gillUK = imperial.defineUnit(symbol: 'gi UK', name: 'gill UK', factor: 1.0 / 32.0);
-    pintUK = imperial.defineUnit(symbol: 'pt UK', name: 'pint UK', factor: 1.0 / 8.0);
-    quartUK = imperial.defineUnit(symbol: 'qt UK', name: 'quart UK', factor: 1.0 / 4.0);
-    peckUK = imperial.defineUnit(symbol: 'peck UK', name: 'peck UK', factor: 2.0);
-    bushelUK = imperial.defineUnit(symbol: 'bu UK', name: 'bushel UK', factor: 8.0);
-    quarterUK = imperial.defineUnit(symbol: 'qr UK', name: 'quarter UK', factor: 64.0);
-
-    systemsOfUnits.addAll([si, us, imperial]);
+    fluidOunceUK;
+    gillUK;
+    pintUK;
+    quartUK;
+    peckUK;
+    bushelUK;
+    quarterUK;
   }
 }
