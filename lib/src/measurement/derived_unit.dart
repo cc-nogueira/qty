@@ -62,13 +62,13 @@ class PowersUnit<K extends PowersPhysicalProperty<K, A>, A extends PhysicalPrope
 abstract class CompoundUnit<K extends CompoundPhysicalProperty<K, A, B>,
     A extends PhysicalProperty<A>, B extends PhysicalProperty<B>> extends DerivedUnit<K> {
   CompoundUnit(
-    K kind,
+    CompoundSystemOfUnits<K, A, B> systemOfUnits,
     this.a,
     this.b,
     double factor, {
     required String name,
     required String symbol,
-  }) : super(CompoundSystemOfUnits<K, A, B>(kind), factor, name: name, symbol: symbol);
+  }) : super(systemOfUnits, factor, name: name, symbol: symbol);
 
   final Unit<A> a;
   final Unit<B> b;
@@ -93,14 +93,14 @@ abstract class CompoundUnit<K extends CompoundPhysicalProperty<K, A, B>,
 class MultipliedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
     B extends PhysicalProperty<B>> extends CompoundUnit<K, A, B> {
   MultipliedUnits(
-    K kind,
+    CompoundSystemOfUnits<K, A, B> systemOfUnits,
     Unit<A> a,
-    Unit<B> b,
-    double factor, {
+    Unit<B> b, {
+    double factor = 1.0,
     String? name,
     String? symbol,
   }) : super(
-          kind,
+          systemOfUnits,
           a,
           b,
           factor,
@@ -113,17 +113,17 @@ class MultipliedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends Phy
       (double value) => factor * value * qcA(1) * qcB(1);
 }
 
-class DividedUnits<K extends CompoundPhysicalProperty<K, A, B>, A extends PhysicalProperty<A>,
+class DividedUnits<K extends DividedPhysicalProperties<K, A, B>, A extends PhysicalProperty<A>,
     B extends PhysicalProperty<B>> extends CompoundUnit<K, A, B> {
   DividedUnits(
-    K kind,
+    DividedSystemOfUnits<K, A, B> systemOfUnits,
     Unit<A> a,
-    Unit<B> b,
-    double factor, {
+    Unit<B> b, {
+    double factor = 1.0,
     String? name,
     String? symbol,
   }) : super(
-          kind,
+          systemOfUnits,
           a,
           b,
           factor,

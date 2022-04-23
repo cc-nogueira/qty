@@ -12,26 +12,24 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
 
   static Speed? _instance;
 
-  late final CompoundSystemOfUnits<Speed, Length, Time> _systemOfUnits;
+  late final DividedSystemOfUnits<Speed, Length, Time> _systemOfUnits;
 
   // SI
-  late final meterPerSecond =
-      _systemOfUnits.defineCompoundUnit(symbol: 'm/s', name: 'meters per second');
+  late final meterPerSecond = _systemOfUnits.defineCompoundUnit(Length().meter, Time().second);
   late final centimeterPerSecond =
-      _systemOfUnits.defineCompoundUnit(symbol: 'cm/s', name: 'cintimeters per second');
-  late final kilometerPerHour =
-      _systemOfUnits.defineCompoundUnit(symbol: 'km/h', name: 'kilometers per hour');
+      _systemOfUnits.defineCompoundUnit(Length().centimeter, Time().second);
+  late final kilometerPerHour = _systemOfUnits.defineCompoundUnit(Length().kilometer, Time().hour);
 
   // Imperial/US
-  late final milePerHour =
-      _systemOfUnits.defineCompoundUnit(symbol: 'mi/h', name: 'miles per hour');
+  late final milePerHour = _systemOfUnits.defineCompoundUnit(Length().mile, Time().hour);
   late final footPerMinute =
-      _systemOfUnits.defineCompoundUnit(symbol: 'ft/min', name: 'feet per minute');
+      _systemOfUnits.defineCompoundUnit(Length().foot, Time().minute, name: 'feet per minute');
   late final footPerSecond =
-      _systemOfUnits.defineCompoundUnit(symbol: 'ft/s', name: 'feet per second');
+      _systemOfUnits.defineCompoundUnit(Length().foot, Time().second, name: 'feet per second');
 
   // Nautical
-  late final knot = _systemOfUnits.defineCompoundUnit(symbol: 'kt', name: 'knots', units: 'NM/h');
+  late final knot = _systemOfUnits.defineCompoundUnit(Length().nauticalMile, Time().hour,
+      symbol: 'kt', name: 'knots');
 
   // SI
   static Quantity<Speed> metersPerSecond(double amount) =>
@@ -54,7 +52,7 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
 
   @override
   void defineSystemsOfUnits() {
-    _systemOfUnits = CompoundSystemOfUnits<Speed, Length, Time>(this);
+    _systemOfUnits = DividedSystemOfUnits<Speed, Length, Time>(this);
     meterPerSecond;
 
     systemsOfUnits.add(_systemOfUnits);

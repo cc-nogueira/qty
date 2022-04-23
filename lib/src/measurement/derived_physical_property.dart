@@ -15,8 +15,8 @@ abstract class DerivedPhysicalProperty<K extends DerivedPhysicalProperty<K>>
 abstract class PowersPhysicalProperty<K extends PowersPhysicalProperty<K, A>,
     A extends PhysicalProperty<A>> extends DerivedPhysicalProperty<K> {
   PowersPhysicalProperty(
-    this.a,
-    this.power, {
+    this.a, {
+    required this.power,
     required String kind,
     required String dimensionSymbol,
     required String quantitySymbol,
@@ -55,9 +55,19 @@ abstract class CompoundPhysicalProperty<
   final B b;
 
   @override
-  CompoundUnit<K, A, B> get baseUnit => compoundUnit(a.baseUnit, b.baseUnit, 1.0);
+  CompoundUnit<K, A, B> get baseUnit {
+    if (systemsOfUnits.isEmpty) {
+      throw StateError('No base unit defined');
+    }
+    final units = systemsOfUnits[0].units;
+    if (units.isEmpty) {
+      throw StateError('No base unit defined');
+    }
+    return units.first as CompoundUnit<K, A, B>;
+  }
 
-  CompoundUnit<K, A, B> compoundUnit(Unit<A> a, Unit<B> b, double factor,
+  CompoundUnit<K, A, B> compoundUnit(
+      CompoundSystemOfUnits<K, A, B> systemOfUnits, Unit<A> a, Unit<B> b, double factor,
       {String? symbol, String? name});
 
   Pattern get compoundSymbolPattern;
@@ -82,13 +92,14 @@ abstract class MultipliedPhysicalProperties<
         );
 
   @override
-  MultipliedUnits<K, A, B> compoundUnit(Unit<A> a, Unit<B> b, double factor,
+  MultipliedUnits<K, A, B> compoundUnit(covariant MultipliedSystemOfUnits<K, A, B> systemOfUnits,
+          Unit<A> a, Unit<B> b, double factor,
           {String? symbol, String? name}) =>
       MultipliedUnits<K, A, B>(
-        this as K,
+        systemOfUnits,
         a,
         b,
-        factor,
+        factor: factor,
         symbol: symbol,
         name: name,
       );
@@ -116,13 +127,14 @@ abstract class DividedPhysicalProperties<
         );
 
   @override
-  DividedUnits<K, A, B> compoundUnit(Unit<A> a, Unit<B> b, double factor,
+  DividedUnits<K, A, B> compoundUnit(covariant DividedSystemOfUnits<K, A, B> systemOfUnits,
+          Unit<A> a, Unit<B> b, double factor,
           {String? symbol, String? name}) =>
       DividedUnits<K, A, B>(
-        this as K,
+        systemOfUnits,
         a,
         b,
-        factor,
+        factor: factor,
         symbol: symbol,
         name: name,
       );
