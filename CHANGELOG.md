@@ -1,5 +1,8 @@
 # Quantities representation and unit conversions
 
+## 0.9.1
+Removing print statement in unit registration
+
 ## 0.9.0
 Refactored DerivedUnits so that they are constructed via Unit instances instead of unit symbols, giving two advantages:  
 * DerivedUnit creation relies on compile time unit references (no text parsing).
