@@ -1,5 +1,10 @@
 # Quantities representation and unit conversions
 
+## 0.9.0
+Refactored DerivedUnits so that they are constructed via Unit instances instead of unit symbols, giving two advantages:  
+* DerivedUnit creation relies on compile time unit references (no text parsing).
+* DerivedUnit creation does not invoke unitWith(symbol) that preloads all units.
+
 ## 0.8.0
 Defined two types of DerivedPhysicalProperty, DerivedSystemOfUnits and DerivedUnit in:
 * CompoundPhysicalProperty, CompoundSystemOfUnits and CompoundUnit
