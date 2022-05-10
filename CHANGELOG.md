@@ -1,5 +1,8 @@
 # Quantities representation and unit conversions
 
+## 0.9.2
+Defined units for precipitation (mm/h and inch/h)
+
 ## 0.9.1
 Removing print statement in unit registration
 
