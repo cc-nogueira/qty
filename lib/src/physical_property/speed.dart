@@ -18,10 +18,13 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
   late final meterPerSecond = _systemOfUnits.defineCompoundUnit(Length().meter, Time().second);
   late final centimeterPerSecond =
       _systemOfUnits.defineCompoundUnit(Length().centimeter, Time().second);
+  late final millimeterPerHour =
+      _systemOfUnits.defineCompoundUnit(Length().millimeter, Time().hour);
   late final kilometerPerHour = _systemOfUnits.defineCompoundUnit(Length().kilometer, Time().hour);
 
   // Imperial/US
   late final milePerHour = _systemOfUnits.defineCompoundUnit(Length().mile, Time().hour);
+  late final inchPerHour = _systemOfUnits.defineCompoundUnit(Length().inch, Time().hour);
   late final footPerMinute =
       _systemOfUnits.defineCompoundUnit(Length().foot, Time().minute, name: 'feet per minute');
   late final footPerSecond =
@@ -36,6 +39,8 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
       Quantity(unit: Speed().meterPerSecond, amount: amount);
   static Quantity<Speed> centimetersPerSecond(double amount) =>
       Quantity(unit: Speed().centimeterPerSecond, amount: amount);
+  static Quantity<Speed> millimetersPerHour(double amount) =>
+      Quantity(unit: Speed().millimeterPerHour, amount: amount);
   static Quantity<Speed> kilometersPerHour(double amount) =>
       Quantity(unit: Speed().kilometerPerHour, amount: amount);
 
@@ -44,6 +49,8 @@ class Speed extends DividedPhysicalProperties<Speed, Length, Time> {
       Quantity(unit: Speed().footPerMinute, amount: amount);
   static Quantity<Speed> feetPerSecond(double amount) =>
       Quantity(unit: Speed().footPerSecond, amount: amount);
+  static Quantity<Speed> inchesPerHour(double amount) =>
+      Quantity(unit: Speed().inchPerHour, amount: amount);
   static Quantity<Speed> milesPerHour(double amount) =>
       Quantity(unit: Speed().milePerHour, amount: amount);
 
